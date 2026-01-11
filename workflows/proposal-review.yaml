@@ -1,0 +1,117 @@
+type: "proposal-review"
+name: "Proposal Review Workflow"
+description: "Systematic approach to AI-assisted development that builds trust through transparent reasoning, reviewable proposals, and collaborative specialist validation"
+specialist: "parker-pragmatic"
+
+file_patterns:
+  - "**/*.al"
+  - "**/*.md"
+file_exclusions:
+  - "**/node_modules/**"
+  - "**/.parker-proposals/**"
+
+phases:
+  - id: "understanding"
+    name: "Understanding & Reasoning"
+    description: "Establish clear understanding of the request, explain AI reasoning, identify alternatives, state confidence level, recommend specialists"
+    required: true
+    mode: "guided"
+    available_actions:
+      - "restate_request"
+      - "explain_reasoning"
+      - "identify_alternatives"
+      - "state_confidence"
+      - "recommend_specialists"
+
+  - id: "proposal_creation"
+    name: "Proposal Creation"
+    description: "Generate complete, reviewable implementation in temporary sandbox location (.parker-proposals/)"
+    required: true
+    mode: "agent_driven"
+    entry_conditions:
+      - "understanding phase completed"
+    available_actions:
+      - "create_sandbox"
+      - "implement_solution"
+      - "add_documentation"
+      - "provide_comparison"
+      - "create_cleanup_instructions"
+
+  - id: "specialist_review"
+    name: "Specialist Review"
+    description: "Coordinate validation from relevant BC specialists before developer decides"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "proposal_creation phase completed"
+    available_actions:
+      - "identify_reviewers"
+      - "present_proposal"
+      - "gather_feedback"
+      - "synthesize_input"
+      - "revise_proposal"
+
+  - id: "developer_decision"
+    name: "Developer Decision"
+    description: "Present complete picture, explain trade-offs, respect developer choice, support implementation"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "specialist_review phase completed"
+    available_actions:
+      - "present_options"
+      - "explain_tradeoffs"
+      - "accept_proposal"
+      - "modify_proposal"
+      - "reject_proposal"
+
+  - id: "verification_cleanup"
+    name: "Verification & Cleanup"
+    description: "Confirm results match expectations and remove all temporary artifacts"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "developer_decision phase completed"
+    available_actions:
+      - "verify_implementation"
+      - "validate_assumptions"
+      - "check_performance"
+      - "remove_proposals"
+      - "document_learning"
+
+per_file_checklist:
+  - id: "understand_context"
+    type: "analysis"
+    description: "Analyze file context and identify relevant patterns"
+    required: true
+
+  - id: "create_proposal"
+    type: "custom"
+    description: "Create proposal with reasoning and alternatives"
+    required: true
+
+  - id: "specialist_validation"
+    type: "custom"
+    description: "Get specialist validation on proposed changes"
+    required: true
+
+  - id: "decision_recorded"
+    type: "validation"
+    description: "Developer decision recorded (accept/modify/reject)"
+    required: true
+
+  - id: "cleanup_complete"
+    type: "validation"
+    description: "All temporary artifacts removed"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "find_bc_knowledge"
+  auto_expand_checklist: false
+  min_relevance_score: 0.5
+
+completion_rules:
+  require_all_files: false
+  require_all_checklist_items: true
+  allow_skip_with_reason: true

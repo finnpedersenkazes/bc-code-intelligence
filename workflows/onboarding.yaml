@@ -1,0 +1,124 @@
+type: "onboarding"
+name: "Developer Onboarding"
+description: "Guide new developers through a Business Central codebase, explaining architecture, patterns, and conventions"
+specialist: "maya-mentor"
+
+file_patterns:
+  - "**/*.al"
+  - "**/app.json"
+  - "**/README.md"
+file_exclusions:
+  - "**/node_modules/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "project_overview"
+    name: "Project Overview"
+    description: "Understand project structure, app.json configuration, and high-level architecture"
+    required: true
+    mode: "guided"
+    available_actions:
+      - "read_app_json"
+      - "scan_folder_structure"
+      - "identify_modules"
+      - "explain_architecture"
+
+  - id: "table_discovery"
+    name: "Data Model Discovery"
+    description: "Explore table objects and understand the data model"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "project_overview phase completed"
+    available_actions:
+      - "list_tables"
+      - "explain_relationships"
+      - "identify_key_tables"
+
+  - id: "business_logic"
+    name: "Business Logic Exploration"
+    description: "Explore codeunits and understand core business logic"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "table_discovery phase completed"
+    available_actions:
+      - "list_codeunits"
+      - "explain_workflows"
+      - "identify_entry_points"
+
+  - id: "ui_exploration"
+    name: "UI Exploration"
+    description: "Explore pages and understand user interface patterns"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "business_logic phase completed"
+    available_actions:
+      - "list_pages"
+      - "explain_navigation"
+      - "identify_key_pages"
+
+  - id: "patterns_conventions"
+    name: "Patterns & Conventions"
+    description: "Identify coding patterns, naming conventions, and team standards"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "ui_exploration phase completed"
+    available_actions:
+      - "identify_patterns"
+      - "explain_conventions"
+      - "highlight_best_practices"
+
+  - id: "integration_points"
+    name: "Integration Points"
+    description: "Identify APIs, events, and integration touchpoints"
+    required: false
+    mode: "guided"
+    entry_conditions:
+      - "business_logic phase completed"
+    available_actions:
+      - "list_apis"
+      - "list_events"
+      - "explain_integrations"
+
+  - id: "summary"
+    name: "Onboarding Summary"
+    description: "Generate onboarding summary document with key learnings"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "patterns_conventions phase completed"
+
+per_file_checklist:
+  - id: "understand_purpose"
+    type: "analysis"
+    description: "Understand the purpose of this object"
+    required: true
+
+  - id: "identify_patterns"
+    type: "custom"
+    description: "Identify patterns used in this file"
+    required: false
+
+  - id: "note_conventions"
+    type: "custom"
+    description: "Note naming conventions and coding style"
+    required: false
+
+  - id: "explored"
+    type: "validation"
+    description: "File explored and understood"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "find_bc_knowledge"
+  auto_expand_checklist: false
+  min_relevance_score: 0.4
+
+completion_rules:
+  require_all_files: false
+  require_all_checklist_items: false
+  allow_skip_with_reason: true

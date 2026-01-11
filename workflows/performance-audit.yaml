@@ -1,0 +1,148 @@
+type: "performance-audit"
+name: "Performance Audit"
+description: "Comprehensive performance analysis and optimization for Business Central AL code"
+specialist: "dean-debug"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "inventory"
+    name: "File Inventory"
+    description: "Enumerate all AL files and assess codebase size"
+    required: true
+    mode: "autonomous"
+
+  - id: "analysis_quick"
+    name: "Quick Analysis"
+    description: "Rapid scan for common performance anti-patterns"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "scan_patterns"
+      - "identify_hotspots"
+
+  - id: "analysis_full"
+    name: "Full Analysis"
+    description: "Deep analysis of all procedures for performance patterns"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "analysis_quick phase completed"
+    available_actions:
+      - "analyze_procedure"
+      - "check_all_patterns"
+      - "document_coverage"
+      - "cross_reference"
+
+  - id: "performance_quick"
+    name: "Quick Optimization"
+    description: "Apply straightforward optimizations (SetLoadFields, obvious SIFT)"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "analysis_full phase completed"
+    available_actions:
+      - "apply_setloadfields"
+      - "apply_sift"
+      - "optimize_loops"
+
+  - id: "performance_full"
+    name: "Full Optimization"
+    description: "Complex optimizations requiring architectural consideration"
+    required: false
+    mode: "agent_driven"
+    entry_conditions:
+      - "performance_quick phase completed"
+    available_actions:
+      - "redesign_query"
+      - "implement_caching"
+      - "batch_operations"
+      - "refactor_loops"
+
+  - id: "execution_validation"
+    name: "Execution Validation"
+    description: "Verify optimizations are correctly implemented and functional"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "performance_quick phase completed"
+    available_actions:
+      - "verify_changes"
+      - "test_compilation"
+      - "validate_logic"
+
+  - id: "verification"
+    name: "Coverage Verification"
+    description: "Ensure all files analyzed and no procedures missed"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "execution_validation phase completed"
+    available_actions:
+      - "validate_coverage"
+      - "detect_gaps"
+      - "generate_report"
+
+per_file_checklist:
+  - id: "scan"
+    type: "analysis"
+    description: "Scan for performance patterns"
+    required: true
+
+  - id: "setloadfields_check"
+    type: "topic_application"
+    description: "Check SetLoadFields before record operations"
+    required: true
+    conditions:
+      content_pattern: "Find(Set|First|Last)\\s*\\("
+
+  - id: "sift_check"
+    type: "topic_application"
+    description: "Check for manual summation that should use SIFT"
+    required: true
+    conditions:
+      content_pattern: "repeat.*\\+.*until|:=.*\\+.*;"
+
+  - id: "loop_check"
+    type: "topic_application"
+    description: "Check loop efficiency patterns"
+    required: true
+    conditions:
+      content_pattern: "repeat"
+
+  - id: "calcsums_check"
+    type: "topic_application"
+    description: "Verify CalcSums/CalcFields usage"
+    required: true
+    conditions:
+      content_pattern: "CalcSums|CalcFields"
+
+  - id: "deleteall_check"
+    type: "topic_application"
+    description: "Review DeleteAll usage and trigger implications"
+    required: true
+    conditions:
+      content_pattern: "DeleteAll"
+
+  - id: "optimization_complete"
+    type: "validation"
+    description: "All performance issues addressed"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "analyze_al_code"
+  auto_expand_checklist: true
+  min_relevance_score: 0.5
+
+completion_rules:
+  require_all_files: true
+  require_all_checklist_items: true
+  allow_skip_with_reason: true

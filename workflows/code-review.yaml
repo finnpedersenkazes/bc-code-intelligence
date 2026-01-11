@@ -1,0 +1,148 @@
+type: "code-review"
+name: "Business Central Code Review"
+description: "Systematic code review for AL extensions focusing on performance, security, and maintainability"
+specialist: "roger-reviewer"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+  - "**/node_modules/**"
+
+phases:
+  - id: "inventory"
+    name: "File Inventory"
+    description: "Enumerate all AL files in scope"
+    required: true
+    mode: "autonomous"
+
+  - id: "preparation"
+    name: "Pre-Review Preparation"
+    description: "Verify tests pass, run static analysis, check formatting"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "run_tests"
+      - "run_static_analysis"
+      - "check_formatting"
+
+  - id: "analysis"
+    name: "Code Analysis"
+    description: "Run analyze_al_code on each file, expand checklists with relevant topics"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "preparation phase completed"
+    available_actions:
+      - "analyze_file"
+      - "expand_checklist"
+      - "record_finding"
+
+  - id: "performance_review"
+    name: "Performance Analysis"
+    description: "Check SetLoadFields usage, query patterns, SIFT usage, loop efficiency"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "analysis phase completed"
+    available_actions:
+      - "check_setloadfields"
+      - "check_query_patterns"
+      - "check_sift_usage"
+      - "check_loop_efficiency"
+      - "record_finding"
+
+  - id: "security_review"
+    name: "Security & Validation"
+    description: "Validate input handling, permissions, error handling, data validation"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "performance_review phase completed"
+    available_actions:
+      - "check_input_validation"
+      - "check_permissions"
+      - "check_error_handling"
+      - "record_finding"
+
+  - id: "maintainability"
+    name: "Code Maintainability"
+    description: "Check naming conventions, complexity, commenting, testability"
+    required: false
+    mode: "guided"
+    entry_conditions:
+      - "security_review phase completed"
+    available_actions:
+      - "check_naming"
+      - "check_complexity"
+      - "check_documentation"
+      - "record_finding"
+
+  - id: "summary"
+    name: "Summary & Report"
+    description: "Generate final review report with findings and recommendations"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "security_review phase completed"
+
+per_file_checklist:
+  - id: "analyze"
+    type: "analysis"
+    description: "Run analyze_al_code to discover relevant topics"
+    required: true
+
+  - id: "setloadfields_check"
+    type: "topic_application"
+    description: "Check SetLoadFields usage before FindSet/FindFirst"
+    required: true
+    conditions:
+      content_pattern: "Find(Set|First|Last)\\s*\\("
+
+  - id: "query_patterns_check"
+    type: "topic_application"
+    description: "Verify efficient query patterns (SetRange, SetFilter, SetCurrentKey)"
+    required: true
+    conditions:
+      content_pattern: "SetRange|SetFilter|SetCurrentKey"
+
+  - id: "sift_check"
+    type: "topic_application"
+    description: "Validate SIFT usage for summations instead of manual loops"
+    required: true
+    conditions:
+      content_pattern: "CalcSums|CalcFields|repeat"
+
+  - id: "loop_efficiency_check"
+    type: "topic_application"
+    description: "Review loop efficiency and minimal processing inside repeat-until"
+    required: true
+    conditions:
+      content_pattern: "repeat"
+
+  - id: "error_handling_check"
+    type: "topic_application"
+    description: "Verify error handling patterns"
+    required: true
+    conditions:
+      content_pattern: "Error\\(|if.*then.*Error"
+
+  - id: "review_complete"
+    type: "validation"
+    description: "Mark review complete for this file"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "analyze_al_code"
+  auto_expand_checklist: true
+  min_relevance_score: 0.6
+
+completion_rules:
+  require_all_files: true
+  require_all_checklist_items: true
+  allow_skip_with_reason: true

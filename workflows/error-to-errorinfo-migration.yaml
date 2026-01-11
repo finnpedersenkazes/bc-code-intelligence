@@ -1,0 +1,137 @@
+type: "error-to-errorinfo-migration"
+name: "Error to ErrorInfo Migration"
+description: "Convert legacy Error() calls to modern ErrorInfo pattern for better error handling"
+specialist: "eva-errors"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "inventory"
+    name: "File Inventory"
+    description: "Enumerate all AL files"
+    required: true
+    mode: "autonomous"
+
+  - id: "pattern_scan"
+    name: "Pattern Scan"
+    description: "Scan all files for Error() patterns"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "scan_file"
+      - "expand_checklist_with_instances"
+
+  - id: "batch_auto"
+    name: "Batch Auto-Fix"
+    description: "Apply automatic fixes to simple patterns (literal strings, StrSubstNo)"
+    required: false
+    mode: "autonomous"
+    entry_conditions:
+      - "pattern_scan phase completed"
+    available_actions:
+      - "batch_apply"
+      - "skip_batch"
+
+  - id: "manual_review"
+    name: "Manual Review"
+    description: "Review and convert complex patterns (text constants, function calls)"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "pattern_scan phase completed"
+    available_actions:
+      - "convert_instance"
+      - "skip_instance"
+      - "flag_for_later"
+
+  - id: "verification"
+    name: "Verification"
+    description: "Verify all conversions compile and work correctly"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "manual_review phase completed"
+    available_actions:
+      - "compile_check"
+      - "run_tests"
+
+  - id: "summary"
+    name: "Summary & Report"
+    description: "Generate migration report with statistics"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "verification phase completed"
+
+per_file_checklist:
+  - id: "scan"
+    type: "analysis"
+    description: "Scan for Error() patterns"
+    required: true
+
+  - id: "review_complete"
+    type: "validation"
+    description: "All Error() calls addressed"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "retrieve_bc_knowledge"
+  auto_expand_checklist: false
+  min_relevance_score: 0.8
+
+pattern_discovery:
+  enabled: true
+  create_instance_items: true
+  group_identical: true
+  specialist: "eva-errors"
+  patterns:
+    - id: "error-call"
+      name: "Error() Call"
+      description: "Legacy Error() function calls that should use ErrorInfo"
+      regex: "Error\\s*\\((?!\\s*ErrorInfo)[^)]+\\)"
+      regex_flags: "gi"
+      exclude_regex: "//.*Error|ErrorInfo\\.Create"
+      context_lines: 2
+      instance_classifier:
+        rules:
+          - name: "literal"
+            pattern: "Error\\s*\\(\\s*'[^']*'\\s*\\)"
+            suggested_action: "Wrap string in ErrorInfo.Create()"
+            auto_fixable: true
+          - name: "strsubstno"
+            pattern: "Error\\s*\\(\\s*StrSubstNo\\s*\\("
+            suggested_action: "Convert to ErrorInfo.Create(StrSubstNo(...))"
+            auto_fixable: true
+          - name: "text_constant"
+            pattern: "Error\\s*\\(\\s*[A-Z][A-Za-z0-9_]+Lbl\\s*\\)"
+            suggested_action: "Review text constant, then wrap in ErrorInfo.Create()"
+            auto_fixable: false
+          - name: "function_call"
+            pattern: "Error\\s*\\(\\s*[A-Z][A-Za-z0-9_]+\\s*\\("
+            suggested_action: "Analyze function return, may need ErrorInfo integration"
+            auto_fixable: false
+      transformations:
+        - instance_type: "literal"
+          template: "Error(ErrorInfo.Create({{original_string}}))"
+          requires_review: false
+        - instance_type: "strsubstno"
+          template: "Error(ErrorInfo.Create(StrSubstNo({{original_string}}, {{params}})))"
+          requires_review: false
+        - instance_type: "text_constant"
+          template: "Error(ErrorInfo.Create({{constant_name}}))"
+          requires_review: true
+      specialist: "eva-errors"
+      topic_id: "eva-errors/fielderror-method-syntax"
+
+completion_rules:
+  require_all_files: true
+  require_all_checklist_items: true
+  allow_skip_with_reason: true

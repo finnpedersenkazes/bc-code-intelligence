@@ -1,0 +1,160 @@
+type: "bc-version-upgrade"
+name: "BC Version Upgrade"
+description: "Upgrade Business Central codebase between major versions, handling breaking changes and deprecated features"
+specialist: "alex-architect"
+
+file_patterns:
+  - "**/*.al"
+  - "**/app.json"
+file_exclusions:
+  - "**/node_modules/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "inventory"
+    name: "File Inventory"
+    description: "Enumerate all AL files and identify current BC version"
+    required: true
+    mode: "autonomous"
+    available_actions:
+      - "read_app_json"
+      - "identify_bc_version"
+      - "list_files"
+
+  - id: "breaking_changes_scan"
+    name: "Breaking Changes Scan"
+    description: "Scan for patterns affected by breaking changes between versions"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "scan_deprecated_apis"
+      - "scan_removed_features"
+      - "scan_changed_behavior"
+
+  - id: "dependency_review"
+    name: "Dependency Review"
+    description: "Review app dependencies and verify compatibility with target version"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "check_dependencies"
+      - "check_runtime_version"
+      - "check_symbol_references"
+
+  - id: "migration_planning"
+    name: "Migration Planning"
+    description: "Create migration plan for breaking changes and deprecated features"
+    required: true
+    mode: "agent_driven"
+    entry_conditions:
+      - "breaking_changes_scan phase completed"
+      - "dependency_review phase completed"
+    available_actions:
+      - "prioritize_changes"
+      - "identify_workarounds"
+      - "create_migration_tasks"
+
+  - id: "code_migration"
+    name: "Code Migration"
+    description: "Apply migrations for deprecated/removed features"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "migration_planning phase completed"
+    available_actions:
+      - "migrate_file"
+      - "apply_transformation"
+      - "skip_migration"
+
+  - id: "verification"
+    name: "Verification"
+    description: "Compile and test migrated code against target version"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "code_migration phase completed"
+    available_actions:
+      - "compile_check"
+      - "run_tests"
+      - "validate_functionality"
+
+  - id: "summary"
+    name: "Migration Report"
+    description: "Generate migration summary with statistics and remaining issues"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "verification phase completed"
+
+per_file_checklist:
+  - id: "scan"
+    type: "analysis"
+    description: "Scan for version-specific patterns"
+    required: true
+
+  - id: "deprecated_check"
+    type: "pattern_instance"
+    description: "Check for deprecated API usage"
+    required: true
+
+  - id: "migration_complete"
+    type: "validation"
+    description: "File migrated to target version"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "find_bc_knowledge"
+  auto_expand_checklist: true
+  min_relevance_score: 0.6
+
+pattern_discovery:
+  enabled: true
+  create_instance_items: true
+  group_identical: true
+  specialist: "alex-architect"
+  patterns:
+    - id: "obsolete-attribute"
+      name: "Obsolete Attribute"
+      description: "Code marked as obsolete that may be removed in target version"
+      regex: "\\[Obsolete\\([^)]*\\)\\]"
+      regex_flags: "gi"
+      context_lines: 3
+      specialist: "alex-architect"
+
+    - id: "deprecated-no-series"
+      name: "Deprecated No. Series Pattern"
+      description: "Legacy No. Series implementation that should use BC24+ module"
+      regex: "NoSeriesMgt\\.(InitSeries|GetNextNo|SetDefaultSeries)"
+      regex_flags: "gi"
+      context_lines: 2
+      instance_classifier:
+        rules:
+          - name: "init_series"
+            pattern: "InitSeries"
+            suggested_action: "Migrate to NoSeries.GetNextNo() or AreRelated()"
+            auto_fixable: false
+          - name: "get_next_no"
+            pattern: "GetNextNo"
+            suggested_action: "Migrate to NoSeries.GetNextNo()"
+            auto_fixable: false
+      specialist: "dean-debug"
+      topic_id: "dean-debug/bc24-no-series-conversion-guide"
+
+    - id: "removed-codeunit-run"
+      name: "Deprecated Codeunit.Run Pattern"
+      description: "Codeunit.Run patterns that may have changed behavior"
+      regex: "Codeunit\\.Run\\s*\\([^)]+\\)"
+      regex_flags: "gi"
+      context_lines: 2
+      specialist: "eva-errors"
+      topic_id: "eva-errors/codeunit-run-pattern"
+
+completion_rules:
+  require_all_files: true
+  require_all_checklist_items: true
+  allow_skip_with_reason: true

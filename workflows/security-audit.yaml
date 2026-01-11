@@ -1,0 +1,139 @@
+type: "security-audit"
+name: "Security Audit"
+description: "Security review of AL code focusing on permissions, input validation, and data protection"
+specialist: "seth-security"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "inventory"
+    name: "File Inventory"
+    description: "Enumerate all AL files in scope"
+    required: true
+    mode: "autonomous"
+
+  - id: "permission_scan"
+    name: "Permission Analysis"
+    description: "Scan for permission-related code and validate permission sets"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "scan_permissions"
+      - "validate_permission_sets"
+      - "check_inherent_permissions"
+
+  - id: "input_validation"
+    name: "Input Validation Review"
+    description: "Check for proper validation of user inputs and external data"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "check_user_inputs"
+      - "check_api_inputs"
+      - "check_file_inputs"
+
+  - id: "data_protection"
+    name: "Data Protection Review"
+    description: "Review handling of sensitive data, credentials, and secrets"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "check_credentials"
+      - "check_pii_handling"
+      - "check_encryption"
+
+  - id: "temporary_table_review"
+    name: "Temporary Table Safety"
+    description: "Verify IsTemporary checks before bulk operations"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "inventory phase completed"
+    available_actions:
+      - "check_istemporary"
+      - "check_deleteall_safety"
+      - "check_modifyall_safety"
+
+  - id: "api_security"
+    name: "API Security Review"
+    description: "Review API endpoints for proper authentication and authorization"
+    required: false
+    mode: "guided"
+    entry_conditions:
+      - "permission_scan phase completed"
+    available_actions:
+      - "check_api_authentication"
+      - "check_api_authorization"
+      - "check_rate_limiting"
+
+  - id: "summary"
+    name: "Security Report"
+    description: "Generate security findings report with risk ratings"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "permission_scan phase completed"
+      - "input_validation phase completed"
+      - "data_protection phase completed"
+      - "temporary_table_review phase completed"
+
+per_file_checklist:
+  - id: "scan"
+    type: "analysis"
+    description: "Scan for security patterns"
+    required: true
+
+  - id: "permission_check"
+    type: "topic_application"
+    description: "Verify proper permission handling"
+    required: true
+    conditions:
+      content_pattern: "Permissions|InherentPermissions|TestPermissions"
+
+  - id: "input_validation_check"
+    type: "topic_application"
+    description: "Check input validation patterns"
+    required: true
+    conditions:
+      content_pattern: "Validate|TestField|FieldError"
+
+  - id: "istemporary_check"
+    type: "topic_application"
+    description: "Verify IsTemporary safeguards on bulk operations"
+    required: true
+    conditions:
+      content_pattern: "DeleteAll|ModifyAll"
+
+  - id: "credential_check"
+    type: "topic_application"
+    description: "Check for hardcoded credentials or secrets"
+    required: true
+    conditions:
+      content_pattern: "password|secret|token|apikey|credential"
+
+  - id: "security_complete"
+    type: "validation"
+    description: "Security review complete for this file"
+    required: true
+
+topic_discovery:
+  enabled: true
+  tool: "analyze_al_code"
+  auto_expand_checklist: true
+  min_relevance_score: 0.7
+
+completion_rules:
+  require_all_files: true
+  require_all_checklist_items: true
+  allow_skip_with_reason: true
