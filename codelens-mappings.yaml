@@ -1,0 +1,111 @@
+# CodeLens Pattern-to-Specialist Mappings
+# These patterns are matched against AL code to suggest relevant specialists
+
+mappings:
+  # Error handling -> Eva
+  - pattern: "\\bError\\s*\\("
+    specialist: eva-errors
+    label: "Ask Eva about ErrorInfo"
+
+  - pattern: "\\bMessage\\s*\\("
+    specialist: eva-errors
+    label: "Review messaging with Eva"
+
+  - pattern: "\\bFieldError\\s*\\("
+    specialist: eva-errors
+    label: "FieldError guidance from Eva"
+
+  - pattern: "\\bTestField\\s*\\("
+    specialist: eva-errors
+    label: "TestField patterns with Eva"
+
+  # Events and integration -> Jordan
+  - pattern: "OnBefore|OnAfter|\\[EventSubscriber"
+    specialist: jordan-bridge
+    label: "Review with Jordan"
+
+  - pattern: "HttpClient|WebServiceActionContext"
+    specialist: jordan-bridge
+    label: "Integration review with Jordan"
+
+  - pattern: "\\[IntegrationEvent"
+    specialist: jordan-bridge
+    label: "Event design with Jordan"
+
+  # Security -> Seth
+  - pattern: "TableData|RIMD|Permissions"
+    specialist: seth-security
+    label: "Security review with Seth"
+
+  - pattern: "\\[Scope\\s*\\("
+    specialist: seth-security
+    label: "Scope review with Seth"
+
+  - pattern: "\\[InherentPermissions"
+    specialist: seth-security
+    label: "InherentPermissions with Seth"
+
+  - pattern: "\\[InherentEntitlements"
+    specialist: seth-security
+    label: "Entitlements review with Seth"
+
+  # Testing -> Quinn
+  - pattern: "\\[Test\\]"
+    specialist: quinn-tester
+    label: "Ask Quinn about testing"
+
+  - pattern: "\\[TestPermissions"
+    specialist: quinn-tester
+    label: "Test permissions with Quinn"
+
+  - pattern: "\\[HandlerFunctions"
+    specialist: quinn-tester
+    label: "Handler functions with Quinn"
+
+  - pattern: "LibraryAssert|Assert\\."
+    specialist: quinn-tester
+    label: "Assertions with Quinn"
+
+  # Performance -> Dean
+  - pattern: "FindSet|FindFirst|ModifyAll"
+    specialist: dean-debug
+    label: "Performance review with Dean"
+
+  - pattern: "SetLoadFields|SetAutoCalcFields"
+    specialist: dean-debug
+    label: "SIFT/performance with Dean"
+
+  - pattern: "CalcFields|CalcSums"
+    specialist: dean-debug
+    label: "CalcFields optimization with Dean"
+
+  - pattern: "LogMessage|Session\\.LogMessage"
+    specialist: dean-debug
+    label: "Telemetry with Dean"
+
+  # Documentation -> Taylor
+  - pattern: "/// <summary>"
+    specialist: taylor-docs
+    label: "Documentation with Taylor"
+
+  - pattern: "/// <param"
+    specialist: taylor-docs
+    label: "Parameter docs with Taylor"
+
+  # Architecture -> Alex
+  - pattern: "codeunit \\d+|table \\d+"
+    specialist: alex-architect
+    label: "Architecture with Alex"
+
+  - pattern: "\\[Obsolete"
+    specialist: alex-architect
+    label: "Deprecation strategy with Alex"
+
+  - pattern: "interface "
+    specialist: alex-architect
+    label: "Interface design with Alex"
+
+  # Code quality -> Roger
+  - pattern: "procedure .+\\("
+    specialist: roger-reviewer
+    label: "Code review with Roger"
