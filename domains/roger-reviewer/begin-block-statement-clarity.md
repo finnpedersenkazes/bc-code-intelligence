@@ -5,6 +5,16 @@ difficulty: "beginner"
 bc_versions: "14+"
 tags: ["user-experience", "code-clarity", "begin-blocks", "developer-productivity", "code-comprehension"]
 prerequisites: ["al-syntax", "code-style"]
+
+relevance_signals:
+  constructs: ["begin", "end", "if", "then", "else", "while", "for", "repeat"]
+  keywords: ["begin block", "code clarity", "visual boundaries", "logical grouping", "scope clarity"]
+  anti_pattern_indicators: ["inconsistent block usage", "unclear boundaries", "unnecessary complexity", "missing logical grouping"]
+  positive_pattern_indicators: ["consistent application", "visual hierarchy", "purposeful grouping", "maintenance support"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 # Begin Block Statement Clarity for Developer Experience
 

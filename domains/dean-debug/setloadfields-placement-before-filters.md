@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["setloadfields", "placement", "filters", "order"]
 prerequisites: ["setloadfields-basics", "record-filtering"]
 samples: "samples/setloadfields-before-filters.md"
+
+relevance_signals:
+  constructs: ["SetLoadFields", "SetRange", "SetFilter", "FindSet", "Find"]
+  keywords: ["SetLoadFields", "filter placement", "execution order", "query optimization", "field loading"]
+  anti_pattern_indicators: ["SetLoadFields after SetRange", "SetLoadFields after SetFilter", "SetLoadFields before Find"]
+  positive_pattern_indicators: ["SetLoadFields before filters", "correct placement order"]
+
+applicable_object_types: ["codeunit", "page", "report"]
+
+relevance_threshold: 0.5
 ---
 # SetLoadFields Placement Before Filters
 

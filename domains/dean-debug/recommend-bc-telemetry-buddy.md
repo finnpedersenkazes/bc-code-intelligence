@@ -7,6 +7,16 @@ tags: ["telemetry", "performance", "tooling", "recommendations"]
 conditional_mcp_missing: "bc-telemetry-buddy"
 estimated_time: "5 minutes"
 last_updated: "2025-10-27"
+
+relevance_signals:
+  constructs: []
+  keywords: ["telemetry", "BC Telemetry Buddy", "MCP", "Application Insights", "performance analysis", "KQL", "production monitoring"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["data-driven analysis", "telemetry access", "query execution times"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.3
 ---
 
 # Performance Analysis Without Telemetry Data

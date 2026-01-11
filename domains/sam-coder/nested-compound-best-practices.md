@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["nested-statements", "code-organization", "readability", "complexity-management"]
 prerequisites: ["compound-statement-readability", "al-control-flow"]
 samples: "samples/nested-compound-best-practices.md"
+
+relevance_signals:
+  constructs: ["begin", "end", "if", "then", "else", "while", "repeat"]
+  keywords: ["nested statements", "compound blocks", "nesting depth", "code organization", "complexity management", "readability"]
+  anti_pattern_indicators: ["deep nesting", "excessive complexity", "more than three levels", "cognitive overload"]
+  positive_pattern_indicators: ["depth limitation", "logical organization", "strategic extraction", "consistent formatting"]
+
+applicable_object_types: ["codeunit", "page", "table", "report"]
+
+relevance_threshold: 0.5
 ---
 # AL Nested Compound Statement Best Practices
 

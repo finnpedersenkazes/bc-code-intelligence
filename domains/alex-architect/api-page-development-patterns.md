@@ -14,6 +14,16 @@ improvement_suggestion: "Use API pages for structured external system integratio
 implementation_steps: ["design-api-structure", "implement-field-exposure", "optimize-performance"]
 validation_criteria: ["odata-compliance", "security-integration", "performance-optimization"]
 technical_areas: ["al-code", "integration"]
+
+relevance_signals:
+  constructs: ["PageType = API", "EntityName", "EntitySetName", "ODataKeyFields"]
+  keywords: ["API page", "OData", "external integration", "business entity", "field exposure", "API contract", "JSON serialization", "REST endpoint"]
+  anti_pattern_indicators: ["direct table exposure", "internal field leakage", "incomplete entity", "breaking contract changes", "over-normalization"]
+  positive_pattern_indicators: ["business entity focus", "contract stability", "field exposure strategy", "API versioning", "selective field loading"]
+
+applicable_object_types: ["page"]
+
+relevance_threshold: 0.5
 ---
 
 # AL API Page Development Patterns

@@ -5,6 +5,16 @@ difficulty: "beginner"
 bc_versions: "14+"
 tags: ["formatting", "indentation", "code-style", "readability"]
 prerequisites: ["al-syntax"]
+
+relevance_signals:
+  constructs: ["var", "begin", "end", "procedure", "trigger", "if", "then", "else", "for", "while", "case"]
+  keywords: ["spacing", "indentation", "4-space", "white space", "code style", "formatting"]
+  anti_pattern_indicators: ["inconsistent indentation", "mixed tabs/spaces", "excessive blank lines", "cramped formatting"]
+  positive_pattern_indicators: ["consistent 4-space indentation", "logical grouping", "clear visual hierarchy"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 # AL Code Spacing and Indentation Conventions
 

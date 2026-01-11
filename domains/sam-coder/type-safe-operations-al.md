@@ -7,6 +7,16 @@ tags: ["type-safety", "compile-time-validation", "strong-typing", "error-prevent
 prerequisites: ["al-data-types", "variable-declaration", "procedure-design"]
 samples: "samples/type-safe-operations.md"
 related_topics: ["generic-method-patterns-al", "template-method-pattern-al"]
+
+relevance_signals:
+  constructs: ["Enum", "interface", "Option", "Record"]
+  keywords: ["type safety", "compile-time validation", "strong typing", "type-safe", "explicit type declarations", "enumeration"]
+  anti_pattern_indicators: ["over-engineering types", "implicit conversion", "type mismatch", "weak typing"]
+  positive_pattern_indicators: ["strongly-typed identifiers", "type-safe enumerations", "explicit type declarations", "compile-time checking"]
+
+applicable_object_types: ["codeunit", "table", "enum", "interface"]
+
+relevance_threshold: 0.5
 ---
 
 # Type-Safe Operations in AL

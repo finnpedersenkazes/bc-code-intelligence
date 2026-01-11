@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["shortcuts", "actions", "user-interface", "accessibility", "keyboard-navigation"]
 prerequisites: ["bc-actions", "page-design"]
+
+relevance_signals:
+  constructs: ["ShortcutKey", "ApplicationArea", "Promoted", "PromotedCategory", "ToolTip", "Caption"]
+  keywords: ["shortcut key", "keyboard shortcut", "action", "accessibility", "keyboard navigation", "Ctrl", "Alt", "Shift", "F-key", "modifier key"]
+  anti_pattern_indicators: ["conflicting assignments", "obscure combinations", "inconsistent patterns", "missing accessibility", "undocumented shortcuts"]
+  positive_pattern_indicators: ["intuitive mapping", "standard conventions", "conflict avoidance", "accessibility compliance", "tooltip inclusion"]
+
+applicable_object_types: ["page", "pageextension"]
+
+relevance_threshold: 0.4
 ---
 # Business Central Action Shortcut Key Syntax and Implementation
 

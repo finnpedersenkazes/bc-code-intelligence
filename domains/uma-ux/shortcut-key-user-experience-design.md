@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["user-experience", "shortcuts", "workflow-optimization", "productivity", "interface-design"]
 prerequisites: ["user-interface-design", "bc-actions"]
+
+relevance_signals:
+  constructs: ["ShortcutKey", "ToolTip", "Caption", "ApplicationArea", "Promoted"]
+  keywords: ["user experience", "shortcut", "workflow optimization", "productivity", "keyboard navigation", "progressive disclosure", "cognitive load", "discoverability", "power user"]
+  anti_pattern_indicators: ["overcomplex combinations", "hidden functionality", "inconsistent behavior", "conflict creation", "no visual feedback"]
+  positive_pattern_indicators: ["workflow analysis", "frequency-based prioritization", "memorable patterns", "visual cues", "help integration", "progressive revelation"]
+
+applicable_object_types: ["page", "pageextension"]
+
+relevance_threshold: 0.4
 ---
 # Shortcut Key User Experience Design in Business Central Applications
 

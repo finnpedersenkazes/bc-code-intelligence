@@ -14,6 +14,16 @@ improvement_suggestion: "Apply consistent spacing around AL comments to improve 
 implementation_steps: ["standardize-comment-spacing", "apply-consistent-patterns", "validate-readability"]
 validation_criteria: ["consistent-comment-spacing", "clear-documentation-separation"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["//"]
+  keywords: ["comment spacing", "documentation", "inline comment", "block comment", "comment delimiter"]
+  anti_pattern_indicators: ["inconsistent spacing", "cramped comments", "poor indentation in comments"]
+  positive_pattern_indicators: ["blank line before comments", "single space after delimiter", "consistent comment formatting"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Comment Spacing Standards

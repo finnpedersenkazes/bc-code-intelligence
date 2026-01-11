@@ -11,6 +11,16 @@ applies_to:
   - "AI-Assisted Development"
   - "Collaborative Workflows"
 last_updated: "2025-11-01"
+
+relevance_signals:
+  constructs: ["SetCurrentKey", "SetRange", "FindFirst", "FindSet", "Error"]
+  keywords: ["AI proposal", "proposal-based", "trust building", "verification", "specialist review", "temporary folder", "reviewable", "transparency", "confidence level"]
+  anti_pattern_indicators: ["direct changes", "over-confident", "no cleanup plan", "incomplete code", "vague proposal"]
+  positive_pattern_indicators: ["complete working example", "clear reasoning", "honest limitations", "specialist review", "cleanup instructions", "confidence rating"]
+
+applicable_object_types: ["codeunit", "table", "page", "report", "query"]
+
+relevance_threshold: 0.3
 ---
 
 # Creating Effective AI Proposals

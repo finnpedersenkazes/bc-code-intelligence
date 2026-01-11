@@ -7,6 +7,16 @@ tags: ["bc24-migration", "no-series-conversion", "legacy-modernization", "breaki
 prerequisites: ["no-series-implementation-patterns", "no-series-module-patterns-bc24", "business-foundation-architecture"]
 samples: "samples/bc24-no-series-conversion.md"
 related_topics: ["no-series-module-patterns-bc24", "no-series-validation-module-bc24", "no-series-implementation-patterns"]
+
+relevance_signals:
+  constructs: ["NoSeriesManagement", "NoSeriesMgt", "InitSeries", "GetNextNo", "PeekNextNo", "TestManual", "SelectSeries", "LookupRelatedNoSeries", "NoSeries", "NoSeriesBatch"]
+  keywords: ["BC24", "No. Series", "number generation", "migration", "conversion", "obsolete", "Business Foundation", "Codeunit 396", "Codeunit 310"]
+  anti_pattern_indicators: ["NoSeriesMgt.InitSeries", "NoSeriesMgt.GetNextNo", "Codeunit NoSeriesManagement"]
+  positive_pattern_indicators: ["NoSeries.GetNextNo", "NoSeries.PeekNextNo", "NoSeries.TestManual"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.6
 ---
 
 # BC24 No. Series Conversion Guide

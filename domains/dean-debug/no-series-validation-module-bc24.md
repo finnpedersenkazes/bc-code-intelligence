@@ -7,6 +7,16 @@ tags: ["no-series-validation", "business-foundation", "module-validation", "bc24
 prerequisites: ["no-series-module-patterns-bc24", "validation-frameworks", "business-foundation-architecture"]
 samples: "samples/no-series-validation-module-bc24.md"
 related_topics: ["no-series-module-patterns-bc24", "no-series-validation-patterns", "bc24-migration-patterns"]
+
+relevance_signals:
+  constructs: ["NoSeries", "IsValidNo", "TestManual", "AreRelated", "VerifySeriesExists", "TryGetNextNo", "NoSeriesBatch"]
+  keywords: ["BC24", "No. Series validation", "Business Foundation", "format validation", "series relationship", "error handling"]
+  anti_pattern_indicators: ["custom format checking", "manual relationship validation", "direct table validation"]
+  positive_pattern_indicators: ["IsValidNo", "AreRelated", "TestManual", "VerifySeriesExists"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.6
 ---
 
 # No. Series Validation Module Patterns (BC24+)

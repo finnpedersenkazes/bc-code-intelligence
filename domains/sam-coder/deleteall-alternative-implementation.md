@@ -5,6 +5,16 @@ difficulty: "advanced"
 bc_versions: "14+"
 tags: ["deleteall", "alternatives", "implementation", "patterns"]
 samples: "samples/deleteall-alternative-implementation.md"
+
+relevance_signals:
+  constructs: ["DeleteAll", "Delete", "OnDelete"]
+  keywords: ["DeleteAll alternative", "bulk delete", "SQL DELETE", "performance optimization", "custom deletion", "batch processing"]
+  anti_pattern_indicators: ["business logic neglect", "premature optimization", "incomplete implementation", "bypassing triggers incorrectly"]
+  positive_pattern_indicators: ["controlled business logic", "batch record processing", "optimized transaction boundaries", "hybrid approach"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.6
 ---
 # DeleteAll Alternative Implementation
 

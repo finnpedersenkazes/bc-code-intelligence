@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["deleteall", "data-manipulation", "triggers"]
 prerequisites: ["table-basics", "record-management"]
 samples: "samples/deleteall-usage.md"
+
+relevance_signals:
+  constructs: ["DeleteAll", "OnDelete", "Delete"]
+  keywords: ["DeleteAll", "bulk deletion", "data manipulation", "trigger execution", "data integrity", "cascade delete"]
+  anti_pattern_indicators: ["DeleteAll for performance", "bypassing OnDelete", "insufficient error handling", "assumed trigger bypass"]
+  positive_pattern_indicators: ["proper OnDelete triggers", "transaction management", "validation before delete", "appropriate filters"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.6
 ---
 # DeleteAll Method Usage
 

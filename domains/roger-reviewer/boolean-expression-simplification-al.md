@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["boolean-expressions", "code-simplification", "readability", "performance", "refactoring"]
 prerequisites: ["al-syntax-basics", "conditional-logic"]
 samples: "samples/boolean-simplification-examples.md"
+
+relevance_signals:
+  constructs: ["and", "or", "not", "if", "then", "else", "=", "<>", "true", "false"]
+  keywords: ["boolean simplification", "De Morgan", "short-circuit evaluation", "double negative", "positive logic", "guard clause"]
+  anti_pattern_indicators: ["double negatives", "redundant conditions", "complex nested conditions", "not (not Condition)"]
+  positive_pattern_indicators: ["simplified boolean", "positive expression", "early exit", "guard clause"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "pageextension", "tableextension"]
+
+relevance_threshold: 0.5
 ---
 
 # Boolean Expression Simplification in AL

@@ -13,6 +13,16 @@ improvement_suggestion: "Apply consistent variable naming conventions to enhance
 implementation_steps: ["establish-naming-standards", "apply-consistent-patterns", "validate-conventions"]
 validation_criteria: ["consistent-naming-application", "improved-readability"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["var", "Record", "Codeunit", "Page", "Report", "Boolean", "Text", "Integer", "Decimal"]
+  keywords: ["variable naming", "naming convention", "CamelCase", "Temp prefix", "Is/Has/Can prefix", "Mgt suffix"]
+  anti_pattern_indicators: ["generic names", "misleading abbreviations", "type prefixes", "inconsistent casing", "Hungarian notation"]
+  positive_pattern_indicators: ["descriptive names", "consistent naming pattern", "business terms", "clear intent"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Variable Naming Conventions

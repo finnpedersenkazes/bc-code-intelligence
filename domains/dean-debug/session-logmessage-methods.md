@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["telemetry", "logging", "session", "performance"]
 prerequisites: ["telemetry-basics"]
 samples: "samples/logmessage-methods.md"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "Verbosity", "DataClassification", "TelemetryScope", "Dictionary"]
+  keywords: ["LogMessage", "telemetry", "verbosity", "correlation", "custom dimensions", "Application Insights"]
+  anti_pattern_indicators: ["high-verbosity in production", "excessive logging", "missing correlation"]
+  positive_pattern_indicators: ["appropriate verbosity", "structured dimensions", "correlation identifiers"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 # BC Session LogMessage Methods
 

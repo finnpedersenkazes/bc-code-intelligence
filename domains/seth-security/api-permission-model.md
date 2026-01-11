@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["api-permissions", "access-control", "security"]
 samples: "samples/api-permission-model.md"
+
+relevance_signals:
+  constructs: ["APIPublisher", "APIGroup", "APIVersion", "ODataKeyFields", "EntityName", "EntitySetName", "Permissions", "TableData"]
+  keywords: ["API page", "OData", "permission model", "access control", "service account", "authentication", "authorization", "field-level security", "tenant isolation", "compliance", "audit"]
+  anti_pattern_indicators: ["missing permissions", "no authentication", "unprotected API", "exposed sensitive fields", "bypass security"]
+  positive_pattern_indicators: ["least privilege", "defense in depth", "permission sets", "field permissions", "audit trail", "service account", "OAuth"]
+
+applicable_object_types: ["page", "permissionset", "codeunit"]
+
+relevance_threshold: 0.7
 ---
 # API Page Permission Model
 

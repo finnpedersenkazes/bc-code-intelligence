@@ -11,6 +11,16 @@ applies_to:
   - "AI-Assisted Development"
   - "Team Collaboration"
 last_updated: "2025-11-01"
+
+relevance_signals:
+  constructs: ["SetCurrentKey", "SetRange", "FindFirst"]
+  keywords: ["AI skepticism", "trust building", "transparency", "verification", "proposal", "control", "collaboration", "confidence level", "specialist validation", "learning"]
+  anti_pattern_indicators: ["rush trust building", "hide limitations", "dismiss skepticism", "autonomous changes", "over-promise"]
+  positive_pattern_indicators: ["explain reasoning", "provide evidence", "invite validation", "acknowledge uncertainty", "gradual trust", "proposal-based"]
+
+applicable_object_types: ["codeunit", "table", "page", "report", "query"]
+
+relevance_threshold: 0.3
 ---
 
 # Working with AI-Skeptical Developers

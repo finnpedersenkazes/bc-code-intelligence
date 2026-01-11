@@ -14,6 +14,16 @@ improvement_suggestion: "Position AL keywords at line start with consistent alig
 implementation_steps: ["identify-keyword-patterns", "apply-positioning-rules", "validate-alignment"]
 validation_criteria: ["consistent-keyword-positioning", "clear-structure-indication"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["if", "else", "begin", "end", "var", "procedure", "while", "for", "case"]
+  keywords: ["line start", "keyword positioning", "keyword anchoring", "structure markers", "visual structure"]
+  anti_pattern_indicators: ["inconsistent keyword alignment", "mid-line keyword placement", "random positioning"]
+  positive_pattern_indicators: ["line start positioning", "consistent alignment", "clear structure indication"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Line Start Keyword Positioning

@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["setloadfields", "case-statements", "conditional-logic", "advanced"]
 prerequisites: ["setloadfields-placement-before-filters", "case-statement-patterns"]
 samples: "samples/setloadfields-before-case.md"
+
+relevance_signals:
+  constructs: ["SetLoadFields", "case", "of"]
+  keywords: ["SetLoadFields", "case statement", "conditional processing", "field loading", "execution path", "multi-path optimization"]
+  anti_pattern_indicators: ["loading all fields upfront", "SetLoadFields after case evaluation"]
+  positive_pattern_indicators: ["common fields before case", "conditional field loading", "path-specific loading"]
+
+applicable_object_types: ["codeunit", "page", "report"]
+
+relevance_threshold: 0.5
 ---
 # SetLoadFields Placement Before Case Statements
 

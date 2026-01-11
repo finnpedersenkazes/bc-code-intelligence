@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["code-formatting", "repeat-statement", "readability", "code-standards"]
 prerequisites: ["al-syntax-basics", "control-structures"]
 samples: "samples/lonely-repeat-examples.md"
+
+relevance_signals:
+  constructs: ["repeat", "until"]
+  keywords: ["lonely repeat", "repeat formatting", "until alignment", "loop structure", "visual connection"]
+  anti_pattern_indicators: ["isolated repeat", "misaligned until", "extra blank lines in repeat block"]
+  positive_pattern_indicators: ["connected repeat block", "aligned until keyword", "consistent indentation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # Lonely Repeat Statement Pattern

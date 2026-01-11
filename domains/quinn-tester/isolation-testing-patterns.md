@@ -9,6 +9,16 @@ related_topics:
   - "../alex-architect/testability-design-patterns.md"
   - "../roger-reviewer/testability-code-smells.md"
 source: "Adapted from Vjeko.com: Testing in isolation (Dec 2023)"
+
+relevance_signals:
+  constructs: ["Interface", "Codeunit", "procedure"]
+  keywords: ["test double", "mock", "stub", "spy", "dummy", "isolation", "dependency injection", "unit testing", "test"]
+  anti_pattern_indicators: ["flaky test", "slow test", "database dependency in test"]
+  positive_pattern_indicators: ["test isolation", "mock implementation", "test double", "dependency injection"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 # Isolation Testing Patterns with Test Doubles
 

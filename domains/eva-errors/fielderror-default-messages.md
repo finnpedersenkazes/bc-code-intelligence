@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["fielderror", "default-messages", "field-state", "error-text"]
 samples: "samples/fielderror-default-messages.md"
+
+relevance_signals:
+  constructs: ["FieldError", "FieldCaption", "TableCaption", "PrimaryKey"]
+  keywords: ["FieldError", "default message", "field caption", "must have a value", "is not valid", "record context"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["FieldError without message", "automatic message", "field state detection", "localized caption"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.4
 ---
 # FieldError Default Message Logic
 

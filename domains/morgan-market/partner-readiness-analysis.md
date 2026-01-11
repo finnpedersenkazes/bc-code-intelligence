@@ -10,6 +10,16 @@ related_topics:
   - "../alex-architect/api-interface-design-patterns.md"
   - "../dean-debug/telemetry-fundamentals.md"
   - "../seth-security/access-modifier-strategy.md"
+
+relevance_signals:
+  constructs: ["IntegrationEvent", "BusinessEvent", "InternalEvent", "Access", "ObsoleteState", "ObsoleteReason", "LogMessage", "Session"]
+  keywords: ["AppSource", "partner readiness", "extensibility", "telemetry", "access modifiers", "events", "ISV", "PTE", "public API", "versioning", "upgrade codeunit", "migration"]
+  anti_pattern_indicators: ["insufficient events", "undocumented events", "everything public", "no deprecation", "missing telemetry", "verbose logging"]
+  positive_pattern_indicators: ["event architecture", "proper telemetry", "access modifier strategy", "interface architecture", "documentation", "versioning strategy"]
+
+applicable_object_types: ["codeunit", "table", "page", "interface", "permissionset"]
+
+relevance_threshold: 0.5
 ---
 # Partner Readiness Analysis for AppSource Apps
 

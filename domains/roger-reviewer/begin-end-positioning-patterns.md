@@ -14,6 +14,16 @@ improvement_suggestion: "Use consistent begin/end positioning for improved code 
 implementation_steps: ["establish-team-standards", "configure-formatting-tools", "apply-consistently"]
 validation_criteria: ["consistent-positioning", "improved-readability", "team-adoption"]
 technical_areas: ["al-code", "formatting"]
+
+relevance_signals:
+  constructs: ["begin", "end", "procedure", "trigger"]
+  keywords: ["begin positioning", "end positioning", "block boundaries", "visual structure", "nesting visualization"]
+  anti_pattern_indicators: ["mixed positioning", "context-dependent formatting", "excessive compaction", "unclear boundaries"]
+  positive_pattern_indicators: ["consistent positioning", "logical grouping", "debugging support", "team standards"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # Begin/End Positioning in AL Code

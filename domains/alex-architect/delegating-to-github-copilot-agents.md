@@ -13,6 +13,16 @@ applies_to:
   - "Issue Management"
   - "AI-Assisted Development"
 last_updated: "2025-10-26"
+
+relevance_signals:
+  constructs: []
+  keywords: ["GitHub Copilot", "Copilot Agent", "issue creation", "task delegation", "AI workflow", "object ID", "naming conventions", "acceptance criteria", "context management"]
+  anti_pattern_indicators: ["vague requirements", "missing object IDs", "no naming standards", "ignoring layer context"]
+  positive_pattern_indicators: ["object identity specification", "naming conventions documentation", "BC architecture context", "data model definition", "API requirements", "test requirements", "acceptance criteria"]
+
+applicable_object_types: ["table", "page", "codeunit", "report", "query", "tableextension", "pageextension", "enum", "permissionset"]
+
+relevance_threshold: 0.3
 ---
 
 # Delegating Coding Tasks to GitHub Copilot Agents

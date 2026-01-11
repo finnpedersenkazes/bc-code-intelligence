@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["error-prevention", "table-safety", "validation", "defensive-programming", "data-protection"]
 prerequisites: ["error-handling", "al-tables"]
 samples: "samples/table-safety-validation-patterns.md"
+
+relevance_signals:
+  constructs: ["IsTemporary", "Error", "TestField", "FieldError"]
+  keywords: ["defensive programming", "error prevention", "validation", "precondition", "data protection", "fail-fast"]
+  anti_pattern_indicators: ["validation bypass", "generic error handling", "late validation", "skip safety check"]
+  positive_pattern_indicators: ["safety validation", "precondition check", "defensive programming", "error prevention"]
+
+applicable_object_types: ["table", "codeunit"]
+
+relevance_threshold: 0.5
 ---
 # Table Safety Validation Patterns for Error Prevention
 

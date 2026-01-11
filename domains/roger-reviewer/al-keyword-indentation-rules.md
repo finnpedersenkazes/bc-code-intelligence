@@ -14,6 +14,16 @@ improvement_suggestion: "Apply consistent indentation rules for AL keywords to c
 implementation_steps: ["define-indentation-standards", "apply-keyword-rules", "validate-consistency"]
 validation_criteria: ["consistent-keyword-indentation", "clear-code-hierarchy"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["if", "else", "while", "for", "case", "begin", "end", "var", "procedure", "trigger", "table", "page", "codeunit"]
+  keywords: ["keyword indentation", "indentation hierarchy", "nesting level", "visual hierarchy", "code structure"]
+  anti_pattern_indicators: ["inconsistent indentation increments", "misaligned begin/end pairs", "random keyword positioning"]
+  positive_pattern_indicators: ["consistent increment size", "aligned block keywords", "scope reflection through indentation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Keyword Indentation Rules

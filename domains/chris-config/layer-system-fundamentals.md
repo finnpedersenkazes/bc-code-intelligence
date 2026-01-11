@@ -12,6 +12,16 @@ applies_to:
   - "BC Code Intelligence MCP Server"
   - "Knowledge Layer Architecture"
 last_updated: "2025-10-27"
+
+relevance_signals:
+  constructs: []
+  keywords: ["layer", "priority", "embedded", "git layer", "project layer", "override", "knowledge architecture", "four-layer", "layer resolution"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["layer system", "knowledge layer", "layer priority", "layer override", "embedded knowledge"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.4
 ---
 
 # Layer System Fundamentals

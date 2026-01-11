@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["fielderror", "testfield", "validation", "error-handling", "method-comparison", "decision-making", "field-validation"]
 prerequisites: ["fielderror-syntax-usage", "testfield-basic-syntax"]
 related_topics: ["validation-patterns", "error-handling-strategies", "field-validation"]
+
+relevance_signals:
+  constructs: ["FieldError", "TestField", "Error", "OnValidate"]
+  keywords: ["fielderror", "testfield", "validation", "comparison", "decision", "method choice", "error handling"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["FieldError vs TestField", "when to use FieldError", "when to use TestField", "validation method choice"]
+
+applicable_object_types: ["table", "codeunit", "page"]
+
+relevance_threshold: 0.4
 ---
 # FieldError vs TestField Decision Guide
 

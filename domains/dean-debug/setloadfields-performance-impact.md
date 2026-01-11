@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["performance", "memory-optimization", "data-loading", "setloadfields"]
 samples: "samples/setloadfields-performance.md"
+
+relevance_signals:
+  constructs: ["SetLoadFields", "FindSet", "Find", "Get"]
+  keywords: ["SetLoadFields", "partial loading", "memory optimization", "field count", "blob field", "batch processing"]
+  anti_pattern_indicators: ["loading all fields", "accessing non-loaded fields", "overuse on small tables"]
+  positive_pattern_indicators: ["selective field loading", "less than 30% fields", "batch optimization"]
+
+applicable_object_types: ["codeunit", "page", "report"]
+
+relevance_threshold: 0.5
 ---
 
 # SetLoadFields Partial Loading Performance Impact

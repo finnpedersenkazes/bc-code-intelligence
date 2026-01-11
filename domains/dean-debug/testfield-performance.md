@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["performance", "validation", "optimization", "best-practices"]
 prerequisites: ["testfield-basic-syntax", "performance-fundamentals"]
+
+relevance_signals:
+  constructs: ["TestField", "FieldError"]
+  keywords: ["TestField", "validation", "performance", "batch processing", "error handling", "loop optimization"]
+  anti_pattern_indicators: ["TestField in tight loop without optimization", "excessive validation failures"]
+  positive_pattern_indicators: ["conditional validation", "early exit", "grouped validation", "TryFunction pattern"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.4
 ---
 # TestField Performance Optimization
 

@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["refactoring", "compound-statements", "code-conversion", "development-workflow"]
 prerequisites: ["al-syntax-basics", "compound-statement-readability"]
 samples: "samples/single-to-compound-conversion.md"
+
+relevance_signals:
+  constructs: ["begin", "end", "if", "then", "else", "while", "repeat"]
+  keywords: ["refactoring", "compound statements", "code conversion", "begin-end blocks", "single statement", "future-proofing"]
+  anti_pattern_indicators: ["single statement without begin-end", "if-then without block", "inconsistent patterns"]
+  positive_pattern_indicators: ["compound block structure", "explicit begin-end", "consistent refactoring", "safe transformation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report"]
+
+relevance_threshold: 0.4
 ---
 # Converting AL Single Statements to Compound Blocks
 

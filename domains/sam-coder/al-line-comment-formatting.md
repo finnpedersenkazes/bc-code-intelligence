@@ -5,6 +5,16 @@ difficulty: "beginner"
 bc_versions: "14+"
 tags: ["comments", "code-quality", "readability", "maintainability"]
 prerequisites: ["al-basics"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["comments", "documentation", "readability", "line comment", "inline comment", "code documentation"]
+  anti_pattern_indicators: ["commenting obvious code", "excessive commenting", "outdated information", "poor grammar"]
+  positive_pattern_indicators: ["explains why", "business context", "edge cases", "performance notes"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "enum", "interface"]
+
+relevance_threshold: 0.4
 ---
 # AL Line Comment Formatting and Placement Patterns
 

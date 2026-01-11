@@ -14,6 +14,16 @@ improvement_suggestion: "Use proper begin/end block structure for maintainable A
 implementation_steps: ["understand-block-types", "apply-nesting-rules", "maintain-indentation"]
 validation_criteria: ["proper-block-nesting", "consistent-indentation", "clear-trigger-structure"]
 technical_areas: ["al-code", "syntax"]
+
+relevance_signals:
+  constructs: ["begin", "end", "trigger", "procedure", "if", "then", "else", "case", "while", "for", "try", "catch"]
+  keywords: ["block structure", "nesting", "indentation", "scope", "trigger", "procedure body", "control structure"]
+  anti_pattern_indicators: ["mismatched begin/end", "inconsistent indentation", "excessive nesting", "empty blocks"]
+  positive_pattern_indicators: ["proper block nesting", "consistent indentation", "clear trigger structure"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Begin/End Block Structure Conventions

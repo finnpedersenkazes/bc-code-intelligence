@@ -13,6 +13,16 @@ improvement_suggestion: "Properly pair end statements with else clauses to maint
 implementation_steps: ["identify-block-boundaries", "align-end-else-pairs", "validate-structure"]
 validation_criteria: ["correct-end-else-pairing", "clear-block-boundaries"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["if", "then", "else", "begin", "end"]
+  keywords: ["end else", "block structure", "conditional pairing", "scope closure", "syntax correctness"]
+  anti_pattern_indicators: ["missing end statements", "improper block closure", "ambiguous pairing"]
+  positive_pattern_indicators: ["close blocks completely before else", "aligned end-else pairs", "consistent indentation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.5
 ---
 
 # AL End Else Pairing

@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["validation", "business-rules", "data-integrity"]
 samples: "samples/rule-execution.md"
+
+relevance_signals:
+  constructs: ["OnValidate", "Error", "FieldError", "TestField"]
+  keywords: ["API", "OData", "validation", "business rules", "data integrity", "HTTP", "batch processing"]
+  anti_pattern_indicators: ["validation bypass", "API error", "validation performance issue"]
+  positive_pattern_indicators: ["API validation", "rule execution", "OData validation", "field validation"]
+
+applicable_object_types: ["page", "table", "codeunit"]
+
+relevance_threshold: 0.5
 ---
 # API Page Validation Rule Execution
 

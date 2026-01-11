@@ -8,6 +8,16 @@ samples: "samples/try-function-usage.md"
 related_topics:
   - "codeunit-run-pattern.md"
   - "testfield-error-handling.md"
+
+relevance_signals:
+  constructs: ["TryFunction", "GetLastErrorText", "ClearLastError", "HttpClient", "HttpResponseMessage"]
+  keywords: ["try function", "error handling", "external system", "HTTP call", "validation without termination", "read-only operation"]
+  anti_pattern_indicators: ["database write inside try", "INSERT inside try", "MODIFY inside try", "DELETE inside try", "suppressing errors"]
+  positive_pattern_indicators: ["external service wrapper", "error detection", "graceful failure", "web service call"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.6
 ---
 # Try Function Usage Guidelines
 

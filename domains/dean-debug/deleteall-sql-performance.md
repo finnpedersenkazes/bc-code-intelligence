@@ -14,6 +14,16 @@ improvement_suggestion: "Use DeleteAll for bulk deletions to leverage SQL DELETE
 implementation_steps: ["identify-bulk-deletion-scenarios", "replace-iterative-loops", "validate-event-dependencies"]
 validation_criteria: ["performance-benchmarks", "event-dependency-analysis"]
 technical_areas: ["al-code", "database"]
+
+relevance_signals:
+  constructs: ["DeleteAll", "Delete", "OnDelete"]
+  keywords: ["DeleteAll", "SQL DELETE", "bulk operation", "performance", "bypass triggers", "database operation"]
+  anti_pattern_indicators: ["loop delete", "iterative deletion for bulk", "Delete in loop"]
+  positive_pattern_indicators: ["DeleteAll for bulk", "single SQL DELETE", "filter before DeleteAll"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.5
 ---
 
 # DeleteAll SQL Translation and Performance Impact

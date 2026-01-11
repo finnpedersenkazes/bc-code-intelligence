@@ -10,6 +10,16 @@ related_topics:
   - "../roger-reviewer/testability-code-smells.md"
   - "api-interface-design-patterns.md"
 source: "Adapted from Vjeko.com: Testing in isolation (Dec 2023)"
+
+relevance_signals:
+  constructs: ["interface", "implements"]
+  keywords: ["testability", "dependency injection", "interface abstraction", "decoupling", "isolation testing", "test double", "mock", "tight coupling", "dependency", "substitution"]
+  anti_pattern_indicators: ["tight coupling", "direct dependency", "setup switch", "configuration-driven branching", "cannot test in isolation"]
+  positive_pattern_indicators: ["interface abstraction", "dependency injection", "backward compatible overload", "test double", "decoupled design", "injectable dependency"]
+
+applicable_object_types: ["codeunit", "interface"]
+
+relevance_threshold: 0.5
 ---
 # Designing Code for Testability in Isolation
 

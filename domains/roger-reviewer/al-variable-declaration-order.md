@@ -14,6 +14,16 @@ implementation_steps: ["establish-declaration-order", "group-related-variables",
 validation_criteria: ["consistent-declaration-order", "improved-organization"]
 technical_areas: ["al-code"]
 samples: "samples/al-variable-declaration-order.md"
+
+relevance_signals:
+  constructs: ["var", "Record", "Codeunit", "Page", "Report", "Text", "Integer", "Decimal", "Boolean", "Dialog", "File"]
+  keywords: ["variable declaration", "declaration order", "variable grouping", "scope organization", "type ordering"]
+  anti_pattern_indicators: ["random ordering", "mixed types", "no grouping", "inconsistent patterns"]
+  positive_pattern_indicators: ["logical grouping", "related variables together", "consistent declaration order"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Variable Declaration Order

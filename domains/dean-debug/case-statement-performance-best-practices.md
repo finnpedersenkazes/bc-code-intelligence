@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["case", "performance", "optimization", "control-flow"]
 prerequisites: ["case-statement-syntax", "performance-fundamentals"]
 samples: "samples/case-performance-optimization.md"
+
+relevance_signals:
+  constructs: ["case", "of", "else"]
+  keywords: ["case statement", "control flow", "branch", "jump table", "branch prediction", "performance optimization"]
+  anti_pattern_indicators: ["nested case", "complex case expression", "resource-heavy branch"]
+  positive_pattern_indicators: ["branch frequency ordering", "early exit", "simple expression"]
+
+applicable_object_types: ["codeunit", "page", "report", "table"]
+
+relevance_threshold: 0.4
 ---
 # Case Statement Performance and Best Practices
 

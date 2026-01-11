@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["telemetry", "verbosity", "production", "diagnostics"]
 prerequisites: ["bc-session-logmessage-methods"]
 samples: "samples/verbosity-strategy.md"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "Verbosity"]
+  keywords: ["verbosity", "telemetry", "Critical", "Error", "Warning", "Normal", "Verbose", "production strategy", "diagnostic"]
+  anti_pattern_indicators: ["Verbose in production", "missing verbosity filtering", "excessive telemetry volume"]
+  positive_pattern_indicators: ["appropriate verbosity levels", "dynamic adjustment", "baseline configuration"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.4
 ---
 # Telemetry Verbosity Strategy
 

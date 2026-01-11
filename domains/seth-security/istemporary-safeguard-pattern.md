@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["data-protection", "temporary-tables", "safeguards", "data-integrity", "error-prevention"]
 prerequisites: ["al-tables", "data-access-patterns"]
+
+relevance_signals:
+  constructs: ["IsTemporary", "DeleteAll", "ModifyAll", "Insert", "Delete", "Modify", "Error"]
+  keywords: ["temporary table", "safeguard", "data protection", "bulk operation", "validation gate", "error prevention", "permanent table", "database safety"]
+  anti_pattern_indicators: ["skipping validation", "silent failure", "late validation", "generic error handling", "bypassing IsTemporary check"]
+  positive_pattern_indicators: ["early validation", "clear error messages", "conditional operations", "defensive programming", "precondition check"]
+
+applicable_object_types: ["codeunit", "table", "page", "report"]
+
+relevance_threshold: 0.7
 ---
 # IsTemporary Table Safeguard Pattern for Data Protection
 

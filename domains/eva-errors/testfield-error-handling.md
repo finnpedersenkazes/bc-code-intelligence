@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["error-handling", "validation", "user-experience", "custom-messages"]
 prerequisites: ["testfield-basic-syntax", "error-handling-fundamentals"]
 samples: "samples/testfield-error-handling.md"
+
+relevance_signals:
+  constructs: ["TestField", "TryFunction", "Error", "GetLastErrorText"]
+  keywords: ["TestField", "error handling", "custom message", "validation", "try function", "batch processing", "error aggregation"]
+  anti_pattern_indicators: ["suppressing legitimate errors", "ignoring validation failures"]
+  positive_pattern_indicators: ["TryFunction wrapper", "custom validation", "aggregated errors", "progressive validation"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.5
 ---
 # TestField Error Handling and Custom Messages
 

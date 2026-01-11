@@ -13,6 +13,16 @@ improvement_suggestion: "Optimize AL code readability through strategic formatti
 implementation_steps: ["analyze-readability-factors", "apply-optimization-techniques", "validate-improvement"]
 validation_criteria: ["improved-code-readability", "reduced-cognitive-load"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["readability", "cognitive load", "code comprehension", "visual hierarchy", "naming clarity", "logical organization"]
+  anti_pattern_indicators: ["dense code blocks", "unclear naming", "random organization", "inconsistent patterns", "unnecessary complexity"]
+  positive_pattern_indicators: ["clear visual hierarchy", "logical grouping", "strategic white space", "meaningful naming", "progressive complexity"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "enum", "interface"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Readability Optimization

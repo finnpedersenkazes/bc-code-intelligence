@@ -7,6 +7,16 @@ tags: ["fielderror", "error-messages", "user-experience", "localization", "messa
 prerequisites: ["fielderror-syntax-usage", "text-constants", "label-variables"]
 samples: "samples/fielderror-message-construction.md"
 related_topics: ["localization-patterns", "user-feedback-design", "validation-error-handling"]
+
+relevance_signals:
+  constructs: ["FieldError", "Label", "FieldCaption", "TableCaption"]
+  keywords: ["FieldError", "message construction", "custom message", "localization", "field context", "validation feedback"]
+  anti_pattern_indicators: ["uppercase custom message", "redundant context", "missing business context"]
+  positive_pattern_indicators: ["Label variable", "lowercase message text", "actionable guidance", "localized message"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.4
 ---
 # FieldError Message Construction Patterns
 

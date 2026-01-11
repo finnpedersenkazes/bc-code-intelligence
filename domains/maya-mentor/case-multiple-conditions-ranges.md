@@ -9,6 +9,16 @@ tags: ["case", "ranges", "multiple-values", "advanced-patterns", "conditional-lo
 prerequisites: ["case-statement-syntax", "data-types", "operators"]
 related_topics: ["case-statement-syntax", "case-performance", "numeric-operations"]
 samples: "samples/case-statement-multiple-conditions.md"
+
+relevance_signals:
+  constructs: ["case", "of", "else", "end"]
+  keywords: ["case statement", "range", "multiple values", "dotdot", "conditional logic", "branching", "pattern matching"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["case multiple values", "case range", "comma-separated values", "dotdot operator"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query"]
+
+relevance_threshold: 0.4
 ---
 # Case Statement Multiple Conditions and Ranges
 

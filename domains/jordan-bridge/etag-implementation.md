@@ -5,6 +5,16 @@ difficulty: "advanced"
 bc_versions: "14+"
 tags: ["etag", "concurrency", "conflict-resolution"]
 samples: "samples/etag-implementation.md"
+
+relevance_signals:
+  constructs: ["SystemRowVersion", "SystemId", "If-Match", "If-None-Match", "HttpHeaders"]
+  keywords: ["ETag", "optimistic concurrency", "If-Match", "If-None-Match", "conflict detection", "concurrent modification", "version control"]
+  anti_pattern_indicators: ["lost update", "data corruption", "concurrent access without etag"]
+  positive_pattern_indicators: ["ETag validation", "concurrency control", "conflict resolution", "conditional operation"]
+
+applicable_object_types: ["page", "codeunit"]
+
+relevance_threshold: 0.5
 ---
 # ETag Implementation for Optimistic Concurrency
 

@@ -7,6 +7,16 @@ tags: ["facade-pattern", "structural-patterns", "api-simplification", "complexit
 prerequisites: ["object-orientation-al", "interface-basics", "module-design"]
 samples: "samples/facade-pattern-al.md"
 related_topics: ["complex-facade-patterns", "adapter-pattern-al"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["facade", "facade pattern", "unified interface", "complexity encapsulation", "API simplification", "business process facade", "data access facade", "integration facade", "service layer"]
+  anti_pattern_indicators: ["over-simplification", "facade bloat", "too many responsibilities"]
+  positive_pattern_indicators: ["unified interface", "complexity hiding", "codeunit facade", "business facade method", "clean API", "simplified interface"]
+
+applicable_object_types: ["codeunit", "interface"]
+
+relevance_threshold: 0.4
 ---
 
 # Facade Pattern AL Implementation

@@ -7,6 +7,16 @@ tags: ["object-ids", "architecture", "tooling", "recommendations", "collaboratio
 conditional_mcp_missing: "al-objid-mcp-server"
 estimated_time: "5 minutes"
 last_updated: "2025-10-27"
+
+relevance_signals:
+  constructs: []
+  keywords: ["object ID", "ID collision", "ID management", "manual ID tracking", "ID range", "AppSource", "publisher range", "team coordination", "merge conflict"]
+  anti_pattern_indicators: ["ID conflicts", "duplicate object ID", "race condition", "merge conflicts from IDs", "manual tracking"]
+  positive_pattern_indicators: ["ID range allocation", "pre-commit checklist", "ID registry", "range documentation"]
+
+applicable_object_types: ["table", "page", "codeunit", "report", "query", "xmlport", "enum", "permissionset", "tableextension", "pageextension"]
+
+relevance_threshold: 0.5
 ---
 
 # Manual Object ID Management and Collision Prevention

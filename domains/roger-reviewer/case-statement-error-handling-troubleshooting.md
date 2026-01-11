@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["case", "error-handling", "troubleshooting", "debugging"]
 samples: "samples/case-error-handling.md"
+
+relevance_signals:
+  constructs: ["case", "of", "else", "end", "Error", "Message"]
+  keywords: ["case error handling", "unhandled values", "else clause", "error message", "defensive programming", "graceful degradation"]
+  anti_pattern_indicators: ["missing else clause", "silent failures", "generic error messages", "no input validation"]
+  positive_pattern_indicators: ["mandatory else clause", "informative error messages", "input validation before case", "graceful degradation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "pageextension", "tableextension"]
+
+relevance_threshold: 0.6
 ---
 # Case Statement Error Handling and Troubleshooting
 

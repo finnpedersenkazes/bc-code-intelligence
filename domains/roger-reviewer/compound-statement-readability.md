@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["readability", "compound-statements", "code-style", "maintainability"]
 prerequisites: ["al-syntax-basics"]
 samples: "samples/compound-statement-readability.md"
+
+relevance_signals:
+  constructs: ["begin", "end", "if", "then", "else", "while", "for", "repeat", "until"]
+  keywords: ["compound statement", "begin-end block", "visual structure", "intent communication", "code consistency"]
+  anti_pattern_indicators: ["inconsistent block usage", "single statement without begin/end", "unclear scope"]
+  positive_pattern_indicators: ["consistent begin-end usage", "explicit block structure", "visual boundaries"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 # AL Compound Statement Readability Patterns
 

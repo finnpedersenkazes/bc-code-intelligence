@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["telemetry", "extensions", "isolation", "multi-tenancy"]
 prerequisites: ["custom-dimensions-best-practices"]
 samples: "samples/extension-isolation.md"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "Dictionary"]
+  keywords: ["extension telemetry", "isolation", "multi-tenant", "publisher", "namespace", "App ID", "cross-extension"]
+  anti_pattern_indicators: ["dimension name conflict", "missing extension identifier"]
+  positive_pattern_indicators: ["extension identification", "namespace separation", "tenant isolation"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.4
 ---
 # Extension Telemetry Isolation
 

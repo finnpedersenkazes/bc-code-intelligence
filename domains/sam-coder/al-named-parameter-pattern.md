@@ -14,6 +14,16 @@ implementation_steps: ["identify-complex-calls", "create-descriptive-variables",
 validation_criteria: ["improved-call-clarity", "reduced-parameter-errors"]
 technical_areas: ["al-code"]
 samples: "samples/al-named-parameter-pattern.md"
+
+relevance_signals:
+  constructs: []
+  keywords: ["named parameters", "parameter object", "procedure calls", "descriptive variables", "self-documenting", "parameter ordering"]
+  anti_pattern_indicators: ["magic numbers", "parameter soup", "type confusion", "inconsistent ordering", "literal values without names"]
+  positive_pattern_indicators: ["descriptive variable names", "parameter object", "logical grouping", "clear parameter purpose"]
+
+applicable_object_types: ["codeunit", "page", "table", "report"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Named Parameter Pattern

@@ -13,6 +13,16 @@ improvement_suggestion: "Use only Microsoft-approved abbreviations to maintain c
 implementation_steps: ["verify-platform-abbreviations", "apply-standard-patterns", "validate-consistency"]
 validation_criteria: ["platform-compliant-abbreviations", "consistent-usage"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["abbreviation", "No.", "Qty", "Amt", "Desc", "LCY", "FCY", "G/L", "VAT", "UOM", "BOM", "SKU", "Whse", "Invt", "Prod"]
+  anti_pattern_indicators: ["custom abbreviations", "inconsistent abbreviation forms", "ambiguous terms", "platform conflicts"]
+  positive_pattern_indicators: ["platform-compliant abbreviations", "consistent usage", "standard BC abbreviations"]
+
+applicable_object_types: ["table", "tableextension", "page", "pageextension", "codeunit", "report", "query"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Standard Abbreviations

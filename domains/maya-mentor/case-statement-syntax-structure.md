@@ -9,6 +9,16 @@ tags: ["case", "switch", "control-flow", "syntax", "branching"]
 prerequisites: ["if-statements", "variable-types", "basic-syntax"]
 related_topics: ["case-multiple-conditions", "case-performance", "case-error-handling"]
 samples: "samples/case-statement-syntax-structure.md"
+
+relevance_signals:
+  constructs: ["case", "of", "else", "end", "begin"]
+  keywords: ["case statement", "switch", "control flow", "branching", "syntax", "enum", "option"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["case statement", "case syntax", "case of", "switch pattern"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query"]
+
+relevance_threshold: 0.4
 ---
 # AL Case Statement Syntax and Structure
 

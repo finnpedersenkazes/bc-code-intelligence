@@ -7,6 +7,16 @@ tags: ["fielderror", "validation", "business-rules", "onvalidate", "posting-code
 prerequisites: ["fielderror-syntax-usage", "field-triggers", "validation-fundamentals"]
 related_topics: ["business-rule-validation", "posting-procedures", "data-integrity-patterns"]
 samples: "samples/fielderror-validation-patterns.md"
+
+relevance_signals:
+  constructs: ["FieldError", "OnValidate", "Error", "TestField"]
+  keywords: ["validation", "business rules", "data integrity", "posting", "error handling", "field validation"]
+  anti_pattern_indicators: ["validation fails", "data integrity violation", "invalid field value"]
+  positive_pattern_indicators: ["FieldError pattern", "validation procedure", "business rule enforcement"]
+
+applicable_object_types: ["table", "codeunit", "page"]
+
+relevance_threshold: 0.5
 ---
 # FieldError in Validation Patterns
 

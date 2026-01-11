@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["codeunit-design", "organization", "maintainability", "performance"]
 prerequisites: ["codeunit-basics", "event-subscriber-patterns"]
 samples: "samples/subscriber-organization.md"
+
+relevance_signals:
+  constructs: ["EventSubscriber", "SingleInstance"]
+  keywords: ["subscriber codeunit", "codeunit size", "event subscriber", "functional cohesion", "domain organization", "subscriber architecture", "compilation overhead", "merge conflict"]
+  anti_pattern_indicators: ["monolithic subscriber codeunit", "oversized codeunit", "too many subscribers in one codeunit", "excessive fragmentation"]
+  positive_pattern_indicators: ["domain-based organization", "layer-based organization", "functional cohesion", "subscriber grouping", "size threshold", "refactoring trigger"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 # Subscriber Codeunit Size and Organization
 

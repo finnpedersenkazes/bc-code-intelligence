@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["telemetry", "performance", "optimization", "monitoring"]
 prerequisites: ["bc-session-logmessage-methods", "custom-dimensions-best-practices"]
 samples: "samples/telemetry-performance.md"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "Dictionary", "Verbosity"]
+  keywords: ["telemetry performance", "CPU overhead", "memory utilization", "network overhead", "sampling", "high-volume telemetry"]
+  anti_pattern_indicators: ["telemetry in tight loop", "complex message formatting", "large dimension collections", "high-frequency logging"]
+  positive_pattern_indicators: ["strategic verbosity", "sampling implementation", "conditional telemetry", "batch processing"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 # Telemetry Performance Considerations
 

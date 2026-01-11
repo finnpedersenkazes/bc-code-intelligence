@@ -7,6 +7,16 @@ tags: ["event-bridge", "event-routing", "message-patterns", "loose-coupling"]
 prerequisites: ["event-basics", "publisher-subscriber", "interface-implementation"]
 samples: "samples/event-bridge-pattern.md"
 related_topics: ["event-payload-design-patterns", "command-queue-pattern-al"]
+
+relevance_signals:
+  constructs: ["IntegrationEvent", "BusinessEvent", "EventSubscriber"]
+  keywords: ["event bridge", "event routing", "loose coupling", "event transformation", "central event hub", "dynamic routing"]
+  anti_pattern_indicators: ["bridge complexity", "performance bottlenecks", "tight coupling through bridge"]
+  positive_pattern_indicators: ["flexible event routing", "event transformation", "dynamic routing rules", "asynchronous processing"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 
 # Event Bridge Pattern in AL

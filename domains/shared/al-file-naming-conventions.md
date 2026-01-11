@@ -14,6 +14,16 @@ implementation_steps: ["identify-object-name", "apply-object-type-suffix", "vali
 validation_criteria: ["consistent-naming-application", "standards-compliance"]
 technical_areas: ["al-code", "file-organization"]
 related_topics: ["al-variable-naming-conventions", "al-standard-abbreviations"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["file naming", "naming convention", "TableExt", "PageExt", "Codeunit", "Table", "Page", "Report", "Query", "XMLport", "Enum", "Interface", "PermissionSet", "Pascal Case"]
+  anti_pattern_indicators: ["Tab-Ext", "Pag-Ext", "Cod50100", "object ID in filename", "underscore notation", "inconsistent casing"]
+  positive_pattern_indicators: ["ObjectName.ObjectType.al", "Pascal Case", "descriptive", "consistent prefixes", "logical grouping"]
+
+applicable_object_types: ["codeunit", "table", "tableextension", "page", "pageextension", "report", "reportextension", "query", "xmlport", "enum", "enumextension", "interface", "permissionset", "permissionsetextension", "profile", "controladdin"]
+
+relevance_threshold: 0.5
 ---
 
 # AL File Naming Conventions

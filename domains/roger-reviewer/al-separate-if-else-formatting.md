@@ -14,6 +14,16 @@ improvement_suggestion: "Format if-else statements with clear separation to show
 implementation_steps: ["separate-conditional-blocks", "align-if-else-keywords", "validate-readability"]
 validation_criteria: ["clear-conditional-separation", "consistent-alignment"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["if", "then", "else", "begin", "end"]
+  keywords: ["if-else formatting", "conditional logic", "branch separation", "decision structure"]
+  anti_pattern_indicators: ["cramped if-else formatting", "inconsistent keyword alignment", "unclear branch boundaries"]
+  positive_pattern_indicators: ["clear keyword positioning", "appropriate spacing", "aligned block structures"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Separate If Else Formatting

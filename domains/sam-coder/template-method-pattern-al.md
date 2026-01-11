@@ -7,6 +7,16 @@ tags: ["template-method", "behavioral-patterns", "algorithm-structure", "inherit
 prerequisites: ["object-orientation-al", "inheritance-patterns", "virtual-methods"]
 samples: "samples/template-method-pattern.md"
 related_topics: ["business-process-template-patterns", "type-safe-operations-al"]
+
+relevance_signals:
+  constructs: ["interface", "implements", "procedure"]
+  keywords: ["template method", "algorithm skeleton", "extension points", "inheritance", "virtual method", "behavioral pattern"]
+  anti_pattern_indicators: ["template complexity", "inflexible design", "too many extension points"]
+  positive_pattern_indicators: ["stable algorithm framework", "customizable steps", "invariant operations", "clear extension points"]
+
+applicable_object_types: ["codeunit", "interface"]
+
+relevance_threshold: 0.5
 ---
 
 # Template Method Pattern in AL

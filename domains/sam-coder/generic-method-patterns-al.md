@@ -7,6 +7,16 @@ tags: ["generic-methods", "type-safety", "code-reuse", "al-generics"]
 prerequisites: ["al-basics", "interface-implementation", "advanced-al-features"]
 samples: "samples/generic-method-patterns.md"
 related_topics: ["type-safe-operations-al", "template-method-pattern-al"]
+
+relevance_signals:
+  constructs: ["interface", "Variant", "RecordRef", "FieldRef"]
+  keywords: ["generic methods", "type-safe", "code reuse", "type parameter", "constraint", "type inference"]
+  anti_pattern_indicators: ["over-generalization", "constraint misuse", "performance degradation", "complex type hierarchies"]
+  positive_pattern_indicators: ["type-safe algorithms", "generic factory", "interface-based generics", "meaningful type parameters"]
+
+applicable_object_types: ["codeunit", "interface"]
+
+relevance_threshold: 0.5
 ---
 
 # Generic Method Patterns in AL

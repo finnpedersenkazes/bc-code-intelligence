@@ -11,6 +11,16 @@ related_topics:
 applies_to:
   - "BC Code Intelligence MCP Server"
 last_updated: "2025-10-29"
+
+relevance_signals:
+  constructs: []
+  keywords: ["json", "yaml", "config", "configuration", "knowledge_layers", "git", "authentication", "az_cli", "pat", "token"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["config file", "configuration format", "bc-code-intel-config", "layer configuration", "authentication setup"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.4
 ---
 
 # Configuration File Formats and Creation

@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["telemetry", "dimensions", "analytics", "monitoring"]
 prerequisites: ["bc-session-logmessage-methods"]
 samples: "samples/custom-dimensions.md"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "Dictionary"]
+  keywords: ["custom dimensions", "telemetry", "Application Insights", "cardinality", "dimension naming", "analytics", "monitoring"]
+  anti_pattern_indicators: ["high-cardinality dimension", "dynamic dimension name", "sensitive data in telemetry"]
+  positive_pattern_indicators: ["consistent naming", "business context", "correlation identifier"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.4
 ---
 # Custom Dimensions Best Practices
 

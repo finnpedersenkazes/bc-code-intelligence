@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["systemid", "data-modeling", "entity-relationships"]
 samples: "samples/systemid-integration.md"
+
+relevance_signals:
+  constructs: ["SystemId", "GUID", "ODataKeyFields"]
+  keywords: ["SystemId", "GUID", "unique identifier", "API page", "OData", "external integration", "data synchronization", "entity relationship", "foreign key", "concurrency control", "ETag"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["SystemId as key", "stable identifier", "external reference", "SystemId integration", "GUID-based relationship"]
+
+applicable_object_types: ["table", "page", "tableextension", "pageextension"]
+
+relevance_threshold: 0.4
 ---
 # SystemId Integration in API Pages
 

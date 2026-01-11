@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["telemetry", "debugging", "correlation", "troubleshooting"]
 prerequisites: ["bc-session-logmessage-methods"]
 samples: "samples/error-correlation.md"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "Dictionary"]
+  keywords: ["error correlation", "telemetry", "root cause", "troubleshooting", "session correlation", "custom correlation", "distributed tracing"]
+  anti_pattern_indicators: ["missing correlation identifier", "isolated telemetry events"]
+  positive_pattern_indicators: ["correlation identifiers", "session-based correlation", "cross-system correlation"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 # Telemetry Error Correlation
 

@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["best-practices", "validation", "code-quality", "maintainability"]
 prerequisites: ["testfield-basic-syntax", "testfield-error-handling"]
 samples: "samples/testfield-patterns.md"
+
+relevance_signals:
+  constructs: ["TestField", "FieldError", "Error"]
+  keywords: ["TestField", "validation", "mandatory field", "data integrity", "field validation", "status-driven validation"]
+  anti_pattern_indicators: ["over-validation", "mixed concerns", "performance-blind validation", "context-blind validation"]
+  positive_pattern_indicators: ["fail fast", "logical validation grouping", "context-appropriate validation", "progressive validation"]
+
+applicable_object_types: ["codeunit", "page", "table"]
+
+relevance_threshold: 0.6
 ---
 # TestField Best Practices and Patterns
 

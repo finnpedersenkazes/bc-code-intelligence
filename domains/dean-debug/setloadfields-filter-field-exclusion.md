@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["setloadfields", "filtering", "field-exclusion"]
 prerequisites: ["setloadfields-basics", "record-filtering"]
 samples: "samples/setloadfields-filter-exclusion.md"
+
+relevance_signals:
+  constructs: ["SetLoadFields", "SetRange", "SetFilter"]
+  keywords: ["SetLoadFields", "filter field exclusion", "memory optimization", "partial loading", "database filtering"]
+  anti_pattern_indicators: ["loading filter-only fields", "accessing excluded fields"]
+  positive_pattern_indicators: ["filter field exclusion", "processing fields only", "memory reduction"]
+
+applicable_object_types: ["codeunit", "page", "report"]
+
+relevance_threshold: 0.5
 ---
 # SetLoadFields Filter Field Exclusion
 

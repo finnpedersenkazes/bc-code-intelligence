@@ -7,6 +7,16 @@ tags: ["complex-facade", "enterprise-patterns", "multi-layer-facade", "facade-co
 prerequisites: ["facade-pattern-al-implementation", "enterprise-architecture", "advanced-al"]
 samples: "samples/complex-facade-patterns.md"
 related_topics: ["facade-pattern-al-implementation", "enterprise-integration-patterns"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["facade", "multi-layer facade", "facade composition", "enterprise architecture", "cross-system coordination", "transaction spanning", "workflow orchestration", "circuit breaker", "API gateway", "microservice coordination"]
+  anti_pattern_indicators: ["over-engineering", "tight coupling between facades", "performance overhead", "monitoring gaps"]
+  positive_pattern_indicators: ["facade hierarchy", "composite facade", "domain-specific facade", "event-driven facade", "caching-enabled facade", "policy-driven facade"]
+
+applicable_object_types: ["codeunit", "interface"]
+
+relevance_threshold: 0.4
 ---
 
 # Complex Facade Patterns

@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["web-services", "automatic-registration", "deployment"]
 samples: "samples/automatic-registration.md"
+
+relevance_signals:
+  constructs: ["APIPage", "APIPublisher", "APIGroup", "APIVersion", "EntityName", "EntitySetName", "ODataKeyFields"]
+  keywords: ["web service", "automatic registration", "OData", "API endpoint", "service metadata", "deployment"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["API page", "web service registration", "OData endpoint", "service discovery"]
+
+applicable_object_types: ["page"]
+
+relevance_threshold: 0.4
 ---
 # API Page Automatic Web Service Registration
 

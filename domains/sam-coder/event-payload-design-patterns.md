@@ -7,6 +7,16 @@ tags: ["event-payload", "message-design", "data-patterns", "serialization"]
 prerequisites: ["event-fundamentals", "data-structures", "json-handling"]
 samples: "samples/event-payload-design.md"
 related_topics: ["event-bridge-pattern-al", "command-queue-pattern-al"]
+
+relevance_signals:
+  constructs: ["IntegrationEvent", "BusinessEvent", "JsonObject", "JsonToken"]
+  keywords: ["event payload", "message design", "serialization", "versioning", "envelope pattern", "data completeness"]
+  anti_pattern_indicators: ["payload bloat", "breaking changes", "inconsistent structure", "unnecessary data"]
+  positive_pattern_indicators: ["standardized envelopes", "payload versioning", "backward compatibility", "clear field names"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 
 # Event Payload Design Patterns

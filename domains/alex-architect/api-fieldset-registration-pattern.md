@@ -7,6 +7,16 @@ tags: ["api-fieldsets", "field-registration", "api-extensibility", "metadata-dri
 prerequisites: ["api-basics", "fieldset-concepts", "registration-patterns"]
 samples: "samples/api-fieldset-registration.md"
 related_topics: ["api-interface-design-patterns", "api-delegate-operation-pattern"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["fieldset", "field registration", "field metadata", "dynamic fields", "field selection", "API extensibility", "permission-aware", "field discovery", "field transformation"]
+  anti_pattern_indicators: ["over-registration", "inconsistent field metadata", "too many fields"]
+  positive_pattern_indicators: ["field registry", "module-based registration", "field metadata management", "conditional field registration", "hierarchical fields"]
+
+applicable_object_types: ["codeunit", "page", "table"]
+
+relevance_threshold: 0.4
 ---
 
 # API Fieldset Registration Pattern

@@ -5,6 +5,16 @@ difficulty: "beginner"
 bc_versions: "14+"
 tags: ["code-style", "operators", "readability", "formatting", "line-breaks"]
 prerequisites: ["al-syntax", "code-formatting"]
+
+relevance_signals:
+  constructs: ["and", "or", "+", "-", "*", "/", "=", "<>", "<", ">", "<=", ">="]
+  keywords: ["operator positioning", "line continuation", "leading operators", "multi-line expression", "visual alignment"]
+  anti_pattern_indicators: ["inconsistent positioning", "poor alignment", "trailing operators", "random line breaks"]
+  positive_pattern_indicators: ["leading operator pattern", "aligned continuation", "consistent indentation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 # Binary Operator Line Positioning and Code Readability
 

@@ -7,6 +7,16 @@ tags: ["fielderror", "error-handling", "validation", "record-methods", "user-fee
 prerequisites: ["record-basics", "field-access"]
 samples: "samples/fielderror-syntax-usage.md"
 related_topics: ["testfield-method", "error-method", "field-validation", "record-validation"]
+
+relevance_signals:
+  constructs: ["FieldError", "Error", "OnValidate"]
+  keywords: ["field error", "validation", "error handling", "user feedback", "field validation", "runtime error"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["FieldError", "field error message", "field validation error", "record.FieldError"]
+
+applicable_object_types: ["table", "codeunit", "page"]
+
+relevance_threshold: 0.4
 ---
 # FieldError Syntax and Usage
 

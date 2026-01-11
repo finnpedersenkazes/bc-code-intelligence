@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["validation", "fields", "error-handling", "data-integrity"]
 prerequisites: ["record-variables", "field-access"]
 samples: "samples/testfield-basic-syntax.md"
+
+relevance_signals:
+  constructs: ["TestField", "Error", "OnValidate"]
+  keywords: ["testfield", "validation", "mandatory field", "required field", "field check", "data integrity"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["TestField", "field validation", "mandatory check", "required field validation"]
+
+applicable_object_types: ["table", "codeunit", "page"]
+
+relevance_threshold: 0.4
 ---
 # TestField Basic Syntax and Usage
 

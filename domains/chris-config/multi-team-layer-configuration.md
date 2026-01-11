@@ -7,6 +7,16 @@ tags: ["configuration", "enterprise", "layers", "git-repositories", "team-collab
 related_topics: ["knowledge-overrides", "layer-system-architecture"]
 applies_to: ["MCP Server", "VS Code Integration", "Team Environments"]
 last_updated: "2025-01-01"
+
+relevance_signals:
+  constructs: []
+  keywords: ["multi-team", "organization", "enterprise", "git repository", "layer priority", "team collaboration", "company standards", "authentication"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["team layer", "company layer", "organization setup", "shared knowledge", "multi-team configuration"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.4
 ---
 
 # Multi-Team Layer Configuration for Organizations

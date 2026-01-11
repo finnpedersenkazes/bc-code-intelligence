@@ -9,6 +9,16 @@ related_topics:
   - "project-context-files.md"
   - "incremental-development-patterns.md"
 source: "Adapted from Anthropic Engineering: Effective harnesses for long-running agents (Nov 2025)"
+
+relevance_signals:
+  constructs: ["Codeunit.Run", "Try", "Commit"]
+  keywords: ["AI agent", "long-running session", "context window", "incremental progress", "handoff", "PROGRESS.md", "feature list", "clean state", "verification", "testing requirements"]
+  anti_pattern_indicators: ["one-shot overreach", "premature victory", "vague goals", "no state management", "unlimited scope"]
+  positive_pattern_indicators: ["environment orientation", "feature lists", "incremental progress", "clean state requirements", "progress tracking", "bounded scope"]
+
+applicable_object_types: ["codeunit", "table", "page", "report", "query", "xmlport"]
+
+relevance_threshold: 0.3
 ---
 # Effective Instructions for Long-Running AI Sessions
 

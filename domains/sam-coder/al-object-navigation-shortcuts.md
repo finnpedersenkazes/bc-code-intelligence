@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["navigation", "al-objects", "workspace", "symbol-search", "dependencies"]
 prerequisites: ["vs-code-al-shortcuts", "al-project-structure"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["navigation", "F12", "Go to Definition", "Find All References", "symbol search", "Peek Definition", "workspace", "object discovery"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["efficient navigation", "symbol-based navigation", "reference discovery", "dependency tracking"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "enum", "interface"]
+
+relevance_threshold: 0.3
 ---
 
 # AL Object Navigation Shortcuts

@@ -11,6 +11,16 @@ related_topics:
 applies_to:
   - "BC Code Intelligence MCP Server"
 last_updated: "2025-10-30"
+
+relevance_signals:
+  constructs: []
+  keywords: ["config", "configuration", "bc-code-intel-config", "workspace", "layers", "priority", "merge", "user config", "project config", "environment variable"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["configuration file", "config.json", "config.yaml", "set_workspace_info", "layer priority"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.4
 ---
 
 # Configuration File Discovery

@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["deleteall", "triggers", "ondelete", "execution-flow"]
 prerequisites: ["deleteall-method-usage", "table-triggers", "transaction-management"]
 samples: "samples/deleteall-triggers.md"
+
+relevance_signals:
+  constructs: ["DeleteAll", "OnDelete", "Delete", "trigger"]
+  keywords: ["OnDelete trigger", "trigger execution", "cascade delete", "audit trail", "validation", "transaction management"]
+  anti_pattern_indicators: ["performance-blind trigger design", "inadequate error handling", "external system dependencies in triggers", "complex trigger logic"]
+  positive_pattern_indicators: ["focused OnDelete triggers", "efficient cascade patterns", "proper error handling", "testable triggers"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.6
 ---
 # DeleteAll Trigger Execution
 

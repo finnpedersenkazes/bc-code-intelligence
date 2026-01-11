@@ -14,6 +14,16 @@ improvement_suggestion: "Write one AL statement per line to improve readability 
 implementation_steps: ["separate-multiple-statements", "format-single-statements", "validate-clarity"]
 validation_criteria: ["one-statement-per-line", "improved-readability"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: [";"]
+  keywords: ["statement per line", "single statement", "line organization", "debugging", "readability"]
+  anti_pattern_indicators: ["multiple statements per line", "cramped code formatting", "complex compound statements"]
+  positive_pattern_indicators: ["single statement per line", "appropriate indentation", "clear statement separation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Statement Per Line Rule

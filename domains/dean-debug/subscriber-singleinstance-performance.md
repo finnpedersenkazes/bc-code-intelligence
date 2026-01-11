@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["events", "singleinstance", "memory", "performance"]
 prerequisites: ["event-subscriber-basics", "memory-management"]
 samples: "samples/singleinstance-subscribers.md"
+
+relevance_signals:
+  constructs: ["EventSubscriber", "SingleInstance"]
+  keywords: ["SingleInstance", "event subscriber", "memory", "session lifecycle", "global variables", "initialization overhead"]
+  anti_pattern_indicators: ["memory accumulation", "uncleaned global variables", "heavy initialization"]
+  positive_pattern_indicators: ["minimal global variables", "explicit cleanup", "lightweight initialization"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 # SingleInstance Subscriber Performance Impact
 

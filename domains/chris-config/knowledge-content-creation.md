@@ -7,6 +7,16 @@ tags: ["knowledge-creation", "content-authoring", "yaml-frontmatter", "markdown"
 related_topics: ["multi-team-layer-configuration", "content-quality-standards"]
 applies_to: ["Knowledge Base", "Team Documentation", "Project Customization"]
 last_updated: "2025-01-01"
+
+relevance_signals:
+  constructs: []
+  keywords: ["knowledge", "content", "frontmatter", "yaml", "override", "domain", "tags", "bc_versions", "difficulty", "markdown"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["create knowledge", "write content", "custom topic", "override embedded", "knowledge authoring"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.4
 ---
 
 # Creating Custom BC Knowledge Content

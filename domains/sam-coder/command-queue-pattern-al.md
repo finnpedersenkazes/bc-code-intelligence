@@ -7,6 +7,16 @@ tags: ["command-queue", "async-processing", "message-patterns", "queue-managemen
 prerequisites: ["queue-basics", "command-pattern", "async-programming"]
 samples: "samples/command-queue-pattern.md"
 related_topics: ["task-scheduler-pattern-implementation", "event-bridge-pattern-al"]
+
+relevance_signals:
+  constructs: ["Codeunit.Run", "TaskScheduler", "JobQueue"]
+  keywords: ["command queue", "async processing", "queue management", "FIFO", "priority queue", "batch processing", "retry", "dead letter"]
+  anti_pattern_indicators: ["queue overflow", "command coupling", "processing bottlenecks", "unbounded queue"]
+  positive_pattern_indicators: ["idempotent commands", "queue health monitoring", "retry mechanism", "command encapsulation"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.5
 ---
 
 # Command Queue Pattern in AL

@@ -14,6 +14,16 @@ improvement_suggestion: "Avoid lonely repeat statements by ensuring proper until
 implementation_steps: ["identify-repeat-patterns", "validate-until-conditions", "ensure-proper-structure"]
 validation_criteria: ["complete-repeat-until-pairs", "proper-loop-structure"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["repeat", "until"]
+  keywords: ["repeat-until", "loop", "control flow", "infinite loop", "termination", "loop exit"]
+  anti_pattern_indicators: ["repeat without until", "unreachable until conditions", "no loop variable progression", "infinite loop"]
+  positive_pattern_indicators: ["proper until condition", "reliable termination", "loop variable progression", "exit condition"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Lonely Repeat Pattern

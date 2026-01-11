@@ -14,6 +14,16 @@ implementation_steps: ["design-subscriber-structure", "implement-loose-coupling"
 validation_criteria: ["maintained-loose-coupling", "acceptable-performance-impact"]
 technical_areas: ["al-code", "integration"]
 samples: "samples/al-event-subscriber-architecture.md"
+
+relevance_signals:
+  constructs: ["EventSubscriber", "IntegrationEvent", "BusinessEvent", "Subscriber", "OnBefore", "OnAfter"]
+  keywords: ["event subscriber", "loose coupling", "event-driven", "integration", "extensibility", "publisher", "event handler"]
+  anti_pattern_indicators: ["tight coupling", "direct data access", "circular dependency", "subscriber failure"]
+  positive_pattern_indicators: ["single responsibility", "error isolation", "background session", "event contract"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Event Subscriber Architecture

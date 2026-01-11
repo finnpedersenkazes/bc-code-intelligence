@@ -14,6 +14,16 @@ improvement_suggestion: "Implement custom telemetry for actionable monitoring an
 implementation_steps: ["design-telemetry-schema", "implement-session-logmessage", "validate-privacy-compliance"]
 validation_criteria: ["privacy-compliant", "actionable-data", "performance-neutral"]
 technical_areas: ["al-code", "monitoring"]
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "DataClassification", "TelemetryScope", "Dictionary"]
+  keywords: ["telemetry", "custom telemetry", "Application Insights", "diagnostics", "monitoring", "privacy", "observability"]
+  anti_pattern_indicators: ["logging PII", "telemetry flooding", "functional telemetry dependency"]
+  positive_pattern_indicators: ["Session.LogMessage", "DataClassification::SystemMetadata", "TelemetryScope::ExtensionPublisher"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 
 # Custom Telemetry Implementation in AL

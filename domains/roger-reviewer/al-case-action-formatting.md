@@ -14,6 +14,16 @@ improvement_suggestion: "Format case statement actions with consistent indentati
 implementation_steps: ["standardize-case-indentation", "align-action-blocks", "validate-readability"]
 validation_criteria: ["consistent-indentation", "clear-action-separation"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["case", "of", "else", "end"]
+  keywords: ["case statement", "case action", "case branch", "decision structure", "control flow"]
+  anti_pattern_indicators: ["inconsistent case label alignment", "poor action block indentation", "unclear action boundaries"]
+  positive_pattern_indicators: ["consistent indentation", "clear action separation", "aligned case labels"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Case Action Formatting

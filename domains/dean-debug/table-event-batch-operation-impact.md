@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["table-events", "batch-operations", "performance", "optimization"]
 prerequisites: ["table-events-basics", "batch-processing"]
 samples: "samples/table-event-batching.md"
+
+relevance_signals:
+  constructs: ["OnInsert", "OnModify", "OnDelete", "EventSubscriber"]
+  keywords: ["table events", "batch operation", "OnInsert", "OnModify", "OnDelete", "event firing", "subscriber performance"]
+  anti_pattern_indicators: ["expensive subscriber in batch", "no batch detection", "database query in subscriber loop"]
+  positive_pattern_indicators: ["batch detection", "deferred processing", "conditional subscriber logic"]
+
+applicable_object_types: ["table", "codeunit"]
+
+relevance_threshold: 0.6
 ---
 # Table Event Performance in Batch Operations
 

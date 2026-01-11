@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["error-handling", "http-status", "api-responses"]
 samples: "samples/api-error-responses.md"
+
+relevance_signals:
+  constructs: ["HttpClient", "HttpResponseMessage", "HttpStatusCode", "JsonObject", "JsonToken", "Error"]
+  keywords: ["error response", "HTTP status", "OData error", "400 Bad Request", "401 Unauthorized", "403 Forbidden", "404 Not Found", "409 Conflict", "500 Internal Server Error", "retry logic"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["error handling", "status code", "retry-after", "error recovery", "graceful degradation"]
+
+applicable_object_types: ["codeunit", "page"]
+
+relevance_threshold: 0.5
 ---
 # Business Central API Error Response Patterns
 

@@ -7,6 +7,16 @@ tags: ["no-series-validation", "data-validation", "integrity-checking", "error-p
 prerequisites: ["no-series-implementation-patterns", "validation-frameworks", "error-handling"]
 samples: "samples/no-series-validation.md"
 related_topics: ["no-series-implementation-patterns", "data-integrity-patterns"]
+
+relevance_signals:
+  constructs: ["TestManual", "GetNextNo", "NoSeriesManagement"]
+  keywords: ["No. Series validation", "format validation", "uniqueness", "sequence integrity", "data integrity", "compliance"]
+  anti_pattern_indicators: ["over-validation", "validation gaps", "false positives"]
+  positive_pattern_indicators: ["multi-layer validation", "configurable rules", "automated remediation"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.5
 ---
 
 # No Series Validation Patterns

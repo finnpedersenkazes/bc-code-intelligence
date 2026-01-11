@@ -14,6 +14,16 @@ improvement_suggestion: "Use consistent spacing around binary operators to impro
 implementation_steps: ["standardize-operator-spacing", "apply-consistent-patterns", "validate-readability"]
 validation_criteria: ["consistent-operator-spacing", "improved-expression-clarity"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["+", "-", "*", "/", "mod", "=", "<>", "<", ">", "<=", ">=", "and", "or", "not", ":="]
+  keywords: ["operator spacing", "expression", "binary operator", "arithmetic", "comparison", "logical", "assignment"]
+  anti_pattern_indicators: ["no spacing around operators", "inconsistent spacing", "cramped expressions"]
+  positive_pattern_indicators: ["single space before and after", "consistent operator spacing", "clear operator separation"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Binary Operator Spacing

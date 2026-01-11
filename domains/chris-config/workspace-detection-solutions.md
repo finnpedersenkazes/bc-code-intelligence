@@ -12,6 +12,16 @@ applies_to:
   - "BC Code Intelligence MCP Server"
   - "VS Code MCP Extension"
 last_updated: "2025-10-27"
+
+relevance_signals:
+  constructs: []
+  keywords: ["workspace", "set_workspace_root", "get_workspace_root", "process.cwd", "VS Code", "project layer", "lazy initialization"]
+  anti_pattern_indicators: ["project config not found", "project layer not loading", "workspace not detected"]
+  positive_pattern_indicators: ["set workspace", "workspace detection", "workspace root", "project configuration"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.5
 ---
 
 # Workspace Detection Solutions

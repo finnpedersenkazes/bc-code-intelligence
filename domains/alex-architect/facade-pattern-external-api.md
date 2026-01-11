@@ -14,6 +14,16 @@ improvement_suggestion: "Use facade pattern to simplify external API integration
 implementation_steps: ["create-facade-codeunit", "abstract-api-calls", "centralize-error-handling"]
 validation_criteria: ["single-entry-point", "hidden-complexity", "clean-interfaces"]
 technical_areas: ["al-code", "integration"]
+
+relevance_signals:
+  constructs: ["HttpClient", "HttpRequestMessage", "HttpResponseMessage", "JsonObject", "JsonToken"]
+  keywords: ["external API", "API integration", "facade pattern", "HTTP client", "authentication", "OAuth", "JWT", "retry logic", "circuit breaker", "rate limiting", "API gateway"]
+  anti_pattern_indicators: ["direct API calls scattered", "shared HTTP client without abstraction", "exposed technical details", "mixed responsibilities"]
+  positive_pattern_indicators: ["single gateway", "business-focused methods", "centralized error handling", "retry logic", "graceful degradation", "configuration driven"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Facade Pattern for External API Integration

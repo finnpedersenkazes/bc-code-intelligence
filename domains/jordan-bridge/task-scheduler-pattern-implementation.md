@@ -7,6 +7,16 @@ tags: ["task-scheduler", "job-processing", "async-patterns", "workflow-managemen
 prerequisites: ["task-scheduler-basics", "queue-processing", "error-handling"]
 samples: "samples/task-scheduler-pattern.md"
 related_topics: ["command-queue-pattern-al", "event-bridge-pattern-al"]
+
+relevance_signals:
+  constructs: ["TaskScheduler", "CreateTask", "JobQueue", "Codeunit.Run", "StartSession", "Sleep"]
+  keywords: ["task scheduler", "job queue", "background processing", "async task", "scheduled job", "retry policy", "batch processing"]
+  anti_pattern_indicators: ["resource exhaustion", "infinite retry", "state corruption", "silent failure"]
+  positive_pattern_indicators: ["idempotent task", "exponential backoff", "dead letter queue", "task monitoring"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.5
 ---
 
 # Task Scheduler Pattern Implementation

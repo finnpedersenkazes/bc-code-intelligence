@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["deleteall", "performance", "optimization", "tradeoffs"]
 prerequisites: ["deleteall-method-usage", "performance-fundamentals"]
 samples: "samples/deleteall-performance.md"
+
+relevance_signals:
+  constructs: ["DeleteAll", "OnDelete", "Delete"]
+  keywords: ["DeleteAll", "bulk deletion", "performance tradeoff", "business logic", "OnDelete trigger", "data integrity"]
+  anti_pattern_indicators: ["DeleteAll on large dataset without considering triggers", "expecting DeleteAll to be fast with complex triggers"]
+  positive_pattern_indicators: ["batch processing", "scheduled deletion", "business logic enforcement"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.5
 ---
 # DeleteAll Performance Tradeoff
 

@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["debugging", "compound-statements", "breakpoints", "code-analysis"]
 prerequisites: ["compound-statement-readability", "al-debugging-basics"]
 samples: "samples/compound-statements-debugging.md"
+
+relevance_signals:
+  constructs: ["begin", "end"]
+  keywords: ["debugging", "breakpoint", "compound statement", "execution flow", "variable scope", "step-through", "tracing"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["structured code", "explicit boundaries", "logical blocks"]
+
+applicable_object_types: ["codeunit", "page", "report", "table"]
+
+relevance_threshold: 0.3
 ---
 # AL Compound Statements for Enhanced Debugging
 

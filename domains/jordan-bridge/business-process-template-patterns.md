@@ -7,6 +7,16 @@ tags: ["business-process", "workflow-templates", "process-automation", "business
 prerequisites: ["template-method-pattern-al", "business-process-design", "workflow-patterns"]
 samples: "samples/business-process-templates.md"
 related_topics: ["template-method-pattern-al", "workflow-automation-patterns"]
+
+relevance_signals:
+  constructs: ["Interface", "Codeunit", "Enum", "Record"]
+  keywords: ["business process", "workflow template", "state management", "approval workflow", "document processing", "process automation"]
+  anti_pattern_indicators: ["over-generalization", "configuration complexity", "state corruption"]
+  positive_pattern_indicators: ["process flow", "state machine", "business rule", "template pattern", "workflow step"]
+
+applicable_object_types: ["codeunit", "table", "enum"]
+
+relevance_threshold: 0.5
 ---
 
 # Business Process Template Patterns

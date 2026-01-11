@@ -7,6 +7,16 @@ tags: ["api-delegates", "operation-delegation", "api-patterns", "extensibility"]
 prerequisites: ["api-basics", "interface-implementation", "event-handling"]
 samples: "samples/api-delegate-operation.md"
 related_topics: ["api-interface-design-patterns", "event-bridge-pattern-al"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["delegate", "delegation", "operation handler", "handler registration", "delegate registry", "chain of responsibility", "context", "fallback", "extensibility", "API contract"]
+  anti_pattern_indicators: ["over-delegation", "tight coupling between delegates", "too many delegation points"]
+  positive_pattern_indicators: ["delegate contract", "handler interface", "delegate registration", "operation delegation", "delegate caching"]
+
+applicable_object_types: ["codeunit", "interface"]
+
+relevance_threshold: 0.4
 ---
 
 # API Delegate Operation Pattern

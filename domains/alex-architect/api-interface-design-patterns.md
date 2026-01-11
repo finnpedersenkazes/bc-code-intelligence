@@ -7,6 +7,16 @@ tags: ["api-interfaces", "contract-design", "api-patterns", "interface-segregati
 prerequisites: ["interface-basics", "api-fundamentals", "contract-design"]
 samples: "samples/api-interface-design.md"
 related_topics: ["api-delegate-operation-pattern", "api-fieldset-registration-pattern"]
+
+relevance_signals:
+  constructs: ["interface"]
+  keywords: ["interface design", "API contract", "interface segregation", "command-query separation", "fluent interface", "builder pattern", "versioning", "deprecation", "backward compatibility"]
+  anti_pattern_indicators: ["interface bloat", "breaking changes", "monolithic interface", "large interface"]
+  positive_pattern_indicators: ["focused interface", "contract stability", "interface composition", "consumer-centric design", "additive evolution"]
+
+applicable_object_types: ["codeunit", "interface", "page"]
+
+relevance_threshold: 0.4
 ---
 
 # API Interface Design Patterns

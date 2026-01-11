@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["setloadfields", "primary-key", "memory-optimization"]
 prerequisites: ["record-variables", "primary-key-concepts"]
 samples: "samples/setloadfields-primary-key.md"
+
+relevance_signals:
+  constructs: ["SetLoadFields", "Get", "FindSet", "Find"]
+  keywords: ["SetLoadFields", "primary key", "memory optimization", "record identity", "minimal loading", "reference storage"]
+  anti_pattern_indicators: ["accessing non-key fields after primary key load", "missing primary key fields"]
+  positive_pattern_indicators: ["primary key only loading", "record reference", "existence validation"]
+
+applicable_object_types: ["codeunit", "page", "report"]
+
+relevance_threshold: 0.5
 ---
 # SetLoadFields Primary Key Optimization
 

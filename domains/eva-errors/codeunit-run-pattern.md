@@ -8,6 +8,16 @@ samples: "samples/codeunit-run-pattern.md"
 related_topics:
   - "try-function-usage.md"
   - "testfield-error-handling.md"
+
+relevance_signals:
+  constructs: ["Codeunit.Run", "Commit", "GetLastErrorText", "ClearLastError"]
+  keywords: ["Codeunit.Run", "transaction isolation", "error handling", "batch processing", "error recovery", "commit before run"]
+  anti_pattern_indicators: ["forgetting commit", "mid-transaction commit", "ignoring failures", "open transaction"]
+  positive_pattern_indicators: ["if Codeunit.Run then", "transaction boundary", "isolated transaction", "error capture"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.6
 ---
 # Codeunit.Run() Error Handling Pattern
 

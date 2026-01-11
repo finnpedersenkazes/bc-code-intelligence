@@ -12,6 +12,16 @@ applies_to:
   - "BC Code Intelligence MCP Server"
   - "Knowledge Layer Architecture"
 last_updated: "2025-10-27"
+
+relevance_signals:
+  constructs: []
+  keywords: ["topics", "specialists", "methodologies", "frontmatter", "yaml", "domains", "content types", "knowledge layer", "markdown"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["content structure", "yaml frontmatter", "specialist definition", "topic format", "knowledge content"]
+
+applicable_object_types: []
+
+relevance_threshold: 0.4
 ---
 
 # Content Types Structure

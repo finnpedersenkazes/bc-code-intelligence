@@ -8,6 +8,16 @@ prerequisites: ["caching-basics", "database-performance"]
 samples: "samples/sift-technology-fundamentals.md"
 related_topics: ["sift-implementation-patterns", "performance-optimization-workflow"]
 estimated_time: "45 minutes"
+
+relevance_signals:
+  constructs: ["CalcSums", "CalcFields", "SumIndexField", "FlowField"]
+  keywords: ["SIFT", "aggregation", "caching", "performance", "real-time totals", "FlowField", "SIFT key", "in-memory"]
+  anti_pattern_indicators: ["over-SIFTing", "SIFT on small tables", "too many SIFT keys"]
+  positive_pattern_indicators: ["SIFT for aggregations", "high-frequency summation", "real-time dashboards"]
+
+applicable_object_types: ["table"]
+
+relevance_threshold: 0.6
 ---
 # SIFT Technology Fundamentals
 

@@ -14,6 +14,16 @@ implementation_steps: ["identify-record-operations", "apply-early-exit-patterns"
 validation_criteria: ["improved-performance", "reduced-database-load"]
 technical_areas: ["al-code", "database"]
 samples: "samples/al-record-find-early-exit.md"
+
+relevance_signals:
+  constructs: ["Find", "FindFirst", "FindLast", "FindSet", "Get", "IsEmpty", "exit"]
+  keywords: ["early exit", "guard clause", "record existence", "database query", "performance optimization"]
+  anti_pattern_indicators: ["assumed existence", "nested processing", "ignored return values", "processing without Find verification"]
+  positive_pattern_indicators: ["if not Find then exit", "guard clause", "early return", "existence check before processing"]
+
+applicable_object_types: ["codeunit", "page", "table", "report"]
+
+relevance_threshold: 0.6
 ---
 
 # AL Record Find Early Exit

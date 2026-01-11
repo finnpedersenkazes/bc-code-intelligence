@@ -13,6 +13,16 @@ improvement_suggestion: "Apply consistent formatting patterns across all AL code
 implementation_steps: ["establish-formatting-standards", "apply-consistent-patterns", "validate-uniformity"]
 validation_criteria: ["consistent-formatting-application", "improved-code-uniformity"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["formatting", "consistency", "indentation", "code-standards", "alignment", "keyword casing", "comment styles"]
+  anti_pattern_indicators: ["mixed formatting styles", "inconsistent indentation", "random keyword casing", "varied comment formatting"]
+  positive_pattern_indicators: ["consistent formatting", "uniform appearance", "standard patterns", "formatting standards"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "enum", "interface"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Formatting Consistency Patterns

@@ -5,6 +5,16 @@ difficulty: "beginner"
 bc_versions: "14+"
 tags: ["api-endpoints", "url-structure", "naming-conventions"]
 samples: "samples/api-url-naming.md"
+
+relevance_signals:
+  constructs: ["APIPublisher", "APIGroup", "APIVersion", "EntityName", "EntitySetName"]
+  keywords: ["URL structure", "entity naming", "API endpoint", "OData URL", "RESTful", "plural noun", "naming convention"]
+  anti_pattern_indicators: ["inconsistent pluralization", "generic names", "technical names instead of business names"]
+  positive_pattern_indicators: ["domain-driven naming", "consistent convention", "plural entity name", "hyphen separation"]
+
+applicable_object_types: ["page"]
+
+relevance_threshold: 0.3
 ---
 # API Page URL Structure and Entity Naming Patterns
 

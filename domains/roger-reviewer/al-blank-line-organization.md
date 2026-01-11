@@ -14,6 +14,16 @@ improvement_suggestion: "Use strategic blank lines to organize AL code into logi
 implementation_steps: ["identify-logical-sections", "insert-separating-blank-lines", "validate-consistency"]
 validation_criteria: ["logical-grouping-clear", "consistent-spacing-applied"]
 technical_areas: ["al-code"]
+
+relevance_signals:
+  constructs: ["var", "begin", "end", "procedure", "trigger"]
+  keywords: ["blank line", "white space", "code organization", "logical grouping", "visual separation"]
+  anti_pattern_indicators: ["excessive blank lines", "no blank lines", "random spacing", "inconsistent patterns"]
+  positive_pattern_indicators: ["logical section separation", "consistent spacing", "clear functional boundaries"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.4
 ---
 
 # AL Blank Line Organization

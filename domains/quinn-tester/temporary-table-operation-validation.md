@@ -6,6 +6,16 @@ bc_versions: "14+"
 tags: ["validation", "temporary-tables", "data-integrity", "operation-safety", "preconditions"]
 prerequisites: ["al-tables", "validation-patterns"]
 samples: "samples/temporary-table-operation-validation.md"
+
+relevance_signals:
+  constructs: ["IsTemporary", "Error", "FieldError", "TestField"]
+  keywords: ["temporary table", "validation", "precondition", "operation safety", "data integrity", "table characteristics"]
+  anti_pattern_indicators: ["incomplete validation", "late validation", "silent failure", "missing precondition check"]
+  positive_pattern_indicators: ["temporary table validation", "operation validation", "precondition check", "table type check"]
+
+applicable_object_types: ["table", "codeunit"]
+
+relevance_threshold: 0.5
 ---
 # Temporary Table Operation Validation Patterns
 

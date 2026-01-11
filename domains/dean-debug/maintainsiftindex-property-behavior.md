@@ -7,6 +7,16 @@ tags: ["sift", "performance", "indexing", "optimization", "table-configuration"]
 prerequisites: ["sift-basics", "table-keys"]
 related_topics: ["sift-tuning", "key-optimization"]
 samples: "samples/maintainsiftindex-examples.md"
+
+relevance_signals:
+  constructs: ["MaintainSIFTIndex", "CalcSums", "CalcFields"]
+  keywords: ["MaintainSIFTIndex", "SIFT", "index maintenance", "query performance", "modification overhead", "real-time index"]
+  anti_pattern_indicators: ["MaintainSIFTIndex=Yes everywhere", "ignoring modification overhead"]
+  positive_pattern_indicators: ["workload analysis", "query-heavy scenarios", "modification-heavy scenarios"]
+
+applicable_object_types: ["table"]
+
+relevance_threshold: 0.5
 ---
 # MaintainSIFTIndex Property Behavior
 

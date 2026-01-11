@@ -14,6 +14,16 @@ improvement_suggestion: "Use SetLoadFields for selective field loading to optimi
 implementation_steps: ["analyze-field-usage", "implement-setloadfields", "measure-performance-impact"]
 validation_criteria: ["memory-reduction", "performance-improvement", "maintained-functionality"]
 technical_areas: ["al-code", "performance"]
+
+relevance_signals:
+  constructs: ["SetLoadFields", "FindSet", "Find", "Get"]
+  keywords: ["SetLoadFields", "performance optimization", "memory reduction", "selective loading", "bulk operation", "field selection"]
+  anti_pattern_indicators: ["incomplete field set", "late application", "inconsistent usage", "primary key omission"]
+  positive_pattern_indicators: ["early declaration", "minimal field set", "consistent application", "primary key inclusion"]
+
+applicable_object_types: ["codeunit", "page", "report"]
+
+relevance_threshold: 0.6
 ---
 
 # AL SetLoadFields Performance Optimization

@@ -6,6 +6,16 @@ bc_versions: "16+"
 tags: ["events", "binding", "conditional", "runtime"]
 prerequisites: ["event-subscriber-basics", "binding-patterns"]
 samples: "samples/manual-binding.md"
+
+relevance_signals:
+  constructs: ["EventSubscriber", "BindSubscription", "UnbindSubscription"]
+  keywords: ["manual binding", "conditional subscriber", "runtime binding", "event registration", "feature toggle", "multi-tenant"]
+  anti_pattern_indicators: ["failed deregistration", "registration failures", "inconsistent binding state", "missing lifecycle management"]
+  positive_pattern_indicators: ["conditional event processing", "dynamic binding", "feature-flag-controlled", "explicit lifecycle management"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.6
 ---
 # Manual Binding for Conditional Event Subscribers
 

@@ -13,6 +13,16 @@ applies_to:
   - "Production Monitoring"
 last_updated: "2025-10-27"
 conditional_mcp: "bc-telemetry-buddy"
+
+relevance_signals:
+  constructs: ["Session.LogMessage", "bctb_query_telemetry", "bctb_get_event_catalog", "bctb_get_recommendations"]
+  keywords: ["telemetry", "Application Insights", "KQL", "performance monitoring", "MCP", "telemetry buddy", "production issues", "query execution"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["data-driven analysis", "telemetry data", "performance metrics", "KQL query"]
+
+applicable_object_types: ["codeunit"]
+
+relevance_threshold: 0.4
 ---
 
 # BC Telemetry Buddy MCP Integration

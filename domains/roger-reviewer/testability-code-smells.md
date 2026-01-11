@@ -9,6 +9,16 @@ related_topics:
   - "../alex-architect/testability-design-patterns.md"
   - "../quinn-tester/isolation-testing-patterns.md"
 source: "Adapted from Vjeko.com: Testing in isolation (Dec 2023)"
+
+relevance_signals:
+  constructs: ["Record", "HttpClient", "Get", "FindSet", "DeleteAll", "case"]
+  keywords: ["testability", "code smell", "tight coupling", "test isolation", "dependency injection", "abstraction", "mock", "test double"]
+  anti_pattern_indicators: ["direct BC table access", "hardcoded service calls", "DeleteAll in test", "mixed data access and logic", "setup switch"]
+  positive_pattern_indicators: ["interface abstraction", "dependency injection", "isolated business logic", "test doubles"]
+
+applicable_object_types: ["codeunit", "page", "table", "report"]
+
+relevance_threshold: 0.6
 ---
 # Testability Code Smells
 

@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["fielderror", "validation", "error-messages", "posting"]
 samples: "samples/fielderror-syntax.md"
+
+relevance_signals:
+  constructs: ["FieldError", "FieldNo", "TestField"]
+  keywords: ["FieldError", "validation error", "field-specific error", "posting codeunit", "error message generation"]
+  anti_pattern_indicators: ["redundant condition checking", "generic error for field-specific issue"]
+  positive_pattern_indicators: ["FieldError with custom message", "lowercase message", "field number constant"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.5
 ---
 # FieldError Method Syntax and Behavior
 

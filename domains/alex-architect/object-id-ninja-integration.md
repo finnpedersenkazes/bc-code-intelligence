@@ -13,6 +13,16 @@ applies_to:
   - "AppSource Development"
 last_updated: "2025-10-27"
 conditional_mcp: "al-objid-mcp-server"
+
+relevance_signals:
+  constructs: []
+  keywords: ["object ID", "ID collision", "ID management", "Object ID Ninja", "MCP", "ID reservation", "ID range", "app.json", "idRanges", "publisher range", "AppSource"]
+  anti_pattern_indicators: ["ID conflicts", "duplicate object ID", "manual ID tracking", "ID collision"]
+  positive_pattern_indicators: ["ID range configuration", "ID reservation", "collision prevention", "team coordination", "Object ID Ninja"]
+
+applicable_object_types: ["table", "page", "codeunit", "report", "query", "xmlport", "enum", "permissionset", "tableextension", "pageextension"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Object ID Ninja MCP Integration

@@ -14,6 +14,16 @@ implementation_steps: ["validate-data-scope", "implement-secure-cleanup", "test-
 validation_criteria: ["secure-data-handling", "proper-memory-cleanup"]
 technical_areas: ["al-code", "data-management"]
 samples: "samples/al-temporary-table-safety.md"
+
+relevance_signals:
+  constructs: ["IsTemporary", "DeleteAll", "ModifyAll", "Insert", "Delete", "Modify", "Reset", "Copy"]
+  keywords: ["temporary table", "in-memory", "data leakage", "memory management", "session isolation", "security context", "data protection", "cleanup", "scope management"]
+  anti_pattern_indicators: ["persistent temporary data", "permission bypass", "cross-session leakage", "uncontrolled scope", "failing to clear"]
+  positive_pattern_indicators: ["secure initialization", "permission validation", "explicit clearing", "try-finally", "error handling cleanup", "minimal data", "data filtering"]
+
+applicable_object_types: ["codeunit", "table", "page", "report"]
+
+relevance_threshold: 0.7
 ---
 
 # AL Temporary Table Safety

@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "18+"
 tags: ["xml-documentation", "intellisense", "api-documentation", "object-documentation"]
 prerequisites: ["al-objects", "xml-basics"]
+
+relevance_signals:
+  constructs: ["summary", "param", "returns", "example", "remarks"]
+  keywords: ["XML documentation", "IntelliSense", "API documentation", "triple-slash", "documentation comment", "object documentation", "procedure documentation"]
+  anti_pattern_indicators: ["minimal documentation", "copy-paste descriptions", "outdated information", "excessive detail", "missing parameter info"]
+  positive_pattern_indicators: ["complete coverage", "clear language", "accurate information", "meaningful examples", "version control", "review process"]
+
+applicable_object_types: ["codeunit", "table", "page", "report", "query", "xmlport", "enum", "interface"]
+
+relevance_threshold: 0.4
 ---
 # AL XML Documentation Comment Structure for Objects
 

@@ -7,6 +7,16 @@ tags: ["no-series", "number-generation", "sequence-management", "business-infras
 prerequisites: ["table-design", "no-series-basics", "business-logic-patterns"]
 samples: "samples/no-series-implementation.md"
 related_topics: ["no-series-validation-patterns", "data-integrity-patterns"]
+
+relevance_signals:
+  constructs: ["NoSeriesManagement", "NoSeriesMgt", "GetNextNo", "InitSeries"]
+  keywords: ["No. Series", "number generation", "sequence management", "concurrency", "gap handling", "locking"]
+  anti_pattern_indicators: ["concurrency issues", "number conflicts", "gap accumulation"]
+  positive_pattern_indicators: ["lock minimization", "batch allocation", "proper error handling"]
+
+applicable_object_types: ["codeunit", "table"]
+
+relevance_threshold: 0.5
 ---
 
 # No Series Implementation Patterns

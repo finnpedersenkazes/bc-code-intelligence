@@ -7,6 +7,16 @@ tags: ["no-series", "number-generation", "business-foundation", "module-architec
 prerequisites: ["table-design", "no-series-basics", "business-logic-patterns"]
 samples: "samples/no-series-module-bc24.md"
 related_topics: ["no-series-validation-module-bc24", "no-series-implementation-patterns", "bc24-migration-patterns"]
+
+relevance_signals:
+  constructs: ["NoSeries", "NoSeriesBatch", "GetNextNo", "PeekNextNo", "TestManual", "LookupRelatedNoSeries", "AreRelated"]
+  keywords: ["BC24", "No. Series", "Business Foundation", "Codeunit 310", "module architecture", "number generation"]
+  anti_pattern_indicators: ["NoSeriesManagement", "InitSeries", "obsolete method"]
+  positive_pattern_indicators: ["NoSeries.GetNextNo", "NoSeries.PeekNextNo", "NoSeriesBatch"]
+
+applicable_object_types: ["codeunit", "table", "page"]
+
+relevance_threshold: 0.6
 ---
 
 # No. Series Module Patterns (BC24+)

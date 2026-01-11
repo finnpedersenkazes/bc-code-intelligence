@@ -5,6 +5,16 @@ difficulty: "advanced"
 bc_versions: "14+"
 tags: ["odata", "query-performance", "api-optimization"]
 samples: "samples/odata-query-optimization.md"
+
+relevance_signals:
+  constructs: ["$filter", "$select", "$orderby", "$skip", "$top", "$expand", "$apply"]
+  keywords: ["OData", "API page", "query optimization", "SQL translation", "filter optimization", "pagination", "aggregation"]
+  anti_pattern_indicators: ["full table scan", "missing index", "complex filter expression", "deep expansion"]
+  positive_pattern_indicators: ["indexed filter", "$select optimization", "proper pagination", "SIFT aggregation"]
+
+applicable_object_types: ["page", "query"]
+
+relevance_threshold: 0.6
 ---
 # OData Query Performance Optimization
 

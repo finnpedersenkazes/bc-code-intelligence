@@ -14,6 +14,16 @@ implementation_steps: ["identify-redundant-else", "apply-early-exit-patterns", "
 validation_criteria: ["reduced-complexity", "improved-readability"]
 technical_areas: ["al-code"]
 samples: "samples/al-unnecessary-else-elimination.md"
+
+relevance_signals:
+  constructs: ["if", "then", "else", "exit", "Error"]
+  keywords: ["unnecessary else", "early return", "guard clause", "early exit", "reduced nesting"]
+  anti_pattern_indicators: ["else after exit", "else after Error", "redundant else block", "deep nesting"]
+  positive_pattern_indicators: ["early exit pattern", "guard clause", "linear flow", "reduced nesting"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "pageextension", "tableextension"]
+
+relevance_threshold: 0.5
 ---
 
 # AL Unnecessary Else Elimination

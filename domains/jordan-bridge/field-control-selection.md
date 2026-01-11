@@ -5,6 +5,16 @@ difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["field-control", "api-design", "data-exposure"]
 samples: "samples/api-field-control.md"
+
+relevance_signals:
+  constructs: ["field", "SystemId", "SystemCreatedAt", "SystemModifiedAt", "Editable", "FieldClass"]
+  keywords: ["field selection", "API field", "data exposure", "field control", "read-only", "editable field", "calculated field", "sensitive data"]
+  anti_pattern_indicators: ["exposing sensitive data", "PII exposure", "unnecessary field exposure"]
+  positive_pattern_indicators: ["field visibility", "security consideration", "performance optimization", "selective field loading"]
+
+applicable_object_types: ["page"]
+
+relevance_threshold: 0.4
 ---
 # API Page Field Control Selection Strategy
 

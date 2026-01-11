@@ -5,6 +5,16 @@ difficulty: "beginner"
 bc_versions: "14+"
 tags: ["vs-code", "productivity", "shortcuts", "al-extension", "navigation"]
 prerequisites: ["vs-code-setup", "al-extension-basics"]
+
+relevance_signals:
+  constructs: []
+  keywords: ["keyboard shortcuts", "VS Code", "productivity", "IntelliSense", "debugging", "F12", "Ctrl+Space", "navigation"]
+  anti_pattern_indicators: []
+  positive_pattern_indicators: ["muscle memory", "coding flow", "efficient navigation", "shortcut mastery"]
+
+applicable_object_types: ["codeunit", "page", "table", "report", "query", "xmlport", "enum", "interface"]
+
+relevance_threshold: 0.3
 ---
 
 # VS Code AL Extension Keyboard Shortcuts

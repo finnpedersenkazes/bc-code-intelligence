@@ -5,6 +5,16 @@ difficulty: "advanced"
 bc_versions: "14+"
 tags: ["api-pages", "table-keys", "performance"]
 samples: "samples/table-key-requirements.md"
+
+relevance_signals:
+  constructs: ["keys", "SystemId", "APIPublisher", "APIGroup", "APIVersion"]
+  keywords: ["API page", "table key", "primary key", "secondary key", "OData", "SystemId", "index", "query performance"]
+  anti_pattern_indicators: ["missing primary key", "excessive secondary keys", "composite key issues", "table scan"]
+  positive_pattern_indicators: ["SystemId usage", "selective secondary keys", "indexed filter fields"]
+
+applicable_object_types: ["table", "page"]
+
+relevance_threshold: 0.6
 ---
 # API Page Source Table Key Requirements
 
