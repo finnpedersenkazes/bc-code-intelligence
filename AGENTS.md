@@ -77,7 +77,7 @@ When creating new knowledge topics, ALWAYS use this YAML frontmatter template:
 ---
 title: "Descriptive Topic Title"
 domain: "performance|api-design|security|etc"
-bc_versions: "14+|18+|19+|specific-range"
+bc_versions: "14..|19..20|19->20|..23|18,20,22"  # See version syntax guide below
 difficulty: "beginner|intermediate|advanced"
 tags: ["tag1", "tag2", "tag3"]
 related_topics:
@@ -90,6 +90,16 @@ applies_to:
 last_updated: "2025-01-01"
 ---
 ```
+
+**BC Version Syntax Guide:**
+- `x..` - Minimum version (e.g., `14..` = BC14 and above)
+- `x..y` - Version range (e.g., `19..20` = BC19, BC20)
+- `..y` - Maximum version (e.g., `..23` = up to BC23)
+- `x->y` - Migration guide (e.g., `19->20` = upgrade from 19 to 20)
+- `x,y,z` - Discrete versions (e.g., `18,20,22` = only those versions)
+- `x-y` - Alternative range (e.g., `18-20` = same as `18..20`)
+- `x+` - Legacy minimum (e.g., `14+` = same as `14..`)
+
 
 ### File Naming Conventions
 - Use kebab-case for all filenames: `api-pagination-patterns.md`
