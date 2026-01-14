@@ -374,9 +374,20 @@ bc_versions: "all versions"  # Wrong - should be specific
 
 ✅ **Correct BC Version Format**
 ```yaml
-bc_versions: "14+"      # Version 14 and above
-bc_versions: "18-20"    # Versions 18 through 20
-bc_versions: "19+"      # Version 19 and above
+# Range syntax
+bc_versions: "14.."       # Version 14 and above
+bc_versions: "19..20"     # Versions 19 through 20
+bc_versions: "..23"       # Up to version 23 (deprecated features)
+bc_versions: "18-20"      # Alternative range syntax (same as 18..20)
+
+# Migration guide syntax
+bc_versions: "19->20"     # Migration from BC19 to BC20 (matches 19, 20)
+
+# Discrete versions
+bc_versions: "18,20,22"   # Specific versions only (matches 18, 20, 22)
+
+# Legacy syntax (still supported)
+bc_versions: "14+"        # Version 14 and above (equivalent to 14..)
 ```
 
 ## Best Practices
