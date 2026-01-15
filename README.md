@@ -3,16 +3,16 @@
 Pure knowledge content repository for Business Central best practices, methodologies, and domain expertise.
 
 ## Structure
-- `/domains/` - 24 BC domains with 87+ atomic knowledge topics
+- `/domains/` - BC domains containing atomic knowledge topics
 - `/methodologies/` - AI workflow frameworks for systematic optimization
-- `/specialists/` - 14 AI persona definitions for focused expertise
+- `/specialists/` - AI persona definitions for focused expertise
 - `/prompts/` - Strategic prompts for common BC scenarios
 
 ## Specialists
-Complete roster of 14 BC development specialists:
+Complete roster of BC development specialists:
 - **Alex Architect** - Strategic Planning & Architecture
-- **Casey Copilot** - AI-Enhanced Development Coach  
 - **Dean Debug** - Performance & Troubleshooting
+ - **Dean Debug** - Performance & Troubleshooting
 - **Eva Errors** - Error Handling & Exception Management
 - **Jordan Bridge** - Systems Connection & Event-Driven Design
 - **Logan Legacy** - Legacy Code & Version Migration
@@ -24,6 +24,9 @@ Complete roster of 14 BC development specialists:
 - **Seth Security** - Security & Permission Management
 - **Taylor Docs** - Documentation & Knowledge Management
 - **Uma UX** - User Experience & Interface Design
+- **Chris Config** - Code Intel MCP Configuration Helper
+- **Victor Versioning** - Version Migration & Upgrade Planning
+- **Lena Pipe** - Pipelines, CI/CD & Containerized Builds
 
 ## Usage
 This repository is consumed by the BC Code Intelligence MCP server via git submodule. Content is pure markdown with YAML frontmatter.

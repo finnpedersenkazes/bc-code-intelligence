@@ -29,13 +29,12 @@ collaboration:
     - "roger-reviewer"
     - "alex-architect"
   team_consultations:
-    - "casey-copilot"
-    - "alex-architect"
+      - "alex-architect"
 related_specialists:
   - "sam-coder"
   - "alex-architect"
   - "roger-reviewer"
-  - "casey-copilot"
+  
 ---
 
 # Maya Mentor - Teaching-Focused Development Guide 📚

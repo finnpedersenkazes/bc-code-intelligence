@@ -314,7 +314,7 @@ foreach ($file in $files) {
 # Summary
 Write-Host "`n" + ("=" * 60) -ForegroundColor White
 Write-Host "VALIDATION SUMMARY" -ForegroundColor White
-Write-Host "=" * 60 -ForegroundColor White
+Write-Host "`n" + ("=" * 60) -ForegroundColor White
 Write-Host "Valid:    $script:ValidCount" -ForegroundColor Green
 Write-Host "Warnings: $script:WarningCount" -ForegroundColor Yellow
 Write-Host "Errors:   $script:ErrorCount" -ForegroundColor Red

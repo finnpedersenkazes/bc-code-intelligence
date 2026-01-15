@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(pwsh -File ./scripts/harvest-obsoletions.ps1 -Version 24)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(xxd:*)",
+      "Bash(ls:*)",
+      "Bash(sort:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"c:/Work/jv-public/bc-code-intelligence/scripts/frontmatter_validator.ps1\":*)"
     ]
   }
 }

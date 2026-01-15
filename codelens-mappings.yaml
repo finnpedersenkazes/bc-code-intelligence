@@ -49,6 +49,22 @@ mappings:
     specialist: seth-security
     label: "Entitlements review with Seth"
 
+  - pattern: "IsolatedStorage\\."
+    specialist: seth-security
+    label: "Secrets storage with Seth"
+
+  - pattern: "SecretText"
+    specialist: seth-security
+    label: "SecretText handling with Seth"
+
+  - pattern: "DataClassification\\s*="
+    specialist: seth-security
+    label: "Data classification with Seth"
+
+  - pattern: "OAuth2\\.AcquireToken"
+    specialist: seth-security
+    label: "OAuth2 auth with Seth"
+
   # Testing -> Quinn
   - pattern: "\\[Test\\]"
     specialist: quinn-tester
@@ -104,6 +120,47 @@ mappings:
   - pattern: "interface "
     specialist: alex-architect
     label: "Interface design with Alex"
+
+  # UX and Page Design -> Uma
+  - pattern: "PageType\\s*=\\s*RoleCenter"
+    specialist: uma-ux
+    label: "Role Center design with Uma"
+
+  - pattern: "CueGroup|DrillDownPageId"
+    specialist: uma-ux
+    label: "Cue design with Uma"
+
+  - pattern: "area\\s*\\(\\s*FactBoxes"
+    specialist: uma-ux
+    label: "FactBox design with Uma"
+
+  - pattern: "SubPageLink"
+    specialist: uma-ux
+    label: "FactBox linking with Uma"
+
+  - pattern: "Promoted\\s*=|PromotedCategory|PromotedOnly"
+    specialist: uma-ux
+    label: "Action design with Uma"
+
+  - pattern: "ShortcutKey\\s*="
+    specialist: uma-ux
+    label: "Keyboard shortcuts with Uma"
+
+  - pattern: "AboutTitle|AboutText"
+    specialist: uma-ux
+    label: "Teaching tips with Uma"
+
+  - pattern: "PageBackgroundTask"
+    specialist: uma-ux
+    label: "Background tasks with Uma"
+
+  - pattern: "Notification\\."
+    specialist: uma-ux
+    label: "Notifications with Uma"
+
+  - pattern: "\\bviews\\b"
+    specialist: uma-ux
+    label: "Page views with Uma"
 
   # Code quality -> Roger
   - pattern: "procedure .+\\("

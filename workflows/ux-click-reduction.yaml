@@ -1,0 +1,216 @@
+type: "ux-audit"
+name: "UX Click Reduction Audit"
+description: "Analyze user workflows and identify opportunities to reduce clicks through better action bars, promoted fields, and page design"
+specialist: "uma-ux"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "workflow_discovery"
+    name: "User Workflow Discovery"
+    description: "Identify common user workflows and business processes the app supports"
+    required: true
+    mode: "guided"
+    available_actions:
+      - "identify_document_flows"
+      - "identify_master_data_operations"
+      - "identify_periodic_tasks"
+      - "map_user_journeys"
+      - "record_workflow"
+
+  - id: "page_inventory"
+    name: "Page Inventory"
+    description: "Enumerate all pages, their types, and relationships to workflows"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "workflow_discovery phase completed"
+
+  - id: "action_bar_analysis"
+    name: "Action Bar Analysis"
+    description: "Analyze action organization, promotion, and discoverability"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "page_inventory phase completed"
+    available_actions:
+      - "audit_promoted_actions"
+      - "check_action_grouping"
+      - "identify_buried_actions"
+      - "review_action_categories"
+      - "check_split_buttons"
+      - "record_finding"
+
+  - id: "field_accessibility"
+    name: "Field Accessibility Analysis"
+    description: "Review field placement, QuickEntry, and importance settings"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "action_bar_analysis phase completed"
+    available_actions:
+      - "audit_quickentry_fields"
+      - "check_importance_settings"
+      - "review_fasttab_organization"
+      - "identify_hidden_critical_fields"
+      - "record_finding"
+
+  - id: "navigation_analysis"
+    name: "Navigation Flow Analysis"
+    description: "Evaluate page-to-page navigation and drill-down efficiency"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "field_accessibility phase completed"
+    available_actions:
+      - "map_navigation_paths"
+      - "identify_missing_drilldowns"
+      - "check_card_list_relationships"
+      - "review_lookup_pages"
+      - "record_finding"
+
+  - id: "keyboard_shortcuts"
+    name: "Keyboard Shortcut Coverage"
+    description: "Verify frequent actions have keyboard shortcuts assigned"
+    required: false
+    mode: "guided"
+    entry_conditions:
+      - "navigation_analysis phase completed"
+    available_actions:
+      - "audit_shortcut_coverage"
+      - "check_shortcut_conflicts"
+      - "identify_missing_shortcuts"
+      - "record_finding"
+
+  - id: "recommendations"
+    name: "Click Reduction Recommendations"
+    description: "Generate prioritized recommendations with estimated click savings"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "navigation_analysis phase completed"
+
+workflow_patterns:
+  document_flows:
+    description: "Create, process, post document cycles"
+    examples:
+      - "Sales Order -> Ship -> Invoice -> Post"
+      - "Purchase Order -> Receive -> Invoice -> Post"
+    click_hotspots:
+      - "Navigate to posting action"
+      - "Switch between list and card"
+      - "Access related documents"
+
+  master_data:
+    description: "Create and maintain master records"
+    examples:
+      - "Customer card setup"
+      - "Item card configuration"
+    click_hotspots:
+      - "Access related lists"
+      - "Configure dimensions"
+      - "Set up pricing"
+
+  periodic_tasks:
+    description: "Regular batch operations"
+    examples:
+      - "Period close"
+      - "Batch posting"
+    click_hotspots:
+      - "Filter setup"
+      - "Batch action access"
+
+ux_checklist:
+  - id: "promoted_actions_present"
+    category: "action_bar"
+    description: "Key workflow actions are promoted to action bar"
+    required: true
+    impact: "high"
+    clicks_saved: "2-3 per operation"
+
+  - id: "action_grouping_logical"
+    category: "action_bar"
+    description: "Related actions grouped together logically"
+    required: true
+    impact: "medium"
+
+  - id: "split_buttons_used"
+    category: "action_bar"
+    description: "Split buttons used for actions with common variants"
+    required: false
+    impact: "medium"
+    clicks_saved: "1-2 per variant"
+
+  - id: "process_category_primary"
+    category: "action_bar"
+    description: "Process category contains primary document actions"
+    required: true
+    impact: "high"
+
+  - id: "quickentry_optimized"
+    category: "fields"
+    description: "QuickEntry set for data entry workflow fields"
+    required: true
+    impact: "high"
+    clicks_saved: "1 per field skipped"
+
+  - id: "importance_standard_critical"
+    category: "fields"
+    description: "Critical fields marked as Standard or Promoted importance"
+    required: true
+    impact: "high"
+
+  - id: "fasttabs_workflow_ordered"
+    category: "fields"
+    description: "FastTabs ordered by workflow frequency"
+    required: true
+    impact: "medium"
+
+  - id: "drilldowns_available"
+    category: "navigation"
+    description: "Drilldowns available for related records"
+    required: true
+    impact: "high"
+    clicks_saved: "3-5 per navigation"
+
+  - id: "navigate_action_present"
+    category: "navigation"
+    description: "Navigate action provides access to related entities"
+    required: true
+    impact: "medium"
+
+  - id: "shortcuts_frequent_actions"
+    category: "keyboard"
+    description: "Keyboard shortcuts assigned to frequent actions"
+    required: false
+    impact: "high"
+    clicks_saved: "2+ per shortcut use"
+
+impact_levels:
+  high:
+    description: "Significant daily time savings"
+    priority: "Address immediately"
+  medium:
+    description: "Noticeable efficiency improvement"
+    priority: "Address in next release"
+  low:
+    description: "Minor convenience enhancement"
+    priority: "Consider when convenient"
+
+completion_rules:
+  require_all_workflows: true
+  require_all_pages: false
+  generate_report: true
+  include_click_estimates: true
+
+related_knowledge:
+  - "domains/uma-ux/promoted-actions.md"
+  - "domains/uma-ux/action-bar-organization.md"
+  - "domains/uma-ux/fasttab-field-arrangement.md"
+  - "domains/uma-ux/common-action-groups.md"
+  - "domains/uma-ux/split-button-patterns.md"

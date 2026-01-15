@@ -1,0 +1,259 @@
+type: "role-center-analysis"
+name: "Role Center Discovery & Optimization"
+description: "Analyze app objects to discover high-value Role Center candidates and optimize existing Role Centers"
+specialist: "uma-ux"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "object_inventory"
+    name: "Object Inventory"
+    description: "Enumerate all tables, pages, reports, and codeunits in the app"
+    required: true
+    mode: "autonomous"
+
+  - id: "role_center_audit"
+    name: "Existing Role Center Audit"
+    description: "Analyze any existing Role Center pages for current structure and gaps"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "object_inventory phase completed"
+    available_actions:
+      - "find_role_centers"
+      - "analyze_cue_groups"
+      - "analyze_activities"
+      - "analyze_page_parts"
+      - "measure_cue_count"
+      - "record_finding"
+
+  - id: "cue_candidate_discovery"
+    name: "Cue Candidate Discovery"
+    description: "Identify tables with status fields, date fields, and counts worth surfacing"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "role_center_audit phase completed"
+    available_actions:
+      - "find_status_fields"
+      - "find_date_fields"
+      - "find_boolean_flags"
+      - "analyze_document_tables"
+      - "identify_flowfield_candidates"
+      - "record_candidate"
+
+  - id: "activity_candidate_discovery"
+    name: "Activity Candidate Discovery"
+    description: "Identify high-value pages and reports for Activity groups"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "cue_candidate_discovery phase completed"
+    available_actions:
+      - "find_list_pages"
+      - "find_document_pages"
+      - "find_frequently_used_reports"
+      - "identify_workflow_patterns"
+      - "group_by_business_process"
+      - "record_candidate"
+
+  - id: "headline_opportunities"
+    name: "Headline Opportunities"
+    description: "Identify data suitable for Headlines (KPIs, time-sensitive info)"
+    required: false
+    mode: "guided"
+    entry_conditions:
+      - "activity_candidate_discovery phase completed"
+    available_actions:
+      - "find_kpi_candidates"
+      - "find_date_based_metrics"
+      - "find_trend_data"
+      - "record_candidate"
+
+  - id: "role_mapping"
+    name: "Role Mapping"
+    description: "Map discovered candidates to specific user roles"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "activity_candidate_discovery phase completed"
+    available_actions:
+      - "identify_user_roles"
+      - "map_candidates_to_roles"
+      - "prioritize_by_role"
+      - "record_mapping"
+
+  - id: "recommendations"
+    name: "Role Center Recommendations"
+    description: "Generate specific recommendations with AL code snippets"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "role_mapping phase completed"
+
+discovery_patterns:
+  status_fields:
+    description: "Fields indicating record state - prime Cue candidates"
+    field_patterns:
+      - "Status"
+      - "State"
+      - "Document Status"
+      - "Approval Status"
+    value_patterns:
+      - "Open|Released|Pending|Approved|Rejected"
+      - "Draft|Posted|Cancelled"
+    cue_recommendation: "Create Cues for each actionable status value"
+
+  date_fields:
+    description: "Date fields for time-sensitive Cues"
+    field_patterns:
+      - "Due Date"
+      - "Posting Date"
+      - "Expected Date"
+      - "Promised Delivery Date"
+      - "Reminder Date"
+    cue_recommendation: "Create Cues for Overdue, Due Today, Due This Week"
+
+  document_patterns:
+    description: "Header/Line table pairs indicating documents"
+    indicators:
+      - "Header table with 'No.' primary key"
+      - "Line table with 'Document No.' + 'Line No.'"
+      - "Status field on header"
+    activity_recommendation: "Add to document processing Activity group"
+
+  boolean_flags:
+    description: "Boolean fields indicating exceptions or states"
+    field_patterns:
+      - "Blocked"
+      - "On Hold"
+      - "Requires Approval"
+      - "Has Errors"
+      - "Is Overdue"
+    cue_recommendation: "Create exception Cues for true counts"
+
+  assignment_fields:
+    description: "Fields indicating ownership for personal Cues"
+    field_patterns:
+      - "Assigned To"
+      - "Salesperson Code"
+      - "Purchaser Code"
+      - "Responsible"
+      - "Owner"
+    cue_recommendation: "Create 'Assigned to Me' filtered Cues"
+
+candidate_scoring:
+  high_value:
+    criteria:
+      - "Status field with 3+ distinct values"
+      - "Date field likely to have overdue records"
+      - "Document table with clear workflow"
+      - "Assignment field for personal filtering"
+    priority: "Include in initial Role Center design"
+
+  medium_value:
+    criteria:
+      - "Boolean exception flag"
+      - "Lookup table with active/inactive"
+      - "Report run frequently"
+    priority: "Consider for specific roles"
+
+  low_value:
+    criteria:
+      - "Historical or archive data"
+      - "Configuration tables"
+      - "Rarely accessed pages"
+    priority: "Omit from Role Center"
+
+role_templates:
+  sales:
+    typical_cues:
+      - "Open Quotes"
+      - "Orders to Ship"
+      - "Overdue Invoices"
+      - "Customers on Hold"
+    typical_activities:
+      - "Create Quote"
+      - "Sales Order List"
+      - "Customer Card"
+      - "Sales Reports"
+
+  purchasing:
+    typical_cues:
+      - "Open Purchase Orders"
+      - "Items to Receive"
+      - "Overdue Payments"
+      - "Vendors on Hold"
+    typical_activities:
+      - "Create Purchase Order"
+      - "Vendor Card"
+      - "Purchase Reports"
+
+  accounting:
+    typical_cues:
+      - "Unapplied Entries"
+      - "Bank Reconciliation"
+      - "Pending Approvals"
+      - "Period Close Tasks"
+    typical_activities:
+      - "General Ledger"
+      - "Chart of Accounts"
+      - "Financial Reports"
+
+  warehouse:
+    typical_cues:
+      - "Items to Receive"
+      - "Items to Ship"
+      - "Pick Lists"
+      - "Put-away Lists"
+    typical_activities:
+      - "Warehouse Shipment"
+      - "Inventory Movement"
+      - "Item Card"
+
+performance_checklist:
+  - id: "cue_count_limit"
+    description: "Role Center has 12 or fewer Cues"
+    threshold: 12
+    risk: "high"
+
+  - id: "flowfield_indexed"
+    description: "Cue FlowFields use indexed filter fields"
+    risk: "high"
+
+  - id: "no_large_table_cues"
+    description: "No Cues on tables with 100K+ records without proper filtering"
+    risk: "high"
+
+  - id: "drilldown_present"
+    description: "All Cues have DrillDownPageId set"
+    risk: "medium"
+
+  - id: "activities_grouped"
+    description: "Activities organized by business process"
+    risk: "low"
+
+output_format:
+  recommendations:
+    - table_name: "Identified source table"
+      field_name: "Field driving the Cue"
+      cue_caption: "Suggested Cue caption"
+      filter_expression: "Recommended filter"
+      drilldown_page: "Target page for drill-down"
+      target_role: "Which user role benefits"
+      priority: "high/medium/low"
+
+completion_rules:
+  require_all_phases: true
+  generate_code_snippets: true
+  include_performance_warnings: true
+
+related_knowledge:
+  - "domains/uma-ux/role-center-design.md"
+  - "domains/uma-ux/page-background-tasks.md"
+  - "domains/dean-debug/sift-optimization.md"

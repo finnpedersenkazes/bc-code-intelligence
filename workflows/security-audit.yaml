@@ -1,139 +1,245 @@
 type: "security-audit"
-name: "Security Audit"
-description: "Security review of AL code focusing on permissions, input validation, and data protection"
+name: "Security & Compliance Audit"
+description: "Comprehensive security analysis covering credentials, permissions, data classification, and vulnerability patterns"
 specialist: "seth-security"
 
 file_patterns:
   - "**/*.al"
+  - "**/app.json"
 file_exclusions:
   - "**/test/**"
   - "**/Test/**"
   - "**/.altestrunner/**"
 
 phases:
-  - id: "inventory"
-    name: "File Inventory"
-    description: "Enumerate all AL files in scope"
+  - id: "codebase_inventory"
+    name: "Codebase Inventory"
+    description: "Enumerate all objects and identify security-relevant code patterns"
     required: true
     mode: "autonomous"
 
-  - id: "permission_scan"
-    name: "Permission Analysis"
-    description: "Scan for permission-related code and validate permission sets"
+  - id: "secrets_scan"
+    name: "Secrets & Credentials Scan"
+    description: "Find hardcoded secrets, API keys, passwords, and improper credential handling"
     required: true
     mode: "guided"
     entry_conditions:
-      - "inventory phase completed"
+      - "codebase_inventory phase completed"
     available_actions:
-      - "scan_permissions"
-      - "validate_permission_sets"
-      - "check_inherent_permissions"
+      - "find_hardcoded_strings"
+      - "find_password_variables"
+      - "find_apikey_patterns"
+      - "check_isolatedstorage_usage"
+      - "verify_secrettext_usage"
+      - "record_finding"
 
-  - id: "input_validation"
-    name: "Input Validation Review"
-    description: "Check for proper validation of user inputs and external data"
+  - id: "permission_audit"
+    name: "Permission Set Audit"
+    description: "Analyze permission sets for completeness and least-privilege compliance"
     required: true
     mode: "guided"
     entry_conditions:
-      - "inventory phase completed"
+      - "codebase_inventory phase completed"
     available_actions:
-      - "check_user_inputs"
-      - "check_api_inputs"
-      - "check_file_inputs"
+      - "find_permission_sets"
+      - "analyze_permission_coverage"
+      - "check_indirect_permissions"
+      - "find_overprivileged_sets"
+      - "verify_rimdx_appropriateness"
+      - "record_finding"
 
-  - id: "data_protection"
-    name: "Data Protection Review"
-    description: "Review handling of sensitive data, credentials, and secrets"
+  - id: "data_classification_audit"
+    name: "Data Classification Audit"
+    description: "Verify all fields have appropriate DataClassification for GDPR compliance"
     required: true
     mode: "guided"
     entry_conditions:
-      - "inventory phase completed"
+      - "codebase_inventory phase completed"
     available_actions:
-      - "check_credentials"
-      - "check_pii_handling"
-      - "check_encryption"
+      - "find_unclassified_fields"
+      - "find_customercontent_fields"
+      - "find_euii_fields"
+      - "verify_sensitive_field_handling"
+      - "check_tobeexternalized"
+      - "record_finding"
 
-  - id: "temporary_table_review"
+  - id: "input_validation_scan"
+    name: "Input Validation Scan"
+    description: "Find SQL injection risks, unvalidated inputs, and unsafe dynamic operations"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "permission_audit phase completed"
+    available_actions:
+      - "find_dynamic_filters"
+      - "find_evaluate_calls"
+      - "find_unvalidated_user_input"
+      - "check_setfilter_interpolation"
+      - "find_format_string_risks"
+      - "record_finding"
+
+  - id: "api_security_review"
+    name: "API & Integration Security"
+    description: "Review external API calls, authentication patterns, and data exposure"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "input_validation_scan phase completed"
+    available_actions:
+      - "find_httpclient_usage"
+      - "check_oauth_implementation"
+      - "verify_https_enforcement"
+      - "find_exposed_credentials_in_urls"
+      - "check_certificate_validation"
+      - "record_finding"
+
+  - id: "event_exposure_review"
+    name: "Event & API Exposure Review"
+    description: "Check for sensitive data exposed through events or public APIs"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "api_security_review phase completed"
+    available_actions:
+      - "find_integration_events"
+      - "analyze_event_parameters"
+      - "find_sensitive_data_in_events"
+      - "check_public_procedure_exposure"
+      - "record_finding"
+
+  - id: "temporary_table_safety"
     name: "Temporary Table Safety"
-    description: "Verify IsTemporary checks before bulk operations"
+    description: "Verify IsTemporary checks and prevent accidental real table modifications"
     required: true
     mode: "guided"
     entry_conditions:
-      - "inventory phase completed"
+      - "event_exposure_review phase completed"
     available_actions:
-      - "check_istemporary"
-      - "check_deleteall_safety"
-      - "check_modifyall_safety"
+      - "find_temporary_table_usage"
+      - "check_istemporary_guards"
+      - "find_modify_without_istemporary"
+      - "record_finding"
 
-  - id: "api_security"
-    name: "API Security Review"
-    description: "Review API endpoints for proper authentication and authorization"
-    required: false
-    mode: "guided"
-    entry_conditions:
-      - "permission_scan phase completed"
-    available_actions:
-      - "check_api_authentication"
-      - "check_api_authorization"
-      - "check_rate_limiting"
-
-  - id: "summary"
-    name: "Security Report"
-    description: "Generate security findings report with risk ratings"
+  - id: "recommendations"
+    name: "Security Recommendations"
+    description: "Generate prioritized security fixes with remediation guidance"
     required: true
     mode: "autonomous"
     entry_conditions:
-      - "permission_scan phase completed"
-      - "input_validation phase completed"
-      - "data_protection phase completed"
-      - "temporary_table_review phase completed"
+      - "temporary_table_safety phase completed"
 
-per_file_checklist:
-  - id: "scan"
-    type: "analysis"
-    description: "Scan for security patterns"
-    required: true
+vulnerability_patterns:
+  - id: "hardcoded_secret"
+    name: "Hardcoded Secret"
+    description: "Password, API key, or token in source code"
+    severity: "critical"
+    cwe: "CWE-798"
+    fix: "Use IsolatedStorage with DataScope::Module"
 
-  - id: "permission_check"
-    type: "topic_application"
-    description: "Verify proper permission handling"
-    required: true
-    conditions:
-      content_pattern: "Permissions|InherentPermissions|TestPermissions"
+  - id: "sql_injection"
+    name: "Filter Injection"
+    description: "User input concatenated into SetFilter without validation"
+    severity: "critical"
+    cwe: "CWE-89"
+    fix: "Use parameterized filters or validate/escape input"
 
-  - id: "input_validation_check"
-    type: "topic_application"
-    description: "Check input validation patterns"
-    required: true
-    conditions:
-      content_pattern: "Validate|TestField|FieldError"
+  - id: "missing_permission_set"
+    name: "No Permission Sets Defined"
+    description: "App has no permission sets - users need SUPER"
+    severity: "high"
+    cwe: "CWE-269"
+    fix: "Define permission sets with minimum required permissions"
 
-  - id: "istemporary_check"
-    type: "topic_application"
-    description: "Verify IsTemporary safeguards on bulk operations"
-    required: true
-    conditions:
-      content_pattern: "DeleteAll|ModifyAll"
+  - id: "overprivileged_permissions"
+    name: "Overprivileged Permission Set"
+    description: "Permission set grants more access than needed"
+    severity: "medium"
+    cwe: "CWE-269"
+    fix: "Apply least privilege - grant only what's needed"
 
-  - id: "credential_check"
-    type: "topic_application"
-    description: "Check for hardcoded credentials or secrets"
-    required: true
-    conditions:
-      content_pattern: "password|secret|token|apikey|credential"
+  - id: "unclassified_pii"
+    name: "Unclassified Personal Data"
+    description: "Fields containing personal data without DataClassification"
+    severity: "high"
+    regulation: "GDPR Article 30"
+    fix: "Set DataClassification to CustomerContent or EUII"
 
-  - id: "security_complete"
-    type: "validation"
-    description: "Security review complete for this file"
-    required: true
+  - id: "http_not_https"
+    name: "HTTP Instead of HTTPS"
+    description: "External calls using HTTP instead of HTTPS"
+    severity: "high"
+    cwe: "CWE-319"
+    fix: "Use HTTPS for all external communications"
 
-topic_discovery:
-  enabled: true
-  tool: "analyze_al_code"
-  auto_expand_checklist: true
-  min_relevance_score: 0.7
+  - id: "credential_in_url"
+    name: "Credentials in URL"
+    description: "API key or password embedded in URL"
+    severity: "critical"
+    cwe: "CWE-598"
+    fix: "Pass credentials in headers, not URLs"
+
+  - id: "missing_istemporary_check"
+    name: "Missing IsTemporary Guard"
+    description: "Modify/Delete on record without IsTemporary check"
+    severity: "medium"
+    fix: "Add IsTemporary guard at procedure entry"
+
+  - id: "sensitive_data_in_event"
+    name: "Sensitive Data in Event"
+    description: "Integration event exposes passwords, tokens, or PII"
+    severity: "high"
+    fix: "Remove sensitive fields from event parameters"
+
+severity_levels:
+  critical:
+    description: "Immediate security risk - exploitable vulnerability"
+    priority: "Fix before any deployment"
+    compliance_impact: "Likely certification failure"
+
+  high:
+    description: "Significant security weakness"
+    priority: "Fix before production release"
+    compliance_impact: "May fail security review"
+
+  medium:
+    description: "Security best practice violation"
+    priority: "Address in current release cycle"
+    compliance_impact: "May raise concerns in audit"
+
+  low:
+    description: "Minor security improvement"
+    priority: "Address when convenient"
+    compliance_impact: "Unlikely to cause issues"
+
+compliance_frameworks:
+  gdpr:
+    relevant_checks:
+      - "data_classification_audit"
+      - "sensitive_data_in_event"
+      - "unclassified_pii"
+    articles:
+      - "Article 30: Records of processing"
+      - "Article 32: Security of processing"
+
+  appsource:
+    relevant_checks:
+      - "permission_audit"
+      - "secrets_scan"
+      - "api_security_review"
+    requirements:
+      - "No hardcoded credentials"
+      - "Proper permission sets"
+      - "Multi-tenant safe"
 
 completion_rules:
-  require_all_files: true
-  require_all_checklist_items: true
-  allow_skip_with_reason: true
+  require_all_phases: true
+  generate_remediation_code: true
+  include_cwe_references: true
+  flag_compliance_impacts: true
+
+related_knowledge:
+  - "domains/seth-security/secrets-isolated-storage.md"
+  - "domains/seth-security/permission-set-design.md"
+  - "domains/seth-security/data-classification.md"
+  - "domains/seth-security/external-api-authentication.md"
+  - "domains/seth-security/istemporary-safeguard-pattern.md"

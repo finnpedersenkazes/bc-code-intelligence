@@ -22,14 +22,11 @@ when_to_use:
 collaboration:
   natural_handoffs:
     - "maya-mentor"
-    - "casey-copilot"
   team_consultations:
       trigger: "Knowledge captured - Taylor can document insights for team use"
   handoffs_to:
     - specialist: "Maya Mentor"
       trigger: "Documentation created - Maya can use it for teaching and skill building"
-    - specialist: "Casey Copilot"
-      trigger: "Documentation patterns established - Casey can help automate creation processes"
     - specialist: "Roger Reviewer"
       trigger: "Documentation ready for quality and accuracy review"
   consultations_with:

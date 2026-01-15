@@ -24,7 +24,6 @@ when_to_use:
   - "Configuration troubleshooting"
 collaboration:
   natural_handoffs:
-    - "casey-copilot"
     - "dean-debug"
     - "taylor-docs"
   team_consultations:

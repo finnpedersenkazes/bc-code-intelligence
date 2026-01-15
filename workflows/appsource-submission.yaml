@@ -1,0 +1,306 @@
+type: "appsource-validation"
+name: "AppSource Submission Preparation"
+description: "Comprehensive validation workflow for AppSource submission readiness covering technical compliance, business requirements, and partner readiness"
+specialist: "morgan-market"
+
+file_patterns:
+  - "**/app.json"
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "object_id_validation"
+    name: "Object ID Compliance"
+    description: "Validate all objects use assigned publisher range and idRanges in app.json"
+    required: true
+    mode: "guided"
+    specialist_handoff: "alex-architect"
+    available_actions:
+      - "verify_publisher_range"
+      - "audit_object_ids"
+      - "validate_idranges"
+      - "record_finding"
+
+  - id: "app_json_validation"
+    name: "App.json Manifest Validation"
+    description: "Verify all required properties, URL accessibility, and visual assets"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "object_id_validation phase completed"
+    available_actions:
+      - "validate_required_properties"
+      - "test_url_accessibility"
+      - "verify_visual_assets"
+      - "check_publisher_match"
+      - "record_finding"
+
+  - id: "codecop_validation"
+    name: "Code Analyzer Validation"
+    description: "Run CodeCop, AppSourceCop, UICop, PerTenantExtensionCop with zero warnings/errors"
+    required: true
+    mode: "guided"
+    specialist_handoff: "roger-reviewer"
+    entry_conditions:
+      - "app_json_validation phase completed"
+    available_actions:
+      - "enable_codecop"
+      - "enable_appsourcecop"
+      - "enable_uicop"
+      - "enable_pertenantextensioncop"
+      - "run_analyzers"
+      - "resolve_warnings"
+      - "record_finding"
+
+  - id: "api_surface_review"
+    name: "API Surface & Scope Review"
+    description: "Review object access modifiers and interface contracts - these cannot be changed post-publication"
+    required: true
+    mode: "guided"
+    specialist_handoff: "alex-architect"
+    entry_conditions:
+      - "codecop_validation phase completed"
+    available_actions:
+      - "audit_access_modifiers"
+      - "review_public_codeunits"
+      - "validate_interface_contracts"
+      - "check_solid_principles"
+      - "identify_unintentional_public"
+      - "record_finding"
+
+  - id: "code_quality"
+    name: "Code Quality Validation"
+    description: "Ensure zero compilation errors/warnings, proper naming, error handling"
+    required: true
+    mode: "guided"
+    specialist_handoff: "roger-reviewer"
+    entry_conditions:
+      - "api_surface_review phase completed"
+    available_actions:
+      - "run_compilation"
+      - "check_warnings"
+      - "validate_naming"
+      - "check_error_handling"
+      - "record_finding"
+
+  - id: "security_validation"
+    name: "Security and Permissions"
+    description: "Validate permission sets, multi-tenant safety, data access patterns"
+    required: true
+    mode: "guided"
+    specialist_handoff: "seth-security"
+    entry_conditions:
+      - "code_quality phase completed"
+    available_actions:
+      - "audit_permissions"
+      - "check_multitenant_safety"
+      - "validate_data_access"
+      - "check_api_security"
+      - "record_finding"
+
+  - id: "legal_compliance"
+    name: "Legal Documentation"
+    description: "Verify privacy statement, EULA, help URLs accessible via HTTPS"
+    required: true
+    mode: "guided"
+    specialist_handoff: "taylor-docs"
+    entry_conditions:
+      - "security_validation phase completed"
+    available_actions:
+      - "test_privacy_url"
+      - "test_eula_url"
+      - "test_help_url"
+      - "verify_https"
+      - "record_finding"
+
+  - id: "compatibility_testing"
+    name: "Version Compatibility"
+    description: "Test on declared platform versions, upgrade paths, multi-company"
+    required: true
+    mode: "guided"
+    specialist_handoff: "quinn-tester"
+    entry_conditions:
+      - "legal_compliance phase completed"
+    available_actions:
+      - "test_platform_version"
+      - "test_upgrade_path"
+      - "test_multicompany"
+      - "run_performance_test"
+      - "record_finding"
+
+  - id: "partner_readiness"
+    name: "Partner Readiness (Optional)"
+    description: "Extensibility events, telemetry, documentation package"
+    required: false
+    mode: "guided"
+    entry_conditions:
+      - "compatibility_testing phase completed"
+    available_actions:
+      - "audit_events"
+      - "check_telemetry"
+      - "review_documentation"
+      - "record_finding"
+
+  - id: "submission_report"
+    name: "Submission Readiness Report"
+    description: "Generate final compliance report with pass/fail status per category"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "compatibility_testing phase completed"
+
+validation_checklist:
+  - id: "publisher_range"
+    category: "object_ids"
+    description: "Microsoft-assigned publisher range obtained"
+    required: true
+    risk_level: "high"
+
+  - id: "objects_in_range"
+    category: "object_ids"
+    description: "All objects within assigned range"
+    required: true
+    risk_level: "high"
+
+  - id: "idranges_complete"
+    category: "object_ids"
+    description: "app.json idRanges covers all objects"
+    required: true
+    risk_level: "high"
+
+  - id: "required_properties"
+    category: "app_json"
+    description: "All required app.json properties present"
+    required: true
+    risk_level: "high"
+
+  - id: "publisher_match"
+    category: "app_json"
+    description: "Publisher matches Partner Center exactly"
+    required: true
+    risk_level: "high"
+
+  - id: "https_urls"
+    category: "app_json"
+    description: "All URLs use HTTPS with valid certs"
+    required: true
+    risk_level: "high"
+
+  - id: "visual_assets"
+    category: "app_json"
+    description: "Logo and screenshots meet requirements"
+    required: true
+    risk_level: "medium"
+
+  - id: "codecop_clean"
+    category: "code_analyzers"
+    description: "CodeCop analyzer passes with zero warnings"
+    required: true
+    risk_level: "high"
+
+  - id: "appsourcecop_clean"
+    category: "code_analyzers"
+    description: "AppSourceCop analyzer passes with zero warnings"
+    required: true
+    risk_level: "high"
+
+  - id: "uicop_clean"
+    category: "code_analyzers"
+    description: "UICop analyzer passes with zero warnings"
+    required: true
+    risk_level: "high"
+
+  - id: "pertenantextensioncop_clean"
+    category: "code_analyzers"
+    description: "PerTenantExtensionCop passes (if applicable)"
+    required: false
+    risk_level: "medium"
+
+  - id: "intentional_scoping"
+    category: "api_surface"
+    description: "All objects have intentional access modifiers (internal vs public)"
+    required: true
+    risk_level: "high"
+    notes: "Public objects become part of your API contract and cannot be made internal later"
+
+  - id: "codeunits_reviewed"
+    category: "api_surface"
+    description: "All public codeunits intentionally exposed for partner use"
+    required: true
+    risk_level: "high"
+    notes: "Default is public - ensure internal codeunits are marked explicitly"
+
+  - id: "interfaces_solid"
+    category: "api_surface"
+    description: "Interfaces follow SOLID principles and are carefully designed"
+    required: true
+    risk_level: "high"
+    notes: "Interfaces cannot be changed after publication - only obsoleted"
+
+  - id: "interface_segregation"
+    category: "api_surface"
+    description: "Interfaces are small and focused (Interface Segregation Principle)"
+    required: true
+    risk_level: "high"
+    notes: "Large interfaces force implementers to stub methods they don't need"
+
+  - id: "zero_errors"
+    category: "code_quality"
+    description: "Zero compilation errors"
+    required: true
+    risk_level: "high"
+
+  - id: "zero_warnings"
+    category: "code_quality"
+    description: "Zero compilation warnings"
+    required: true
+    risk_level: "medium"
+
+  - id: "permission_sets"
+    category: "security"
+    description: "Permission sets defined"
+    required: true
+    risk_level: "high"
+
+  - id: "multitenant_safe"
+    category: "security"
+    description: "Multi-tenant safe implementation"
+    required: true
+    risk_level: "high"
+
+  - id: "privacy_accessible"
+    category: "legal"
+    description: "Privacy statement accessible"
+    required: true
+    risk_level: "high"
+
+  - id: "eula_accessible"
+    category: "legal"
+    description: "EULA accessible"
+    required: true
+    risk_level: "high"
+
+risk_levels:
+  high:
+    description: "Causes automatic rejection"
+    action: "Must fix before submission"
+  medium:
+    description: "May cause approval delays"
+    action: "Should address promptly"
+  low:
+    description: "Affects post-launch success"
+    action: "Recommended to address"
+
+completion_rules:
+  require_all_high_risk: true
+  require_all_phases: false
+  allow_skip_optional: true
+  generate_report: true
+
+related_knowledge:
+  - "domains/morgan-market/appsource-app-json-requirements.md"
+  - "domains/morgan-market/appsource-object-id-validation.md"
+  - "domains/morgan-market/appsource-submission-checklist.md"

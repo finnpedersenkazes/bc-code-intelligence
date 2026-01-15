@@ -1,0 +1,274 @@
+type: "factbox-audit"
+name: "FactBox Discovery & Optimization"
+description: "Analyze pages to identify FactBox opportunities and optimize existing FactBox implementations"
+specialist: "uma-ux"
+
+file_patterns:
+  - "**/*.al"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "page_inventory"
+    name: "Page & Table Inventory"
+    description: "Enumerate all pages, their source tables, and existing FactBox areas"
+    required: true
+    mode: "autonomous"
+
+  - id: "existing_factbox_audit"
+    name: "Existing FactBox Audit"
+    description: "Analyze current FactBox implementations for quality and performance"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "page_inventory phase completed"
+    available_actions:
+      - "find_factbox_areas"
+      - "analyze_factbox_parts"
+      - "check_factbox_performance"
+      - "assess_content_relevance"
+      - "record_finding"
+
+  - id: "relationship_discovery"
+    name: "Table Relationship Discovery"
+    description: "Identify table relationships that could be surfaced in FactBoxes"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "existing_factbox_audit phase completed"
+    available_actions:
+      - "find_foreign_keys"
+      - "find_related_tables"
+      - "identify_one_to_many"
+      - "identify_lookup_relationships"
+      - "record_relationship"
+
+  - id: "factbox_candidate_discovery"
+    name: "FactBox Candidate Discovery"
+    description: "Identify high-value FactBox opportunities based on relationships and user needs"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "relationship_discovery phase completed"
+    available_actions:
+      - "find_summary_candidates"
+      - "find_related_list_candidates"
+      - "find_statistics_candidates"
+      - "find_attachment_candidates"
+      - "prioritize_candidates"
+      - "record_candidate"
+
+  - id: "page_gap_analysis"
+    name: "Page Gap Analysis"
+    description: "Identify pages missing FactBoxes that would benefit from them"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "factbox_candidate_discovery phase completed"
+    available_actions:
+      - "find_pages_without_factboxes"
+      - "assess_factbox_need"
+      - "match_candidates_to_pages"
+      - "record_gap"
+
+  - id: "performance_review"
+    name: "FactBox Performance Review"
+    description: "Identify FactBoxes causing performance issues"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "page_gap_analysis phase completed"
+    available_actions:
+      - "check_query_complexity"
+      - "identify_expensive_calcfields"
+      - "find_unfiltered_lists"
+      - "assess_load_impact"
+      - "record_finding"
+
+  - id: "recommendations"
+    name: "FactBox Recommendations"
+    description: "Generate prioritized recommendations with implementation guidance"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "performance_review phase completed"
+
+discovery_patterns:
+  summary_factboxes:
+    description: "Statistical summaries of related records"
+    indicators:
+      - "One-to-many relationship exists"
+      - "Child table has amount/quantity fields"
+      - "Aggregation would be meaningful"
+    examples:
+      - "Customer -> Total Outstanding Balance"
+      - "Item -> Inventory by Location"
+      - "Vendor -> Open Purchase Orders"
+    part_type: "CardPart"
+
+  related_lists:
+    description: "Lists of related records for quick reference"
+    indicators:
+      - "Foreign key relationship"
+      - "Users frequently navigate to related records"
+      - "Related records < 20 typically"
+    examples:
+      - "Customer -> Recent Sales Orders"
+      - "Item -> Active Purchase Lines"
+      - "Sales Header -> Sales Lines preview"
+    part_type: "ListPart"
+
+  document_attachments:
+    description: "Attached files and links"
+    indicators:
+      - "Document Attachment table relationship"
+      - "Record Links exist"
+      - "Notes functionality needed"
+    examples:
+      - "Any master -> Attached Documents"
+      - "Any document -> Record Links"
+    part_type: "ListPart"
+
+  record_statistics:
+    description: "Key metrics about the current record"
+    indicators:
+      - "FlowFields on source table"
+      - "Calculated totals meaningful in context"
+      - "History/trend data available"
+    examples:
+      - "Customer -> Sales This Year vs Last Year"
+      - "Item -> Qty on Hand, Reserved, Available"
+    part_type: "CardPart"
+
+  workflow_status:
+    description: "Approval and workflow state"
+    indicators:
+      - "Approval Entry relationships"
+      - "Workflow status fields"
+      - "Pending actions exist"
+    examples:
+      - "Document -> Approval Status FactBox"
+      - "Record -> Workflow History"
+    part_type: "ListPart"
+
+page_type_recommendations:
+  card_pages:
+    priority: "high"
+    recommended_factboxes:
+      - "Related record summaries"
+      - "Statistics about current record"
+      - "Recent related transactions"
+      - "Document attachments"
+      - "Notes and links"
+
+  document_pages:
+    priority: "high"
+    recommended_factboxes:
+      - "Customer/Vendor summary"
+      - "Item availability (for lines)"
+      - "Approval status"
+      - "Related documents"
+      - "Attachments"
+
+  list_pages:
+    priority: "medium"
+    recommended_factboxes:
+      - "Selected record details"
+      - "Quick statistics"
+    notes: "FactBoxes update on row selection - keep lightweight"
+
+  worksheet_pages:
+    priority: "low"
+    recommended_factboxes:
+      - "Line details on selection"
+    notes: "Users focus on grid - minimal FactBox distraction"
+
+candidate_scoring:
+  high_value:
+    criteria:
+      - "Eliminates navigation to see related data"
+      - "Surfaces frequently-needed information"
+      - "Cheap to calculate (indexed FlowFields)"
+      - "Card page with natural relationships"
+    priority: "Implement immediately"
+
+  medium_value:
+    criteria:
+      - "Useful but not critical information"
+      - "Moderate query cost"
+      - "Document page enhancement"
+    priority: "Include in next release"
+
+  low_value:
+    criteria:
+      - "Nice-to-have information"
+      - "Expensive to calculate"
+      - "List page (updates on selection)"
+    priority: "Consider if performance allows"
+
+performance_checklist:
+  - id: "filtered_queries"
+    description: "FactBox ListParts use SubPageLink filtering"
+    risk: "high"
+    notes: "Unfiltered lists load ALL records"
+
+  - id: "calcfield_indexed"
+    description: "FlowFields in FactBoxes use indexed filters"
+    risk: "high"
+
+  - id: "limited_records"
+    description: "ListPart FactBoxes limited to reasonable count"
+    risk: "medium"
+    threshold: 10
+
+  - id: "no_expensive_triggers"
+    description: "FactBox pages avoid expensive OnAfterGetRecord"
+    risk: "high"
+
+  - id: "appropriate_page_type"
+    description: "FactBoxes match page context (Card vs List)"
+    risk: "medium"
+
+anti_patterns:
+  - id: "unfiltered_listpart"
+    description: "ListPart without SubPageLink loads all records"
+    severity: "critical"
+    fix: "Add SubPageLink to filter by parent record"
+
+  - id: "expensive_flowfields"
+    description: "Complex CalcFormulas recalculated on every page load"
+    severity: "high"
+    fix: "Use SIFT indexes or pre-calculated fields"
+
+  - id: "too_many_factboxes"
+    description: "More than 4-5 FactBoxes clutters the page"
+    severity: "medium"
+    fix: "Prioritize most valuable, remove low-value parts"
+
+  - id: "redundant_information"
+    description: "FactBox shows same data as page fields"
+    severity: "low"
+    fix: "Remove redundant FactBox or page fields"
+
+output_format:
+  recommendations:
+    - page_name: "Target page for FactBox"
+      factbox_type: "CardPart/ListPart"
+      source_table: "Data source"
+      relationship: "How it relates to page"
+      fields_to_show: "Recommended fields"
+      subpagelink: "Filter expression"
+      priority: "high/medium/low"
+      performance_notes: "Any concerns"
+
+completion_rules:
+  require_all_phases: true
+  generate_code_snippets: true
+  include_performance_warnings: true
+
+related_knowledge:
+  - "domains/uma-ux/role-center-design.md"
+  - "domains/dean-debug/sift-optimization.md"
+  - "domains/dean-debug/setloadfields-pattern.md"

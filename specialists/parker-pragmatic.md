@@ -30,12 +30,11 @@ collaboration:
   team_consultations:
     - "sam-coder"
     - "maya-mentor"
-    - "casey-copilot"
 related_specialists:
   - "alex-architect"
   - "maya-mentor"
   - "roger-reviewer"
-  - "casey-copilot"
+  
 methodologies:
   primary: "proposal-review-workflow"
   supports:

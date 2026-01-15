@@ -48,15 +48,15 @@ $totalTopics = 0
 $totalSamples = 0
 
 foreach ($specialist in $specialists) {
-    $topicFiles = Get-ChildItem -Path $specialist.FullName -Filter "*.md" -File -ErrorAction SilentlyContinue
+    # Get all .md files recursively, excluding samples folders
+    $topicFiles = Get-ChildItem -Path $specialist.FullName -Filter "*.md" -File -Recurse -ErrorAction SilentlyContinue |
+        Where-Object { $_.DirectoryName -notmatch '[\\/]samples([\\/]|$)' }
     $topicCount = ($topicFiles | Measure-Object).Count
 
-    $samplesPath = Join-Path $specialist.FullName "samples"
-    $sampleCount = 0
-    if (Test-Path $samplesPath) {
-        $sampleFiles = Get-ChildItem -Path $samplesPath -Filter "*.md" -File -ErrorAction SilentlyContinue
-        $sampleCount = ($sampleFiles | Measure-Object).Count
-    }
+    # Get all sample files from any samples folder (including nested)
+    $sampleFiles = Get-ChildItem -Path $specialist.FullName -Filter "*.md" -File -Recurse -ErrorAction SilentlyContinue |
+        Where-Object { $_.DirectoryName -match '[\\/]samples([\\/]|$)' }
+    $sampleCount = ($sampleFiles | Measure-Object).Count
 
     $workflows = $workflowsBySpecialist[$specialist.Name]
     $workflowCount = if ($workflows) { $workflows.Count } else { 0 }

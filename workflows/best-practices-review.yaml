@@ -1,0 +1,296 @@
+type: "best-practices-review"
+name: "Comprehensive Best Practices Review"
+description: "Full-spectrum code review leveraging all specialist knowledge for performance, security, UX, architecture, and maintainability"
+specialist: "roger-reviewer"
+
+file_patterns:
+  - "**/*.al"
+  - "**/app.json"
+file_exclusions:
+  - "**/test/**"
+  - "**/Test/**"
+  - "**/.altestrunner/**"
+
+phases:
+  - id: "codebase_inventory"
+    name: "Codebase Inventory"
+    description: "Full enumeration of objects, complexity metrics, and hot spot identification"
+    required: true
+    mode: "autonomous"
+
+  - id: "performance_scan"
+    name: "Performance Analysis"
+    description: "Identify performance anti-patterns using Dean's expertise"
+    required: true
+    mode: "guided"
+    specialist_handoff: "dean-debug"
+    entry_conditions:
+      - "codebase_inventory phase completed"
+    available_actions:
+      - "check_setloadfields_usage"
+      - "find_n_plus_one_patterns"
+      - "analyze_loop_efficiency"
+      - "check_sift_coverage"
+      - "find_bulk_operation_opportunities"
+      - "record_finding"
+    checklist:
+      - "SetLoadFields before all FindSet/FindFirst"
+      - "No Get/CalcFields inside loops"
+      - "SIFT keys for FlowFields"
+      - "ModifyAll/DeleteAll for bulk operations"
+      - "Proper key selection with SetCurrentKey"
+
+  - id: "security_scan"
+    name: "Security Analysis"
+    description: "Security vulnerability scan using Seth's expertise"
+    required: true
+    mode: "guided"
+    specialist_handoff: "seth-security"
+    entry_conditions:
+      - "codebase_inventory phase completed"
+    available_actions:
+      - "find_hardcoded_secrets"
+      - "check_permission_sets"
+      - "verify_data_classification"
+      - "check_input_validation"
+      - "verify_istemporary_guards"
+      - "record_finding"
+    checklist:
+      - "No hardcoded credentials"
+      - "IsolatedStorage for secrets"
+      - "Permission sets defined"
+      - "DataClassification on all fields"
+      - "IsTemporary guards on record parameters"
+
+  - id: "error_handling_scan"
+    name: "Error Handling Analysis"
+    description: "Error handling patterns using Eva's expertise"
+    required: true
+    mode: "guided"
+    specialist_handoff: "eva-errors"
+    entry_conditions:
+      - "codebase_inventory phase completed"
+    available_actions:
+      - "check_error_messages"
+      - "find_silent_failures"
+      - "verify_errorinfo_usage"
+      - "check_try_function_patterns"
+      - "verify_user_friendly_messages"
+      - "record_finding"
+    checklist:
+      - "User-friendly error messages"
+      - "ErrorInfo for actionable errors"
+      - "No silent failures (empty catch)"
+      - "Proper TryFunction patterns"
+      - "Field-level errors use FieldError"
+
+  - id: "ux_scan"
+    name: "UX Pattern Analysis"
+    description: "User experience patterns using Uma's expertise"
+    required: true
+    mode: "guided"
+    specialist_handoff: "uma-ux"
+    entry_conditions:
+      - "codebase_inventory phase completed"
+    available_actions:
+      - "check_action_organization"
+      - "verify_promoted_actions"
+      - "check_factbox_efficiency"
+      - "analyze_field_placement"
+      - "verify_keyboard_shortcuts"
+      - "record_finding"
+    checklist:
+      - "Key actions promoted"
+      - "Logical action grouping"
+      - "FactBoxes with SubPageLink"
+      - "QuickEntry on data entry fields"
+      - "Consistent page layouts"
+
+  - id: "architecture_scan"
+    name: "Architecture Analysis"
+    description: "Code organization and API design using Alex's expertise"
+    required: true
+    mode: "guided"
+    specialist_handoff: "alex-architect"
+    entry_conditions:
+      - "performance_scan phase completed"
+      - "security_scan phase completed"
+    available_actions:
+      - "check_access_modifiers"
+      - "analyze_coupling"
+      - "verify_interface_design"
+      - "check_obsolete_patterns"
+      - "identify_circular_dependencies"
+      - "record_finding"
+    checklist:
+      - "Intentional public vs internal"
+      - "Interfaces follow ISP"
+      - "Proper Obsolete attributes"
+      - "Loose coupling between modules"
+      - "Clear dependency direction"
+
+  - id: "event_scan"
+    name: "Event Architecture Analysis"
+    description: "Integration events and extensibility using Jordan's expertise"
+    required: true
+    mode: "guided"
+    specialist_handoff: "jordan-bridge"
+    entry_conditions:
+      - "architecture_scan phase completed"
+    available_actions:
+      - "inventory_integration_events"
+      - "check_event_coverage"
+      - "verify_event_parameters"
+      - "identify_extensibility_gaps"
+      - "check_subscriber_patterns"
+      - "record_finding"
+    checklist:
+      - "Key processes have events"
+      - "Event parameters sufficient"
+      - "No sensitive data in events"
+      - "Subscriber error handling"
+      - "No circular event chains"
+
+  - id: "documentation_scan"
+    name: "Documentation Analysis"
+    description: "Code documentation using Taylor's expertise"
+    required: false
+    mode: "guided"
+    specialist_handoff: "taylor-docs"
+    entry_conditions:
+      - "event_scan phase completed"
+    available_actions:
+      - "check_xml_documentation"
+      - "verify_public_api_docs"
+      - "check_procedure_summaries"
+      - "verify_parameter_docs"
+      - "record_finding"
+    checklist:
+      - "Public procedures documented"
+      - "Parameters have descriptions"
+      - "Complex logic has comments"
+      - "Obsolete reasons documented"
+
+  - id: "consolidation"
+    name: "Finding Consolidation"
+    description: "Consolidate all specialist findings into unified report"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "performance_scan phase completed"
+      - "security_scan phase completed"
+      - "error_handling_scan phase completed"
+      - "ux_scan phase completed"
+      - "architecture_scan phase completed"
+      - "event_scan phase completed"
+
+  - id: "recommendations"
+    name: "Prioritized Recommendations"
+    description: "Generate actionable recommendations prioritized by impact and effort"
+    required: true
+    mode: "autonomous"
+    entry_conditions:
+      - "consolidation phase completed"
+
+finding_categories:
+  - id: "critical"
+    name: "Critical Issues"
+    description: "Security vulnerabilities, data loss risks, breaking changes"
+    action: "Must fix before release"
+    specialists: ["seth-security", "dean-debug"]
+
+  - id: "high"
+    name: "High Priority"
+    description: "Performance problems, significant UX issues, maintainability risks"
+    action: "Should fix in current release"
+    specialists: ["dean-debug", "uma-ux", "alex-architect"]
+
+  - id: "medium"
+    name: "Medium Priority"
+    description: "Best practice violations, minor performance issues, documentation gaps"
+    action: "Plan for near-term fix"
+    specialists: ["roger-reviewer", "eva-errors", "jordan-bridge"]
+
+  - id: "low"
+    name: "Low Priority"
+    description: "Suggestions, minor improvements, polish items"
+    action: "Address when convenient"
+    specialists: ["taylor-docs", "uma-ux"]
+
+cross_cutting_patterns:
+  - id: "consistency"
+    name: "Code Consistency"
+    checks:
+      - "Naming conventions followed"
+      - "Formatting consistent"
+      - "Similar patterns used for similar problems"
+      - "Error handling approach uniform"
+
+  - id: "completeness"
+    name: "Implementation Completeness"
+    checks:
+      - "All CRUD operations secured"
+      - "All user inputs validated"
+      - "All external calls have error handling"
+      - "All public APIs documented"
+
+  - id: "robustness"
+    name: "Code Robustness"
+    checks:
+      - "Edge cases handled"
+      - "Null/empty checks present"
+      - "Timeouts configured for external calls"
+      - "Retry logic where appropriate"
+
+report_format:
+  sections:
+    - name: "Executive Summary"
+      content: "Overall health score, critical findings count, top recommendations"
+
+    - name: "Critical Issues"
+      content: "Security and data integrity issues requiring immediate attention"
+
+    - name: "Performance Findings"
+      content: "Performance anti-patterns with estimated impact"
+
+    - name: "Security Findings"
+      content: "Security vulnerabilities and compliance gaps"
+
+    - name: "UX Findings"
+      content: "User experience improvements"
+
+    - name: "Architecture Findings"
+      content: "Design and maintainability concerns"
+
+    - name: "Recommendations"
+      content: "Prioritized action items with effort estimates"
+
+scoring:
+  health_score:
+    description: "Overall codebase health 0-100"
+    factors:
+      - "Critical issues: -20 each"
+      - "High issues: -5 each"
+      - "Medium issues: -2 each"
+      - "Low issues: -0.5 each"
+    thresholds:
+      - "90-100: Excellent"
+      - "75-89: Good"
+      - "60-74: Needs Attention"
+      - "Below 60: Significant Issues"
+
+completion_rules:
+  require_all_phases: false
+  require_critical_phases: true
+  generate_health_score: true
+  generate_action_plan: true
+  parallel_specialist_scans: true
+
+related_knowledge:
+  - "domains/dean-debug/"
+  - "domains/seth-security/"
+  - "domains/eva-errors/"
+  - "domains/uma-ux/"
+  - "domains/alex-architect/"
+  - "domains/jordan-bridge/"
+  - "domains/taylor-docs/"

@@ -1,6 +1,6 @@
 type: "performance-audit"
-name: "Performance Audit"
-description: "Comprehensive performance analysis and optimization for Business Central AL code"
+name: "Performance Deep Dive"
+description: "Comprehensive performance analysis to identify bottlenecks, N+1 queries, missing optimizations, and SIFT opportunities"
 specialist: "dean-debug"
 
 file_patterns:
@@ -11,138 +11,208 @@ file_exclusions:
   - "**/.altestrunner/**"
 
 phases:
-  - id: "inventory"
-    name: "File Inventory"
-    description: "Enumerate all AL files and assess codebase size"
+  - id: "codebase_inventory"
+    name: "Codebase Inventory"
+    description: "Enumerate all AL files and identify high-risk areas (large procedures, loops, database operations)"
     required: true
     mode: "autonomous"
 
-  - id: "analysis_quick"
-    name: "Quick Analysis"
-    description: "Rapid scan for common performance anti-patterns"
+  - id: "database_operation_scan"
+    name: "Database Operation Analysis"
+    description: "Find all FindSet, FindFirst, Get, Insert, Modify, Delete operations"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "codebase_inventory phase completed"
+    available_actions:
+      - "find_record_operations"
+      - "map_operation_locations"
+      - "identify_hot_paths"
+      - "record_finding"
+
+  - id: "setloadfields_audit"
+    name: "SetLoadFields Audit"
+    description: "Check for missing SetLoadFields before record retrieval operations"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "database_operation_scan phase completed"
+    available_actions:
+      - "find_findset_without_setloadfields"
+      - "find_findfirst_without_setloadfields"
+      - "analyze_field_usage_after_find"
+      - "calculate_potential_savings"
+      - "record_finding"
+
+  - id: "loop_analysis"
+    name: "Loop & Iteration Analysis"
+    description: "Identify database calls inside loops (N+1 patterns) and inefficient iterations"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "database_operation_scan phase completed"
+    available_actions:
+      - "find_loops_with_db_calls"
+      - "find_get_in_loops"
+      - "find_calcfields_in_loops"
+      - "find_nested_loops"
+      - "identify_bulk_alternatives"
+      - "record_finding"
+
+  - id: "sift_analysis"
+    name: "SIFT & FlowField Analysis"
+    description: "Audit FlowField usage and SIFT index coverage"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "loop_analysis phase completed"
+    available_actions:
+      - "find_flowfields"
+      - "check_sift_coverage"
+      - "find_calcsums_opportunities"
+      - "identify_missing_sift_keys"
+      - "find_manual_summation_loops"
+      - "record_finding"
+
+  - id: "query_pattern_analysis"
+    name: "Query Pattern Analysis"
+    description: "Evaluate filter patterns, key usage, and query efficiency"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "sift_analysis phase completed"
+    available_actions:
+      - "find_unfiltered_findset"
+      - "check_setcurrentkey_usage"
+      - "find_inefficient_filters"
+      - "identify_missing_indexes"
+      - "check_partial_records"
+      - "record_finding"
+
+  - id: "bulk_operation_opportunities"
+    name: "Bulk Operation Opportunities"
+    description: "Find single-record operations that could be bulk operations"
+    required: true
+    mode: "guided"
+    entry_conditions:
+      - "query_pattern_analysis phase completed"
+    available_actions:
+      - "find_modify_in_loops"
+      - "find_delete_in_loops"
+      - "suggest_modifyall"
+      - "suggest_deleteall"
+      - "record_finding"
+
+  - id: "recommendations"
+    name: "Performance Recommendations"
+    description: "Generate prioritized recommendations with estimated impact"
     required: true
     mode: "autonomous"
     entry_conditions:
-      - "inventory phase completed"
-    available_actions:
-      - "scan_patterns"
-      - "identify_hotspots"
+      - "bulk_operation_opportunities phase completed"
 
-  - id: "analysis_full"
-    name: "Full Analysis"
-    description: "Deep analysis of all procedures for performance patterns"
-    required: true
-    mode: "guided"
-    entry_conditions:
-      - "analysis_quick phase completed"
-    available_actions:
-      - "analyze_procedure"
-      - "check_all_patterns"
-      - "document_coverage"
-      - "cross_reference"
+anti_patterns:
+  - id: "findset_no_setloadfields"
+    name: "FindSet without SetLoadFields"
+    description: "FindSet/FindFirst called without prior SetLoadFields"
+    severity: "high"
+    impact: "Loads all fields from database, wastes bandwidth and memory"
+    fix: "Add SetLoadFields with only needed fields before Find operation"
 
-  - id: "performance_quick"
-    name: "Quick Optimization"
-    description: "Apply straightforward optimizations (SetLoadFields, obvious SIFT)"
-    required: true
-    mode: "guided"
-    entry_conditions:
-      - "analysis_full phase completed"
-    available_actions:
-      - "apply_setloadfields"
-      - "apply_sift"
-      - "optimize_loops"
+  - id: "get_in_loop"
+    name: "Get inside loop"
+    description: "Record.Get called inside repeat-until or foreach"
+    severity: "critical"
+    impact: "N+1 query pattern - one database call per iteration"
+    fix: "Bulk load records before loop, use dictionary/temp table lookup"
 
-  - id: "performance_full"
-    name: "Full Optimization"
-    description: "Complex optimizations requiring architectural consideration"
-    required: false
-    mode: "agent_driven"
-    entry_conditions:
-      - "performance_quick phase completed"
-    available_actions:
-      - "redesign_query"
-      - "implement_caching"
-      - "batch_operations"
-      - "refactor_loops"
+  - id: "calcfields_in_loop"
+    name: "CalcFields inside loop"
+    description: "CalcFields called inside iteration"
+    severity: "high"
+    impact: "Database aggregation per row - extremely expensive"
+    fix: "Use Query object or pre-calculate outside loop"
 
-  - id: "execution_validation"
-    name: "Execution Validation"
-    description: "Verify optimizations are correctly implemented and functional"
-    required: true
-    mode: "guided"
-    entry_conditions:
-      - "performance_quick phase completed"
-    available_actions:
-      - "verify_changes"
-      - "test_compilation"
-      - "validate_logic"
+  - id: "modify_in_loop"
+    name: "Single Modify in loop"
+    description: "Individual Modify calls inside loop"
+    severity: "medium"
+    impact: "One transaction per record instead of bulk"
+    fix: "Use ModifyAll when setting same values, or batch with Commit"
 
-  - id: "verification"
-    name: "Coverage Verification"
-    description: "Ensure all files analyzed and no procedures missed"
-    required: true
-    mode: "autonomous"
-    entry_conditions:
-      - "execution_validation phase completed"
-    available_actions:
-      - "validate_coverage"
-      - "detect_gaps"
-      - "generate_report"
+  - id: "unfiltered_findset"
+    name: "Unfiltered FindSet"
+    description: "FindSet without SetRange/SetFilter on large table"
+    severity: "high"
+    impact: "Scans entire table - catastrophic on large tables"
+    fix: "Always filter before FindSet, especially on transaction tables"
 
-per_file_checklist:
-  - id: "scan"
-    type: "analysis"
-    description: "Scan for performance patterns"
-    required: true
+  - id: "manual_summation"
+    name: "Manual summation loop"
+    description: "Loop accumulating values that could be CalcSums"
+    severity: "medium"
+    impact: "Manual loop instead of SIFT-optimized aggregation"
+    fix: "Use CalcSums with proper SIFT key"
 
-  - id: "setloadfields_check"
-    type: "topic_application"
-    description: "Check SetLoadFields before record operations"
-    required: true
-    conditions:
-      content_pattern: "Find(Set|First|Last)\\s*\\("
+  - id: "missing_setcurrentkey"
+    name: "Missing SetCurrentKey"
+    description: "Query relies on implicit key instead of optimal key"
+    severity: "medium"
+    impact: "May use suboptimal index, causing table scans"
+    fix: "Explicitly set key matching filter fields"
 
-  - id: "sift_check"
-    type: "topic_application"
-    description: "Check for manual summation that should use SIFT"
-    required: true
-    conditions:
-      content_pattern: "repeat.*\\+.*until|:=.*\\+.*;"
+  - id: "nested_loops_db"
+    name: "Nested loops with database"
+    description: "Outer loop with inner loop containing DB operations"
+    severity: "critical"
+    impact: "O(n*m) database calls - exponential degradation"
+    fix: "Restructure to bulk load, use temp tables, or Query objects"
 
-  - id: "loop_check"
-    type: "topic_application"
-    description: "Check loop efficiency patterns"
-    required: true
-    conditions:
-      content_pattern: "repeat"
+severity_levels:
+  critical:
+    description: "Causes timeouts or failures at scale"
+    priority: "Fix immediately"
+    typical_impact: "10x-100x slower"
 
-  - id: "calcsums_check"
-    type: "topic_application"
-    description: "Verify CalcSums/CalcFields usage"
-    required: true
-    conditions:
-      content_pattern: "CalcSums|CalcFields"
+  high:
+    description: "Significant performance degradation"
+    priority: "Fix before release"
+    typical_impact: "2x-10x slower"
 
-  - id: "deleteall_check"
-    type: "topic_application"
-    description: "Review DeleteAll usage and trigger implications"
-    required: true
-    conditions:
-      content_pattern: "DeleteAll"
+  medium:
+    description: "Suboptimal but functional"
+    priority: "Address when convenient"
+    typical_impact: "Minor slowdown"
 
-  - id: "optimization_complete"
-    type: "validation"
-    description: "All performance issues addressed"
-    required: true
+  low:
+    description: "Micro-optimization opportunity"
+    priority: "Consider if in hot path"
+    typical_impact: "Negligible in isolation"
 
-topic_discovery:
-  enabled: true
-  tool: "analyze_al_code"
-  auto_expand_checklist: true
-  min_relevance_score: 0.5
+estimation_factors:
+  records_affected:
+    description: "Estimated table size affects severity"
+    thresholds:
+      - "< 1000 records: reduce severity one level"
+      - "1000-100000 records: use stated severity"
+      - "> 100000 records: increase severity one level"
+
+  call_frequency:
+    description: "How often the code path executes"
+    multipliers:
+      - "Once per session: low priority"
+      - "Per document: medium priority"
+      - "Per line: high priority"
+      - "Per keystroke: critical priority"
 
 completion_rules:
-  require_all_files: true
-  require_all_checklist_items: true
-  allow_skip_with_reason: true
+  require_all_phases: true
+  generate_code_snippets: true
+  include_impact_estimates: true
+  prioritize_by_severity: true
+
+related_knowledge:
+  - "domains/dean-debug/setloadfields-pattern.md"
+  - "domains/dean-debug/sift-optimization.md"
+  - "domains/dean-debug/partial-records.md"
+  - "domains/dean-debug/query-object-patterns.md"

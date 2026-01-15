@@ -31,7 +31,6 @@ methodologies/            # AI workflow frameworks
 
 specialists/             # AI persona definitions
 ├── alex-architect.md        # Strategic Planning & Architecture
-├── casey-copilot.md         # AI-Enhanced Development Coach
 ├── dean-debug.md            # Performance & Troubleshooting
 ├── eva-errors.md            # Error Handling & Exception Management
 ├── jordan-bridge.md         # Systems Connection & Event-Driven Design
