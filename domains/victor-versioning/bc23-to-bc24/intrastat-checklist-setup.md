@@ -1,0 +1,23 @@
+﻿---
+title: "Intrastat Checklist Setup Obsoleted"
+domain: "victor-versioning"
+difficulty: "intermediate"
+migration_type: "obsoletion"
+bc_versions: "21->22"
+urgency: "immediate"
+tags: ["bc22-migration", "breaking-change", "obsoletion", "table"]
+
+relevance_signals:
+  constructs: ["Intrastat Checklist Setup", "IntrastatChecklistSetup"]
+  keywords: []
+  anti_pattern_indicators: []
+  positive_pattern_indicators: []
+
+applicable_object_types: ["table"]
+relevance_threshold: 0.6
+---
+# Intrastat Checklist Setup Obsoleted
+
+### table `Intrastat Checklist Setup`
+{'Object': 'Intrastat Checklist Setup', 'State': 'Removed', 'Tag': '22.0', 'Reason': 'Replaced by Advanced Intrastat Checklist'}
+

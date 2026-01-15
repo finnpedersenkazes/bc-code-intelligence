@@ -1,0 +1,29 @@
+﻿---
+title: "Purch. Post Invoice Events - 3 Obsoletions"
+domain: "victor-versioning"
+difficulty: "intermediate"
+migration_type: "obsoletion"
+bc_versions: "25->26"
+urgency: "deprecation-warning"
+tags: ["bc26-migration", "breaking-change", "obsoletion", "codeunit"]
+
+relevance_signals:
+  constructs: ["RunOnCalculateVATAmountsOnAfterGetReverseChargeVATPostingSetup", "Purch. Post Invoice Events", "Purch.PostInvoiceEvents", "RunOnPrepareLineOnAfterFillInvoicePostingBuffer"]
+  keywords: []
+  anti_pattern_indicators: ["Purch. Post Invoice Events.RunOnCalculateVATAmountsOnAfterGetReverseChargeVATPostingSetup", "Purch. Post Invoice Events.RunOnPrepareLineOnAfterFillInvoicePostingBuffer"]
+  positive_pattern_indicators: []
+
+applicable_object_types: ["codeunit"]
+relevance_threshold: 0.6
+---
+# Purch. Post Invoice Events - 3 Obsoletions
+
+### procedure `RunOnCalculateVATAmountsOnAfterGetReverseChargeVATPostingSetup`
+{'Object': 'Purch. Post Invoice Events', 'State': 'Pending', 'Tag': '26.0', 'Reason': 'Replaced by procedure that also receives PurchHeader and TempInvoicePostingBuffer'}
+
+### procedure `RunOnCalculateVATAmountsOnAfterGetReverseChargeVATPostingSetup`
+{'Object': 'Purch. Post Invoice Events', 'State': 'Pending', 'Tag': '26.0', 'Reason': 'Replaced by procedure that also receives TempInvoicePostingBuffer'}
+
+### procedure `RunOnPrepareLineOnAfterFillInvoicePostingBuffer`
+{'Object': 'Purch. Post Invoice Events', 'State': 'Pending', 'Tag': '26.0', 'Reason': 'Replaced by procedure RunOnPrepareLineOnAfterFillInvoicePostingBuffer(var InvoicePostingBuffer: Record "Invoice Posting Buffer"; PurchLine: Record "Purchase Line"; var TempInvoicePostingBuffer: Record "Invoice Posting Buffer" temporary; var FALineNo: Integer; var InvDefLineNo: Integer; var DeferralLineNo: Integer; var IsHandled: Boolean)'}
+
