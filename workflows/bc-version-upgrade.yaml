@@ -1,7 +1,7 @@
 type: "bc-version-upgrade"
 name: "BC Version Upgrade"
 description: "Upgrade Business Central codebase between major versions, handling breaking changes and deprecated features"
-specialist: "alex-architect"
+specialist: "victor-versioning"
 
 file_patterns:
   - "**/*.al"
