@@ -3,7 +3,17 @@ title: "Creating Custom BC Knowledge Content"
 domain: "chris-config"
 difficulty: "intermediate"
 bc_versions: "14+"
-tags: ["knowledge-creation", "content-authoring", "yaml-frontmatter", "markdown", "relevance-signals", "samples", "custom-patterns", "detection"]
+tags:
+  [
+    "knowledge-creation",
+    "content-authoring",
+    "yaml-frontmatter",
+    "markdown",
+    "relevance-signals",
+    "samples",
+    "custom-patterns",
+    "detection",
+  ]
 related_topics:
   - "content-types-structure.md"
   - "multi-team-layer-configuration.md"
@@ -11,9 +21,35 @@ related_topics:
 
 relevance_signals:
   constructs: []
-  keywords: ["knowledge", "content", "frontmatter", "yaml", "domain", "tags", "bc_versions", "difficulty", "markdown", "relevance signals", "samples", "topic", "detection pattern", "custom pattern"]
-  anti_pattern_indicators: ["code in topic", "missing frontmatter", "no relevance_signals"]
-  positive_pattern_indicators: ["create knowledge", "write content", "custom topic", "knowledge authoring", "V2 frontmatter", "separate samples", "detection.pattern"]
+  keywords:
+    [
+      "knowledge",
+      "content",
+      "frontmatter",
+      "yaml",
+      "domain",
+      "tags",
+      "bc_versions",
+      "difficulty",
+      "markdown",
+      "relevance signals",
+      "samples",
+      "topic",
+      "detection pattern",
+      "custom pattern",
+    ]
+  anti_pattern_indicators:
+    ["code in topic", "missing frontmatter", "no relevance_signals"]
+  positive_pattern_indicators:
+    [
+      "create knowledge",
+      "write content",
+      "custom topic",
+      "knowledge authoring",
+      "V2 frontmatter",
+      "separate samples",
+      "detection.pattern",
+    ]
 
 applicable_object_types: []
 relevance_threshold: 0.4
@@ -35,6 +71,7 @@ For each topic, create TWO files:
 2. **Samples file**: `domains/{specialist}/samples/topic-name.md` - All AL code examples
 
 **Why separate?**
+
 - Agents can load concepts without code overhead
 - Samples fetched only when implementation needed
 - Smaller context, more efficient retrieval
@@ -45,7 +82,7 @@ For each topic, create TWO files:
 ```yaml
 ---
 title: "Descriptive Topic Title"
-domain: "specialist-name"              # Must match folder (dean-debug, seth-security, etc.)
+domain: "specialist-name" # Must match folder (dean-debug, seth-security, etc.)
 difficulty: "beginner|intermediate|advanced"
 bc_versions: "14+"
 tags: ["tag1", "tag2", "tag3"]
@@ -54,20 +91,20 @@ related_topics:
 
 # V2 Relevance Signals (REQUIRED)
 relevance_signals:
-  constructs: ["FindSet", "SetLoadFields"]    # AL constructs covered
-  keywords: ["performance", "optimization"]    # Technical terms for matching
-  anti_pattern_indicators: ["missing SetLoadFields", "Get in loop"]  # Bad pattern phrases
-  positive_pattern_indicators: ["uses SetLoadFields", "bulk load"]   # Good pattern phrases
+  constructs: ["FindSet", "SetLoadFields"] # AL constructs covered
+  keywords: ["performance", "optimization"] # Technical terms for matching
+  anti_pattern_indicators: ["missing SetLoadFields", "Get in loop"] # Bad pattern phrases
+  positive_pattern_indicators: ["uses SetLoadFields", "bulk load"] # Good pattern phrases
 
 # Custom Pattern Detection (OPTIONAL - v1.7.3+)
 # Use for company/project standards enforcement
 detection:
-  pattern: "(FindSet\\(\\))(?!.*SetLoadFields)"  # Regex pattern (use | for literal block)
-  severity: "warning"                             # error|warning|info
-  description: "FindSet without SetLoadFields"    # What this checks
+  pattern: "(FindSet\\(\\))(?!.*SetLoadFields)" # Regex pattern (use | for literal block)
+  severity: "warning" # error|warning|info
+  description: "FindSet without SetLoadFields" # What this checks
 
-applicable_object_types: ["codeunit", "page", "table"]  # Object types this applies to
-relevance_threshold: 0.5              # 0.3-0.4=informational, 0.5-0.6=standard, 0.7-0.8=critical
+applicable_object_types: ["codeunit", "page", "table"] # Object types this applies to
+relevance_threshold: 0.5 # 0.3-0.4=informational, 0.5-0.6=standard, 0.7-0.8=critical
 ---
 ```
 
@@ -77,26 +114,33 @@ relevance_threshold: 0.5              # 0.3-0.4=informational, 0.5-0.6=standard,
 # Topic Title
 
 ## Overview
+
 2-3 sentence summary - what and why
 
 ## How It Works
+
 Conceptual explanation (no code here)
 
 ## When to Apply
+
 - Scenario 1
 - Scenario 2
 - Scenario 3
 
 ## Best Practices
+
 Grouped recommendations
 
 ## Common Mistakes
+
 What to avoid (conceptually)
 
 ## Summary
+
 Key takeaways
 
 ---
+
 **Code Examples**: See [samples/topic-name.md](samples/topic-name.md)
 **Related Topics**: [Other Topic](./other-topic.md)
 ```
@@ -105,7 +149,7 @@ Key takeaways
 
 ## Samples Content Structure (All Code)
 
-```markdown
+````markdown
 ---
 title: "Topic Name - Code Examples"
 parent_topic: "topic-name.md"
@@ -128,6 +172,7 @@ begin
         until Customer.Next() = 0;
 end;
 ```
+````
 
 ## Bad Pattern ❌
 
@@ -159,7 +204,8 @@ begin
         until Customer.Next() = 0;
 end;
 ```
-```
+
+````
 
 ## Specialist Domains
 
@@ -206,15 +252,15 @@ relevance_signals:
     - "uses SetLoadFields"
     - "partial record loading"
     - "optimized query"
-```
+````
 
 ### Threshold Guidelines
 
-| Threshold | When to Use |
-|-----------|-------------|
-| 0.3-0.4 | Informational topics, good patterns to suggest |
-| 0.5-0.6 | Standard patterns, common issues |
-| 0.7-0.8 | Critical issues, security concerns (high precision) |
+| Threshold | When to Use                                         |
+| --------- | --------------------------------------------------- |
+| 0.3-0.4   | Informational topics, good patterns to suggest      |
+| 0.5-0.6   | Standard patterns, common issues                    |
+| 0.7-0.8   | Critical issues, security concerns (high precision) |
 
 ## Custom Pattern Detection (v1.7.3+)
 
@@ -222,23 +268,26 @@ The optional `detection` frontmatter field enables **regex-based code scanning**
 
 ```yaml
 detection:
-  pattern: "(Caption\\s*=\\s*['\"][^'\"]+['\"])"  # Regex pattern
-  severity: "warning"                              # error|warning|info  
-  description: "Caption requires Danish comment"   # What this checks
+  pattern: "(Caption\\s*=\\s*['\"][^'\"]+['\"])" # Regex pattern
+  severity: "warning" # error|warning|info
+  description: "Caption requires Danish comment" # What this checks
 ```
 
 **When to use**:
+
 - Company-specific coding standards (e.g., "all Captions need Danish comments")
 - Project-specific conventions (e.g., "no hardcoded text, use Labels")
 - Automated compliance checking (e.g., "Error() calls must use ErrorInfo")
 
 **How it works**:
+
 1. `analyze_al_code` scans topics for `detection.pattern` frontmatter
 2. Runs regex against code being analyzed
 3. Results appear in `company_standards_violations` section (separate from `suggested_topics`)
 4. Layer priority determines precedence (project > team > company > embedded)
 
 **YAML syntax for regex patterns**:
+
 ```yaml
 # Option 1: Double quotes with escaped backslashes
 pattern: "(FindSet\\(\\))(?!.*SetLoadFields)"
@@ -256,30 +305,36 @@ pattern: 'procedure\s+\w+\('
 ## Content Development Workflow
 
 ### 1. Plan Your Topic
+
 - Identify the knowledge gap
 - Choose the specialist domain
 - Determine difficulty level
 - List relevant constructs and keywords
 
 ### 2. Create Topic File
+
 ```
 domains/{specialist}/topic-name.md
 ```
+
 - Write V2 frontmatter with relevance_signals
 - Conceptual content only
 - Under 100 lines after frontmatter
 - Link to samples at bottom
 
 ### 3. Create Samples File
+
 ```
 domains/{specialist}/samples/topic-name.md
 ```
+
 - All AL code examples
 - Good patterns with comments
 - Bad patterns marked with ❌
 - Corrected versions marked with ✅
 
 ### 4. Validate
+
 ```powershell
 ./scripts/frontmatter_validator.ps1 -Path "domains" -ExcludeSamples
 ```
@@ -300,9 +355,11 @@ Before committing new topics:
 ## Common Mistakes
 
 ### ❌ Code in Topic File
+
 Topic files should be conceptual only. Move all AL code to `samples/`.
 
 ### ❌ Missing Relevance Signals
+
 ```yaml
 # Wrong - no relevance_signals
 ---
@@ -312,15 +369,18 @@ domain: "dean-debug"
 ```
 
 ### ❌ Wrong Domain Name
+
 ```yaml
 # Wrong - domain doesn't match folder
-domain: "performance"  # Should be "dean-debug"
+domain: "performance" # Should be "dean-debug"
 ```
 
 ### ❌ Topic Too Long
+
 Keep topics under 100 lines after frontmatter. Split large topics or move detail to samples.
 
 ### ❌ Empty Relevance Arrays
+
 ```yaml
 # Wrong - empty arrays don't help matching
 relevance_signals:

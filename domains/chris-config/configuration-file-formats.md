@@ -14,9 +14,28 @@ last_updated: "2025-10-29"
 
 relevance_signals:
   constructs: []
-  keywords: ["json", "yaml", "config", "configuration", "layers", "git", "authentication", "az_cli", "pat", "token"]
+  keywords:
+    [
+      "json",
+      "yaml",
+      "config",
+      "configuration",
+      "layers",
+      "git",
+      "authentication",
+      "az_cli",
+      "pat",
+      "token",
+    ]
   anti_pattern_indicators: []
-  positive_pattern_indicators: ["config file", "configuration format", "bc-code-intel-config", "layer configuration", "authentication setup"]
+  positive_pattern_indicators:
+    [
+      "config file",
+      "configuration format",
+      "bc-code-intel-config",
+      "layer configuration",
+      "authentication setup",
+    ]
 
 applicable_object_types: []
 
@@ -34,12 +53,14 @@ The BC Code Intelligence MCP server supports flexible configuration through JSON
 The MCP server accepts configuration in **two formats**:
 
 ### **JSON Format** (Most Common)
+
 - File names: `bc-code-intel-config.json`
 - Syntax: Standard JSON with comments NOT supported
 - Best for: Simple configurations, CI/CD environments
 - Validation: Strict JSON parsing
 
 ### **YAML Format** (Human-Friendly)
+
 - File names: `bc-code-intel-config.yaml` or `bc-code-intel-config.yml`
 - Syntax: YAML with indentation-based structure
 - Best for: Complex configurations, human readability
@@ -57,6 +78,7 @@ npx bc-code-intelligence-mcp
 ```
 
 **When to skip config files:**
+
 - Individual developer using embedded BC knowledge only
 - Trying out the MCP server for the first time
 - No company-specific knowledge to add
@@ -67,6 +89,7 @@ npx bc-code-intelligence-mcp
 ### **Example 1: Enable Diagnostic Tools**
 
 **JSON:**
+
 ```json
 {
   "enable_diagnostic_tools": true
@@ -74,6 +97,7 @@ npx bc-code-intelligence-mcp
 ```
 
 **YAML:**
+
 ```yaml
 enable_diagnostic_tools: true
 ```
@@ -83,6 +107,7 @@ enable_diagnostic_tools: true
 ### **Example 2: Add a Company Git Layer**
 
 **JSON:**
+
 ```json
 {
   "layers": [
@@ -104,6 +129,7 @@ enable_diagnostic_tools: true
 ```
 
 **YAML:**
+
 ```yaml
 layers:
   - name: "Company BC Standards"
@@ -122,6 +148,7 @@ layers:
 ### **Example 3: Full Multi-Layer Setup**
 
 **JSON:**
+
 ```json
 {
   "layers": [
@@ -166,6 +193,7 @@ layers:
 ```
 
 **YAML:**
+
 ```yaml
 layers:
   - name: "Company Standards"
@@ -204,21 +232,21 @@ enable_diagnostic_tools: true
 
 ### **Root Configuration Object**
 
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `layers` | Array | No | `[]` | Array of knowledge layer configurations |
-| `enable_diagnostic_tools` | Boolean | No | `false` | Enable advanced diagnostic MCP tools |
-| `bc_version` | String | No | Auto-detect | Target BC version for filtering (e.g., "22", "21") |
+| Field                     | Type    | Required | Default     | Description                                        |
+| ------------------------- | ------- | -------- | ----------- | -------------------------------------------------- |
+| `layers`                  | Array   | No       | `[]`        | Array of knowledge layer configurations            |
+| `enable_diagnostic_tools` | Boolean | No       | `false`     | Enable advanced diagnostic MCP tools               |
+| `bc_version`              | String  | No       | Auto-detect | Target BC version for filtering (e.g., "22", "21") |
 
 ### **Knowledge Layer Object**
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `name` | String | Yes | Human-readable layer name |
-| `priority` | Number | Yes | Layer priority (0-100, higher wins) |
-| `source` | Object | Yes | Source configuration (varies by type, includes `type` field) |
-| `auth` | Object | No | Authentication configuration (for git layers) |
-| `enabled` | Boolean | No (default: `true`) | Whether layer is active |
+| Field      | Type    | Required             | Description                                                  |
+| ---------- | ------- | -------------------- | ------------------------------------------------------------ |
+| `name`     | String  | Yes                  | Human-readable layer name                                    |
+| `priority` | Number  | Yes                  | Layer priority (0-100, higher wins)                          |
+| `source`   | Object  | Yes                  | Source configuration (varies by type, includes `type` field) |
+| `auth`     | Object  | No                   | Authentication configuration (for git layers)                |
+| `enabled`  | Boolean | No (default: `true`) | Whether layer is active                                      |
 
 ### **Git Source Configuration**
 
@@ -234,7 +262,7 @@ enable_diagnostic_tools: true
 "auth": {
   // Option 1: Azure CLI (recommended for Azure DevOps)
   "type": "az_cli"
-  
+
   // Option 2: Token (fallback or for GitHub)
   // "type": "token",
   // "token_env_var": string   // Environment variable containing token
@@ -253,6 +281,7 @@ enable_diagnostic_tools: true
 ## Layer Priority Guidelines
 
 **Standard Priority Ranges:**
+
 - **0**: Embedded knowledge (reserved - always present)
 - **10-30**: Company-wide standards
 - **40-60**: Team or department conventions
@@ -268,6 +297,7 @@ enable_diagnostic_tools: true
 #### **Option 1: Azure CLI (Preferred)**
 
 **Why prefer Azure CLI:**
+
 - ✅ No token expiration management
 - ✅ Works with MFA and conditional access policies
 - ✅ Single sign-on via `az login`
@@ -278,11 +308,13 @@ enable_diagnostic_tools: true
 1. **Install Azure CLI:** https://aka.ms/install-az-cli
 
 2. **Login to Azure:**
+
    ```bash
    az login
    ```
 
 3. **Configure in JSON:**
+
    ```json
    "auth": {
      "type": "az_cli"
@@ -296,6 +328,7 @@ enable_diagnostic_tools: true
    ```
 
 **Full example:**
+
 ```json
 {
   "layers": [
@@ -326,10 +359,11 @@ Use when Azure CLI is not available or when automation requires static credentia
    - Scopes: `Code (Read)`
 
 2. **Set environment variable:**
+
    ```bash
    # Windows PowerShell
    $env:AZURE_DEVOPS_PAT = "your_pat_token_here"
-   
+
    # Linux/macOS
    export AZURE_DEVOPS_PAT="your_pat_token_here"
    ```
@@ -350,10 +384,11 @@ Use when Azure CLI is not available or when automation requires static credentia
    - Permissions: `repo` (for private repos) or no permissions (public repos)
 
 2. **Set environment variable:**
+
    ```bash
    # Windows PowerShell
    $env:GITHUB_TOKEN = "ghp_your_token_here"
-   
+
    # Linux/macOS
    export GITHUB_TOKEN="ghp_your_token_here"
    ```
@@ -371,6 +406,7 @@ Use when Azure CLI is not available or when automation requires static credentia
 ### **Method 1: Manual Creation**
 
 **Windows:**
+
 ```powershell
 # Create in workspace
 New-Item -Path "bc-code-intel-config.json" -ItemType File
@@ -380,6 +416,7 @@ notepad bc-code-intel-config.json
 ```
 
 **Linux/macOS:**
+
 ```bash
 # Create in workspace
 touch bc-code-intel-config.json
@@ -403,6 +440,7 @@ cp bc-code-intel-config.example.json bc-code-intel-config.json
 ### **Method 3: Programmatic Generation**
 
 **PowerShell:**
+
 ```powershell
 $config = @{
     layers = @(
@@ -427,6 +465,7 @@ $config | ConvertTo-Json -Depth 10 | Out-File "bc-code-intel-config.json"
 ```
 
 **Bash/Node.js:**
+
 ```bash
 cat > bc-code-intel-config.json << 'EOF'
 {
@@ -454,6 +493,7 @@ EOF
 See [Configuration File Discovery](configuration-file-discovery.md) for details on where to place config files.
 
 **Quick reference:**
+
 1. **Workspace:** `./bc-code-intel-config.{json|yaml|yml}` (highest priority)
 2. **Home Directory:** `~/.bc-code-intel/config.{json|yaml|yml}`
 3. **Environment Variable:** `BC_CODE_INTEL_CONFIG=/path/to/config.json`
@@ -465,6 +505,7 @@ See [Configuration File Discovery](configuration-file-discovery.md) for details 
 **Online:** Use https://jsonlint.com/
 
 **Command Line:**
+
 ```bash
 # Node.js
 node -e "JSON.parse(require('fs').readFileSync('bc-code-intel-config.json', 'utf8'))"
@@ -502,12 +543,15 @@ Then query layer status via MCP tools to verify layers loaded correctly.
 ## Common Configuration Patterns
 
 ### **Pattern 1: Individual Developer (Zero Config)**
+
 ```json
 {}
 ```
+
 Uses embedded knowledge only.
 
 ### **Pattern 2: Company Standards Only**
+
 ```json
 {
   "layers": [
@@ -526,6 +570,7 @@ Uses embedded knowledge only.
 ```
 
 ### **Pattern 3: Multiple Teams with Project Overrides**
+
 ```json
 {
   "layers": [
@@ -561,6 +606,7 @@ Uses embedded knowledge only.
 ```
 
 ### **Pattern 4: Temporary Layer Disable**
+
 ```json
 {
   "layers": [
@@ -571,7 +617,7 @@ Uses embedded knowledge only.
         "type": "git",
         "url": "..."
       },
-      "enabled": false  // <-- Temporarily disabled
+      "enabled": false // <-- Temporarily disabled
     }
   ]
 }
@@ -580,22 +626,26 @@ Uses embedded knowledge only.
 ## Troubleshooting
 
 ### **"Configuration file not found"**
+
 - Check file name exactly: `bc-code-intel-config.json` (not `.config.json`)
 - Verify file in correct location (workspace root or home directory)
 - Use `get_workspace_info` to check current working directory
 
 ### **"Invalid JSON/YAML syntax"**
+
 - Validate with tools mentioned above
 - Common issues: trailing commas (JSON), incorrect indentation (YAML)
 - Use example configs as templates
 
 ### **"Git layer not loading"**
+
 - Verify repository URL is accessible
 - Check authentication token is set in environment variable
 - Ensure `token_env_var` name matches actual environment variable
 - Test git clone manually: `git clone <repository_url>`
 
 ### **"Project layer showing 0 topics"**
+
 - Verify directory structure: `bc-code-intel-overrides/domains/`
 - Check YAML frontmatter in topic files
 - Ensure `path` in config matches actual directory

@@ -3,7 +3,13 @@ title: "Layer System Fundamentals"
 domain: "chris-config"
 bc_versions: "1.5.0+"
 difficulty: "intermediate"
-tags: ["mcp-configuration", "layer-architecture", "knowledge-management", "override-system"]
+tags:
+  [
+    "mcp-configuration",
+    "layer-architecture",
+    "knowledge-management",
+    "override-system",
+  ]
 related_topics:
   - "content-types-structure.md"
   - "layer-override-strategies.md"
@@ -15,9 +21,27 @@ last_updated: "2025-10-27"
 
 relevance_signals:
   constructs: []
-  keywords: ["layer", "priority", "embedded", "git layer", "project layer", "override", "knowledge architecture", "four-layer", "layer resolution"]
+  keywords:
+    [
+      "layer",
+      "priority",
+      "embedded",
+      "git layer",
+      "project layer",
+      "override",
+      "knowledge architecture",
+      "four-layer",
+      "layer resolution",
+    ]
   anti_pattern_indicators: []
-  positive_pattern_indicators: ["layer system", "knowledge layer", "layer priority", "layer override", "embedded knowledge"]
+  positive_pattern_indicators:
+    [
+      "layer system",
+      "knowledge layer",
+      "layer priority",
+      "layer override",
+      "embedded knowledge",
+    ]
 
 applicable_object_types: []
 
@@ -33,6 +57,7 @@ The BC Code Intelligence MCP server uses a **4-layer knowledge architecture** th
 ## The Four-Layer Architecture
 
 ### **Layer 0: Embedded Knowledge** (Priority 0)
+
 - **Source**: NPM package embedded knowledge (git submodule)
 - **Content**: Core BC knowledge - 87+ topics, 14 specialists, methodologies
 - **Scope**: Universal - available to all users
@@ -40,12 +65,14 @@ The BC Code Intelligence MCP server uses a **4-layer knowledge architecture** th
 - **Use Case**: Default knowledge base, zero-configuration experience
 
 **Key Characteristics:**
+
 - Highest reliability - always available
 - Officially maintained BC knowledge
 - Comprehensive coverage of BC development patterns
 - Updates via npm package updates
 
 ### **Layer 1-2: Company Knowledge** (Priority 20-50)
+
 - **Source**: Git repositories (Azure DevOps, GitHub, etc.)
 - **Content**: Company-specific specialists, standards, patterns
 - **Scope**: Organization-wide
@@ -53,12 +80,14 @@ The BC Code Intelligence MCP server uses a **4-layer knowledge architecture** th
 - **Use Case**: Company coding standards, custom specialists, org patterns
 
 **Key Characteristics:**
+
 - Centrally managed company knowledge
 - Authentication-based access control (PAT tokens)
 - Cached locally for performance (`.bckb-cache/git-repos/`)
 - Can override embedded knowledge with company-specific guidance
 
 ### **Layer 3: Team Knowledge** (Priority 60-80)
+
 - **Source**: Shared team directories or repositories
 - **Content**: Team conventions, project templates, shared patterns
 - **Scope**: Team or department
@@ -66,11 +95,13 @@ The BC Code Intelligence MCP server uses a **4-layer knowledge architecture** th
 - **Use Case**: Team-specific patterns, shared project standards
 
 **Key Characteristics:**
+
 - Team collaboration and knowledge sharing
 - More specific than company, less specific than project
 - Useful for department or team conventions
 
 ### **Layer 4: Project Knowledge** (Priority 100)
+
 - **Source**: Local `./bc-code-intel-overrides/` directory
 - **Content**: Project-specific overrides, custom topics, local specialists
 - **Scope**: Single project/workspace
@@ -78,6 +109,7 @@ The BC Code Intelligence MCP server uses a **4-layer knowledge architecture** th
 - **Use Case**: Project-specific patterns, temporary overrides, local experimentation
 
 **Key Characteristics:**
+
 - Highest priority - always wins in conflicts
 - Local filesystem access (no authentication needed)
 - Perfect for project-specific customization
@@ -88,11 +120,13 @@ The BC Code Intelligence MCP server uses a **4-layer knowledge architecture** th
 ### **Priority-Based Resolution**
 
 When the same topic/specialist exists in multiple layers:
+
 1. **Highest priority layer wins** (Project > Team > Company > Embedded)
 2. Content is **completely replaced**, not merged
 3. Only the highest-priority version is returned
 
 **Example:**
+
 ```
 Embedded Layer (0): sam-coder.md (official specialist)
 Company Layer (20): sam-coder.md (company-customized version)
@@ -104,6 +138,7 @@ Result: Project layer version is used
 ### **Content Type Support**
 
 All layers support three content types (as of v1.5.0):
+
 - **Topics**: BC domain knowledge (in `domains/` subdirectory)
 - **Specialists**: AI persona definitions (in `specialists/` subdirectory)
 - **Methodologies**: Systematic workflows (in `methodologies/` subdirectory)
@@ -113,12 +148,14 @@ Each layer independently manages these three content types.
 ## Layer Configuration
 
 ### **Embedded Layer** (No Configuration Needed)
+
 ```json
 // Automatically available - no configuration required
 // Loaded from NPM package embedded-knowledge/ directory
 ```
 
 ### **Git Layer** (Company/Team Knowledge)
+
 ```json
 {
   "layers": [
@@ -141,6 +178,7 @@ Each layer independently manages these three content types.
 ```
 
 ### **Project Layer** (Local Overrides)
+
 ```json
 {
   "layers": [
@@ -188,10 +226,10 @@ The VS Code MCP extension doesn't set `process.cwd()` to the workspace root, cau
 
 ```typescript
 // Set workspace root explicitly
-set_workspace_info({ 
+set_workspace_info({
   workspace_root: "/path/to/your/workspace",
-  available_mcps: []
-})
+  available_mcps: [],
+});
 
 // Triggers:
 // 1. process.chdir() to workspace
@@ -202,6 +240,7 @@ set_workspace_info({
 ### **Lazy Initialization Pattern**
 
 The MCP server uses lazy initialization:
+
 1. **Startup**: Load embedded knowledge only (fast startup)
 2. **First Tool Call**: If workspace not set, prompt for `set_workspace_info`
 3. **After Workspace Set**: Full initialization including all configured layers
@@ -211,11 +250,13 @@ The MCP server uses lazy initialization:
 ### **Git Layer Caching**
 
 Git repositories are cloned to `.bckb-cache/git-repos/{hash}/`:
+
 - **First Load**: Clone repository (may take seconds)
 - **Subsequent Loads**: Use cached local copy (sub-100ms)
 - **Updates**: Periodic pull or manual cache invalidation
 
 ### **Performance Characteristics**
+
 - Embedded Layer: <10ms (in-memory)
 - Project Layer: <50ms (filesystem access)
 - Git Layer (cached): <100ms (filesystem + parsing)
@@ -233,16 +274,19 @@ Git repositories are cloned to `.bckb-cache/git-repos/{hash}/`:
 ## Common Patterns
 
 ### **Individual Developer** (Zero Config)
+
 ```
 Embedded Layer only - no configuration needed
 ```
 
 ### **Company with Standards** (Git Layer)
+
 ```
 Embedded Layer (BC knowledge) + Company Git Layer (org standards)
 ```
 
 ### **Team with Project Overrides** (All Layers)
+
 ```
 Embedded + Company Git + Project Local
 ```
@@ -250,12 +294,14 @@ Embedded + Company Git + Project Local
 ## Troubleshooting
 
 **Layer not loading?**
+
 - Check directory structure (domains/, specialists/, methodologies/)
 - Verify authentication (PAT tokens for git layers)
 - Check layer priority configuration
 - Use diagnostic tools if enabled
 
 **Content not found?**
+
 - Verify content type is in correct subdirectory
 - Check YAML frontmatter format (required for specialists)
 - Confirm layer priority order

@@ -3,7 +3,14 @@ title: "Configuration File Discovery"
 domain: "chris-config"
 bc_versions: "1.5.3+"
 difficulty: "beginner"
-tags: ["mcp-configuration", "file-discovery", "workspace", "environment", "config-merge"]
+tags:
+  [
+    "mcp-configuration",
+    "file-discovery",
+    "workspace",
+    "environment",
+    "config-merge",
+  ]
 related_topics:
   - "configuration-file-formats.md"
   - "workspace-detection-solutions.md"
@@ -14,9 +21,28 @@ last_updated: "2025-10-30"
 
 relevance_signals:
   constructs: []
-  keywords: ["config", "configuration", "bc-code-intel-config", "workspace", "layers", "priority", "merge", "user config", "project config", "environment variable"]
+  keywords:
+    [
+      "config",
+      "configuration",
+      "bc-code-intel-config",
+      "workspace",
+      "layers",
+      "priority",
+      "merge",
+      "user config",
+      "project config",
+      "environment variable",
+    ]
   anti_pattern_indicators: []
-  positive_pattern_indicators: ["configuration file", "config.json", "config.yaml", "set_workspace_info", "layer priority"]
+  positive_pattern_indicators:
+    [
+      "configuration file",
+      "config.json",
+      "config.yaml",
+      "set_workspace_info",
+      "layer priority",
+    ]
 
 applicable_object_types: []
 
@@ -36,11 +62,13 @@ The BC Code Intelligence MCP server searches for configuration files in multiple
 The server now loads configurations in **two phases**:
 
 **Phase 1: Startup (User Config)**
+
 - Loads user-level config from `~/.bc-code-intel/config.json`
 - Available immediately when server starts
 - Contains your personal preferences and company-wide layers
 
 **Phase 2: Workspace Discovery (User + Project Merge)**
+
 - When workspace becomes known (via `set_workspace_info`)
 - Loads project config from `./bc-code-intel-config.json`
 - **Merges** with user config using priority-based strategy
@@ -49,10 +77,12 @@ The server now loads configurations in **two phases**:
 ### **Merge Strategy**
 
 Layers are merged by **priority number**:
+
 - **Same priority**: Project layer **wins** (overrides user layer)
 - **Different priorities**: Both layers **included** (sorted by priority)
 
 **Example Merge:**
+
 ```
 User config (~/.bc-code-intel/config.json):
   - Layer A (priority 20)
@@ -81,22 +111,26 @@ The MCP server searches these locations for configuration files:
 The MCP server searches these locations for configuration files:
 
 ### **1. Environment Variable** (Explicit Override)
+
 ```bash
 BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 # Legacy: BCKB_CONFIG_PATH (deprecated, use BC_CODE_INTEL_CONFIG_PATH)
 ```
 
 **When to use:**
+
 - CI/CD pipelines with dynamic config paths
 - Testing different configurations
 - Temporary override for debugging
 
 **Behavior:**
+
 - Loaded at **priority 50** in merge process
 - Overrides both user and project configs at lower priorities
 - Does NOT prevent user/project configs from loading
 
 **Example:**
+
 ```bash
 # Linux/macOS
 export BC_CODE_INTEL_CONFIG_PATH="/opt/configs/bc-code-intel-config.json"
@@ -110,18 +144,21 @@ $env:BC_CODE_INTEL_CONFIG_PATH = "C:\Configs\bc-code-intel-config.json"
 ### **2. User-Level Configuration** (Personal + Company-Wide)
 
 **Recommended Path:**
+
 ```
 ~/.bc-code-intel/config.json
 ~/.bc-code-intel/config.yaml
 ```
 
 **Legacy Paths (deprecated):**
+
 ```
 ~/.bckb/config.json          ← Shows deprecation warning
 ~/.bckb/config.yaml
 ```
 
 **System-Wide Paths:**
+
 ```
 # Linux
 /etc/bc-code-intel/config.json
@@ -132,6 +169,7 @@ C:\ProgramData\bc-code-intel\config.json
 ```
 
 **When to use:**
+
 - Company-wide knowledge layers for all projects
 - Personal authentication credentials
 - Default preferences across all workspaces
@@ -139,6 +177,7 @@ C:\ProgramData\bc-code-intel\config.json
 **Priority:** Layers in user config load at **priority 10** by default
 
 **Example:**
+
 ```json
 // ~/.bc-code-intel/config.json
 {
@@ -175,12 +214,14 @@ C:\ProgramData\bc-code-intel\config.json
 ### **3. Project-Level Configuration** (Project-Specific Overrides)
 
 **Recommended Path (in workspace root):**
+
 ```
 bc-code-intel-config.json
 bc-code-intel-config.yaml
 ```
 
 **Legacy Filenames (deprecated):**
+
 ```
 bckb-config.json             ← Shows deprecation warning
 .bc-code-intel/config.json   ← Hidden directory variant
@@ -188,6 +229,7 @@ bckb-config.json             ← Shows deprecation warning
 ```
 
 **When to use:**
+
 - Project-specific layer overrides
 - Team-shared configuration (committed to repo)
 - Project requires specific knowledge layers
@@ -197,6 +239,7 @@ bckb-config.json             ← Shows deprecation warning
 **Workspace Detection Required:** Project config only loads after workspace is set via `set_workspace_info`
 
 **Example:**
+
 ```json
 // bc-code-intel-config.json (in project root)
 {
@@ -228,11 +271,13 @@ bckb-config.json             ← Shows deprecation warning
 ### **4. Embedded Default** (Always Present)
 
 If no configuration files are found, the server uses **embedded defaults**:
+
 - Embedded knowledge layer (priority 0)
 - Standard cache and performance settings
 - Diagnostic tools disabled
 
 **When this applies:**
+
 - Zero-configuration first-time use
 - No config files in any location
 - Quick testing without setup
@@ -242,6 +287,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ### **Use User Config (~/.bc-code-intel/config.json) For:**
 
 ✅ **Company-wide knowledge layers**
+
 ```json
 {
   "layers": [
@@ -249,10 +295,12 @@ If no configuration files are found, the server uses **embedded defaults**:
   ]
 }
 ```
+
 - Applies to ALL projects you work on
 - Company standards, best practices, common patterns
 
 ✅ **Personal authentication**
+
 ```json
 {
   "layers": [
@@ -269,6 +317,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 ✅ **Personal preferences**
+
 ```json
 {
   "cache": { "max_size_mb": 200 },
@@ -279,6 +328,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ### **Use Project Config (./bc-code-intel-config.json) For:**
 
 ✅ **Project-specific layer overrides**
+
 ```json
 {
   "layers": [
@@ -286,14 +336,17 @@ If no configuration files are found, the server uses **embedded defaults**:
   ]
 }
 ```
+
 - Only applies to this project
 - Can be committed to repo and shared with team
 
 ✅ **Team-shared configuration**
+
 - All team members get same layers
 - Version controlled with project code
 
 ✅ **Override user config layers**
+
 ```json
 {
   "layers": [
@@ -308,6 +361,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ### **Example 1: No Conflicts (All Layers Preserved)**
 
 **User config:**
+
 ```json
 {
   "layers": [
@@ -318,6 +372,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 **Project config:**
+
 ```json
 {
   "layers": [
@@ -328,9 +383,11 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 **Result:**
+
 ```
 [embedded(0), company(20), team-alpha(30), project-local(50), personal(80)]
 ```
+
 ✅ All layers included (no priority conflicts)
 
 ---
@@ -338,6 +395,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ### **Example 2: Priority Conflict (Project Wins)**
 
 **User config:**
+
 ```json
 {
   "layers": [
@@ -347,6 +405,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 **Project config:**
+
 ```json
 {
   "layers": [
@@ -356,9 +415,11 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 **Result:**
+
 ```
 [embedded(0), project-specific(30)]
 ```
+
 ✅ Project layer **replaces** user layer at priority 30
 
 ---
@@ -366,6 +427,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ### **Example 3: Multiple Conflicts**
 
 **User config:**
+
 ```json
 {
   "layers": [
@@ -377,6 +439,7 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 **Project config:**
+
 ```json
 {
   "layers": [
@@ -387,9 +450,11 @@ If no configuration files are found, the server uses **embedded defaults**:
 ```
 
 **Result:**
+
 ```
 [embedded(0), user-A(10), project-B(20), project-C(30)]
 ```
+
 ✅ user-A preserved (no conflict)
 ✅ project-B replaces user-B (priority 20)
 ✅ project-C replaces user-C (priority 30)
@@ -399,18 +464,21 @@ If no configuration files are found, the server uses **embedded defaults**:
 The server recognizes these file names **in each location**:
 
 ### **Recommended (v1.5.3+)**
+
 - `bc-code-intel-config.json`
 - `bc-code-intel-config.yaml`
 - `bc-code-intel-config.yml`
 
 ### **Legacy (deprecated, shows warning)**
+
 - `bckb-config.json`
 - `bckb-config.yaml`
 - `bckb-config.yml`
 
 **Search order within each location:**
+
 1. `.json` checked first
-2. `.yaml` checked second  
+2. `.yaml` checked second
 3. `.yml` checked last
 
 **Deprecation warnings:** Legacy filenames trigger a warning suggesting migration to `bc-code-intel-*` naming.
@@ -420,6 +488,7 @@ The server recognizes these file names **in each location**:
 ### **The Workspace Challenge**
 
 VS Code MCP extension doesn't automatically set workspace root, causing:
+
 - Project config discovery to fail initially
 - Project-specific layers not loading at startup
 
@@ -428,12 +497,13 @@ VS Code MCP extension doesn't automatically set workspace root, causing:
 Use the `set_workspace_info` MCP tool to enable project config:
 
 ```typescript
-set_workspace_info({ 
-  workspace_root: "/absolute/path/to/workspace" 
-})
+set_workspace_info({
+  workspace_root: "/absolute/path/to/workspace",
+});
 ```
 
 **What happens after setting workspace:**
+
 1. Configuration re-loads with workspace context
 2. Project config discovered from workspace root
 3. User + Project configs merged
@@ -441,8 +511,9 @@ set_workspace_info({
 5. Project layers (if configured) now load
 
 **Query current workspace:**
+
 ```typescript
-get_workspace_info()
+get_workspace_info();
 // Returns: { workspace_root: "/current/path", layers_loaded: [...] }
 ```
 
@@ -454,21 +525,21 @@ graph TD
     B --> C{~/.bc-code-intel/config.json exists?}
     C -->|Yes| D[User layers loaded]
     C -->|No| E[Embedded defaults only]
-    
+
     D --> F[Server Ready - User Config Active]
     E --> F
-    
+
     F --> G[Client calls set_workspace_info]
     G --> H{Project config exists?}
     H -->|Yes| I[Load Project Config]
     H -->|No| J[Keep User Config Only]
-    
+
     I --> K[Merge User + Project Configs]
     K --> L[Priority-Based Merge]
     L --> M{Same priority?}
     M -->|Yes| N[Project Wins]
     M -->|No| O[Both Included]
-    
+
     N --> P[Merged Config Active]
     O --> P
     J --> P
@@ -481,12 +552,14 @@ graph TD
 The server expands `~` to user home directory:
 
 **Linux/macOS:**
+
 ```bash
 ~ → /home/username
 ~/.bc-code-intel/config.json → /home/username/.bc-code-intel/config.json
 ```
 
 **Windows:**
+
 ```powershell
 ~ → C:\Users\Username
 ~/.bc-code-intel/config.json → C:\Users\Username\.bc-code-intel\config.json
@@ -495,12 +568,14 @@ The server expands `~` to user home directory:
 ### **Relative vs Absolute Paths**
 
 **Project config (relative to workspace):**
+
 ```
 ./bc-code-intel-config.json
 # Relative to workspace root (set via set_workspace_info)
 ```
 
 **Environment variable (absolute):**
+
 ```bash
 BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 # Must be absolute path
@@ -513,6 +588,7 @@ BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 **Setup:** No config file anywhere
 
 **Result:**
+
 - Embedded knowledge only
 - No custom layers
 - Works immediately
@@ -524,6 +600,7 @@ BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 ### **Scenario 2: User-Wide Company Layer**
 
 **Setup:** `~/.bc-code-intel/config.json`
+
 ```json
 {
   "layers": [
@@ -546,6 +623,7 @@ BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 ```
 
 **Result:**
+
 - Company layer loads for ALL projects
 - Available immediately at server startup
 - Uses your personal GitHub token
@@ -559,6 +637,7 @@ BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 **Setup:**
 
 User config `~/.bc-code-intel/config.json`:
+
 ```json
 {
   "layers": [
@@ -579,6 +658,7 @@ User config `~/.bc-code-intel/config.json`:
 ```
 
 Project config `./bc-code-intel-config.json`:
+
 ```json
 {
   "layers": [
@@ -599,6 +679,7 @@ Project config `./bc-code-intel-config.json`:
 ```
 
 **Result after merge:**
+
 ```
 Layers: [
   embedded (priority 0),
@@ -618,13 +699,17 @@ Layers: [
 **Setup:**
 
 User config `~/.bc-code-intel/config.json`:
+
 ```json
 {
   "layers": [
     {
       "name": "company-default-patterns",
       "priority": 30,
-      "source": { "type": "git", "url": "https://github.com/company/default-patterns" },
+      "source": {
+        "type": "git",
+        "url": "https://github.com/company/default-patterns"
+      },
       "enabled": true
     }
   ]
@@ -632,12 +717,13 @@ User config `~/.bc-code-intel/config.json`:
 ```
 
 Project config `./bc-code-intel-config.json`:
+
 ```json
 {
   "layers": [
     {
       "name": "legacy-project-patterns",
-      "priority": 30,  // Same priority = project wins
+      "priority": 30, // Same priority = project wins
       "source": { "type": "local", "path": "./legacy-patterns" },
       "enabled": true
     }
@@ -646,6 +732,7 @@ Project config `./bc-code-intel-config.json`:
 ```
 
 **Result after merge:**
+
 ```
 Layers: [
   embedded (priority 0),
@@ -660,11 +747,13 @@ Layers: [
 ### **Scenario 5: CI/CD with Dynamic Config**
 
 **Setup:** Environment variable
+
 ```bash
 export BC_CODE_INTEL_CONFIG_PATH="/ci/configs/bc-code-intel-prod.json"
 ```
 
 **Result:**
+
 - Loads at priority 50 in merge
 - Merges with user and project configs
 - CI pipeline controls configuration
@@ -676,12 +765,14 @@ export BC_CODE_INTEL_CONFIG_PATH="/ci/configs/bc-code-intel-prod.json"
 ### **User-Wide Directory**
 
 **Linux/macOS:**
+
 ```bash
 mkdir -p ~/.bc-code-intel
 touch ~/.bc-code-intel/config.json
 ```
 
 **Windows PowerShell:**
+
 ```powershell
 New-Item -Path "$env:USERPROFILE\.bc-code-intel" -ItemType Directory -Force
 New-Item -Path "$env:USERPROFILE\.bc-code-intel\config.json" -ItemType File
@@ -699,6 +790,7 @@ touch bc-code-intel-config.json
 ### **"User config not loading"**
 
 **Check user config location:**
+
 ```bash
 # Linux/macOS
 ls -la ~/.bc-code-intel/config.*
@@ -708,6 +800,7 @@ ls "$env:USERPROFILE\.bc-code-intel\config.*"
 ```
 
 **Verify file is valid:**
+
 ```bash
 # Test JSON syntax
 cat ~/.bc-code-intel/config.json | jq .    # Linux/macOS (if jq installed)
@@ -715,6 +808,7 @@ Get-Content "$env:USERPROFILE\.bc-code-intel\config.json" | ConvertFrom-Json  # 
 ```
 
 **Check server logs:**
+
 - Look for: `[config] Loaded user configuration: <path>`
 - Deprecation warnings if using legacy paths
 
@@ -725,11 +819,12 @@ Get-Content "$env:USERPROFILE\.bc-code-intel\config.json" | ConvertFrom-Json  # 
 **Problem:** Project config only loads after workspace is set
 
 **Solution:**
+
 ```typescript
 // 1. Set workspace root first
-set_workspace_info({ 
-  workspace_root: "/absolute/path/to/workspace" 
-})
+set_workspace_info({
+  workspace_root: "/absolute/path/to/workspace",
+});
 
 // 2. Check logs for project config discovery
 // Look for: [config] Loaded project configuration: <path>
@@ -737,6 +832,7 @@ set_workspace_info({
 ```
 
 **Verify project config location:**
+
 ```bash
 # Must be in workspace root
 ls -la ./bc-code-intel-config.*
@@ -747,12 +843,14 @@ ls -la ./bc-code-intel-config.*
 ### **"Which config is being used?"**
 
 **Query loaded configuration:**
+
 ```typescript
-get_config_sources()
+get_config_sources();
 // Returns list of loaded config files and their priorities
 ```
 
 **Check server logs for merge details:**
+
 ```
 [config] Loaded user configuration: ~/.bc-code-intel/config.json (json)
 [config] Loaded project configuration: ./bc-code-intel-config.json (json)
@@ -764,15 +862,18 @@ get_config_sources()
 ### **"Layer priority conflict - wrong layer loading"**
 
 **Remember merge rules:**
+
 - Same priority → **Project wins**
 - Different priorities → Both included
 
 **Debug priority conflicts:**
+
 1. List all configured layers with priorities
 2. Identify conflicts (same priority number)
 3. Remember: Project config overrides user config at same priority
 
 **Example conflict resolution:**
+
 ```
 User: company-layer (priority 30)
 Project: team-layer (priority 30)
@@ -786,12 +887,14 @@ Result: team-layer wins (project overrides user)
 ### **"Deprecation warnings appearing"**
 
 **Legacy paths trigger warnings:**
+
 ```
 ⚠️  Using legacy config path: ~/.bckb/config.json
    Consider moving to ~/.bc-code-intel/config.json or config.yaml
 ```
 
 **Migration steps:**
+
 1. Copy existing config:
    ```bash
    cp ~/.bckb/config.json ~/.bc-code-intel/config.json
@@ -801,6 +904,7 @@ Result: team-layer wins (project overrides user)
 4. Warning disappears
 
 **Use absolute paths if tilde expansion fails:**
+
 ```bash
 # Instead of: ~/.bc-code-intel/config.json
 # Use: /home/username/.bc-code-intel/config.json
@@ -842,6 +946,7 @@ When the server starts, it logs which config was loaded:
 ```
 
 Or if no config found:
+
 ```
 ℹ️  No configuration file found, using embedded defaults
 ```

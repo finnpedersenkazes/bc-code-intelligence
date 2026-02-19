@@ -13,9 +13,30 @@ last_updated: "2025-10-27"
 
 relevance_signals:
   constructs: []
-  keywords: ["workspace", "set_workspace_info", "get_workspace_info", "process.cwd", "VS Code", "project layer", "lazy initialization", "available_mcps"]
-  anti_pattern_indicators: ["project config not found", "project layer not loading", "workspace not detected"]
-  positive_pattern_indicators: ["set workspace", "workspace detection", "workspace root", "project configuration"]
+  keywords:
+    [
+      "workspace",
+      "set_workspace_info",
+      "get_workspace_info",
+      "process.cwd",
+      "VS Code",
+      "project layer",
+      "lazy initialization",
+      "available_mcps",
+    ]
+  anti_pattern_indicators:
+    [
+      "project config not found",
+      "project layer not loading",
+      "workspace not detected",
+    ]
+  positive_pattern_indicators:
+    [
+      "set workspace",
+      "workspace detection",
+      "workspace root",
+      "project configuration",
+    ]
 
 applicable_object_types: []
 
@@ -33,6 +54,7 @@ The VS Code MCP extension does **not** set `process.cwd()` to the workspace root
 ### **Root Cause**
 
 When the MCP server runs in VS Code via the MCP extension:
+
 - `process.cwd()` points to the MCP extension's installation directory
 - **NOT** the user's workspace directory
 - Example: `C:\Users\Username\.vscode\extensions\...` instead of `C:\Work\MyProject\`
@@ -40,6 +62,7 @@ When the MCP server runs in VS Code via the MCP extension:
 ### **Impact**
 
 Without correct working directory:
+
 1. **Configuration Discovery Fails**: Can't find `./bc-code-intel-config.json` in workspace
 2. **Project Layer Won't Load**: Can't access `./bc-code-intel-overrides/` directory
 3. **Relative Paths Broken**: Any workspace-relative path resolution fails
@@ -50,16 +73,18 @@ Without correct working directory:
 ### **Two New MCP Tools**
 
 **1. set_workspace_info** - Configure workspace explicitly
+
 ```typescript
-set_workspace_info({ 
+set_workspace_info({
   workspace_root: "/absolute/path/to/workspace",
-  available_mcps: []  // List of available MCP server IDs
-})
+  available_mcps: [], // List of available MCP server IDs
+});
 ```
 
 **Description:** Set workspace root directory and available MCP server IDs. Enables project-specific knowledge layers and ecosystem-aware specialist recommendations. Call before other BC tools to activate workspace context.
 
 **What it does:**
+
 1. Validates the provided path exists
 2. Calls `process.chdir(workspace_root)` to change working directory
 3. Triggers full service reinitialization
@@ -67,13 +92,15 @@ set_workspace_info({
 5. Discovers project-local configuration if present
 
 **2. get_workspace_info** - Query current workspace
+
 ```typescript
-get_workspace_info()
+get_workspace_info();
 ```
 
 **Description:** Get the currently configured workspace root directory and available MCP servers, if any.
 
 **Returns:**
+
 ```json
 {
   "workspace_root": "/current/working/directory",
@@ -87,11 +114,13 @@ get_workspace_info()
 The MCP server implements **lazy initialization** with **first-call interception**:
 
 **At Startup:**
+
 - Server loads embedded knowledge only (fast startup, ~100ms)
 - `servicesInitialized = false`
 - All tool classes initialized but not ready
 
 **On First Tool Call (before workspace set):**
+
 - Tool handler checks `servicesInitialized === false`
 - Returns helpful message instead of executing tool:
 
@@ -102,7 +131,7 @@ The server will automatically initialize when you call set_workspace_info with y
 
 For CLI usage, this should happen automatically. If you see this message, there may be an initialization error.
 
-set_workspace_info({ 
+set_workspace_info({
   workspace_root: "/absolute/path/to/your/workspace",
   available_mcps: []
 })
@@ -118,6 +147,7 @@ After setting workspace info, all tools will be available.
 ```
 
 **After Workspace Set:**
+
 - Full initialization runs
 - All layers loaded (embedded, git, project)
 - `servicesInitialized = true`
@@ -128,29 +158,34 @@ After setting workspace info, all tools will be available.
 ### **VS Code Workflow**
 
 **Step 1: Open workspace in VS Code**
+
 ```
 File → Open Folder → Select your BC project
 ```
 
 **Step 2: Start MCP conversation**
+
 ```
 User: "Hey, can you help me optimize this code?"
 ```
 
 **Step 3: Server prompts for workspace**
+
 ```
 MCP: "I need workspace context. Call set_workspace_info first..."
 ```
 
 **Step 4: Set workspace info** (agent or user)
+
 ```typescript
-set_workspace_info({ 
+set_workspace_info({
   workspace_root: "C:\\Work\\MyBCProject",
-  available_mcps: []
-})
+  available_mcps: [],
+});
 ```
 
 **Step 5: Full functionality available**
+
 ```
 ✅ Project config loaded
 ✅ Project knowledge layers available
@@ -160,6 +195,7 @@ set_workspace_info({
 ### **Claude Desktop Workflow** (Manual Setup)
 
 **Option A: Environment Variable** (Recommended)
+
 ```bash
 # Set before launching Claude Desktop
 export BC_WORKSPACE_ROOT="/path/to/workspace"
@@ -169,12 +205,13 @@ $env:BC_WORKSPACE_ROOT = "C:\Work\MyBCProject"
 ```
 
 **Option B: Manual Tool Call**
+
 ```typescript
 // First interaction with MCP
-set_workspace_info({ 
+set_workspace_info({
   workspace_root: "/path/to/workspace",
-  available_mcps: []
-})
+  available_mcps: [],
+});
 ```
 
 ### **Automated CI/CD Workflow**
@@ -229,15 +266,16 @@ With workspace configured, project layer loads from:
 **Problem:** Configuration exists but not being loaded
 
 **Solution:**
+
 ```typescript
 // Verify current workspace
-get_workspace_info()
+get_workspace_info();
 
 // If wrong, set correct path
-set_workspace_info({ 
+set_workspace_info({
   workspace_root: "/correct/path",
-  available_mcps: []
-})
+  available_mcps: [],
+});
 ```
 
 ### **"Project layer showing 0 topics"**
@@ -245,11 +283,13 @@ set_workspace_info({
 **Problem:** `bc-code-intel-overrides/` directory structure incorrect
 
 **Check:**
+
 1. Directory exists: `{workspace}/bc-code-intel-overrides/`
 2. Content in subdirectories: `domains/`, `specialists/`, `methodologies/`
 3. Proper frontmatter in markdown files
 
 **Solution:**
+
 ```bash
 # Create proper structure
 mkdir -p bc-code-intel-overrides/domains/my-domain
@@ -261,6 +301,7 @@ mkdir -p bc-code-intel-overrides/specialists
 **Problem:** Path doesn't exist or insufficient permissions
 
 **Verify:**
+
 ```bash
 # Check path exists
 ls -la /path/to/workspace
@@ -270,6 +311,7 @@ ls -la /path/to/workspace
 ```
 
 **Solution:**
+
 - Use absolute paths (not relative)
 - Ensure directory exists before calling set_workspace_info
 - Check file permissions
@@ -287,21 +329,22 @@ ls -la /path/to/workspace
 ### **Service Reinitialization on Workspace Change**
 
 When `set_workspace_info` is called:
+
 ```typescript
 // 1. Change working directory
-process.chdir(workspace_root)
+process.chdir(workspace_root);
 
 // 2. Store available MCP servers
-this.availableMcps = available_mcps
+this.availableMcps = available_mcps;
 
 // 3. Reload configuration
-configService.loadConfiguration()
+configService.loadConfiguration();
 
 // 4. Reinitialize all services
-await initializeServices()
+await initializeServices();
 
 // 5. Reload all knowledge layers
-await layerService.loadAllLayers()
+await layerService.loadAllLayers();
 ```
 
 **Performance:** Full reinitialization takes 1-3 seconds including git layer cloning (if not cached).
@@ -342,11 +385,13 @@ code .  # Launch VS Code with workspace set
 ## Migration from Pre-1.5.0
 
 **Before v1.5.0:**
+
 - Project layer only worked in environments where `process.cwd()` was correct
 - VS Code users couldn't use project-local features
 - No workaround available
 
 **After v1.5.0:**
+
 - Explicit workspace configuration via `set_workspace_info`
 - Ecosystem-aware specialist recommendations via available_mcps parameter
 - Works in all environments (VS Code, Claude Desktop, CLI)
