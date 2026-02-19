@@ -4,7 +4,7 @@ domain: "chris-config"
 difficulty: "intermediate"
 bc_versions: "14+"
 tags: ["configuration", "enterprise", "layers", "git-repositories", "team-collaboration"]
-related_topics: ["knowledge-overrides", "layer-system-architecture"]
+related_topics: ["knowledge-content-creation", "layer-system-fundamentals"]
 applies_to: ["MCP Server", "VS Code Integration", "Team Environments"]
 last_updated: "2025-01-01"
 
@@ -58,17 +58,18 @@ Company Layer (Priority 25)      ← Git repo: company-bc-standards
 Embedded Layer (Priority 0)      ← Built-in BC knowledge base
 ```
 
-## VS Code MCP Integration Setup
+## Configuration Setup
 
-Most users integrate through VS Code's `mcp.json` configuration:
+Most users configure the MCP server via environment variables and configuration files:
 
-### Basic VS Code Setup
+### Claude Desktop Setup
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 ```json
 {
   "mcpServers": {
     "bc-code-intelligence": {
       "command": "npx",
-      "args": ["bc-code-intelligence-mcp"],
+      "args": ["-y", "bc-code-intelligence-mcp"],
       "env": {
         "GITHUB_TOKEN": "your_github_token_here"
       }
@@ -238,9 +239,11 @@ export GITHUB_TOKEN="ghp_your_token_here"
 
 ### Layer Not Loading
 ```bash
-# Debug layer loading
-bc-code-intel --debug-layers
-bc-code-intel --test-layer company-standards
+# Ask about layer configuration
+bc-code-intel ask "Why isn't my company layer loading?"
+
+# List all specialists (includes layer info in debug output)
+bc-code-intel specialists
 ```
 
 **Common causes:**
@@ -248,19 +251,23 @@ bc-code-intel --test-layer company-standards
 - Wrong branch name in configuration
 - Network connectivity issues
 - Invalid JSON/YAML in config file
+- Config file not in expected location
 
 ### Authentication Failed
 ```bash
-# Test authentication
+# Set authentication in environment
 export GITHUB_TOKEN="your_token"
-bc-code-intel --test-auth
+
+# Ask for authentication help
+bc-code-intel ask "How do I configure GitHub authentication for private layers?"
 ```
 
 **Common causes:**
 - Expired or invalid GitHub token
-- Token doesn't have repository access
+- Token doesn't have repository access (needs repo:read scope)
 - SSH key not configured properly
 - Repository is private but no auth configured
+- Token environment variable not set correctly
 
 ## ROI and Cost-Benefit Analysis
 
@@ -303,9 +310,9 @@ bc-code-intel --test-auth
 
 ## Related Topics
 
-- **[Knowledge Content Creation](knowledge-overrides)**: How to create custom BC knowledge content
-- **[Layer System Architecture](layer-system-architecture)**: Understanding the technical implementation
-- **[Specialist Customization](specialist-customization)**: Creating custom AI specialists
+- **[Knowledge Content Creation](knowledge-content-creation)**: How to create custom BC knowledge content
+- **[Layer System Fundamentals](layer-system-fundamentals)**: Understanding the technical implementation
+- **[Configuration File Formats](configuration-file-formats)**: Detailed configuration schema reference
 
 ---
 

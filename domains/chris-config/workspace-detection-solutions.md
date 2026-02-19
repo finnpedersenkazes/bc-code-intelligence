@@ -6,8 +6,6 @@ difficulty: "intermediate"
 tags: ["mcp-configuration", "workspace-management", "vscode", "troubleshooting"]
 related_topics:
   - "layer-system-fundamentals.md"
-  - "configuration-troubleshooting.md"
-  - "project-layer-setup.md"
 applies_to:
   - "BC Code Intelligence MCP Server"
   - "VS Code MCP Extension"
@@ -15,7 +13,7 @@ last_updated: "2025-10-27"
 
 relevance_signals:
   constructs: []
-  keywords: ["workspace", "set_workspace_root", "get_workspace_root", "process.cwd", "VS Code", "project layer", "lazy initialization"]
+  keywords: ["workspace", "set_workspace_info", "get_workspace_info", "process.cwd", "VS Code", "project layer", "lazy initialization", "available_mcps"]
   anti_pattern_indicators: ["project config not found", "project layer not loading", "workspace not detected"]
   positive_pattern_indicators: ["set workspace", "workspace detection", "workspace root", "project configuration"]
 
@@ -51,12 +49,15 @@ Without correct working directory:
 
 ### **Two New MCP Tools**
 
-**1. set_workspace_root** - Configure workspace explicitly
+**1. set_workspace_info** - Configure workspace explicitly
 ```typescript
-set_workspace_root({ 
-  workspace_root: "/absolute/path/to/workspace" 
+set_workspace_info({ 
+  workspace_root: "/absolute/path/to/workspace",
+  available_mcps: []  // List of available MCP server IDs
 })
 ```
+
+**Description:** Set workspace root directory and available MCP server IDs. Enables project-specific knowledge layers and ecosystem-aware specialist recommendations. Call before other BC tools to activate workspace context.
 
 **What it does:**
 1. Validates the provided path exists
@@ -65,15 +66,18 @@ set_workspace_root({
 4. Reloads all knowledge layers with new workspace context
 5. Discovers project-local configuration if present
 
-**2. get_workspace_root** - Query current workspace
+**2. get_workspace_info** - Query current workspace
 ```typescript
-get_workspace_root()
+get_workspace_info()
 ```
+
+**Description:** Get the currently configured workspace root directory and available MCP servers, if any.
 
 **Returns:**
 ```json
 {
   "workspace_root": "/current/working/directory",
+  "available_mcps": ["bc-telemetry-buddy", "al-objid-mcp-server"],
   "services_initialized": true
 }
 ```
@@ -92,24 +96,25 @@ The MCP server implements **lazy initialization** with **first-call interception
 - Returns helpful message instead of executing tool:
 
 ```
-🚀 BC Code Intelligence MCP Server - Workspace Configuration
+⚠️ **Server Not Yet Initialized**
 
-The MCP server needs workspace context to load project-specific knowledge and configuration.
+The server will automatically initialize when you call set_workspace_info with your workspace path.
 
-REQUIRED ACTION:
-Call the set_workspace_root tool with your workspace path:
+For CLI usage, this should happen automatically. If you see this message, there may be an initialization error.
 
-set_workspace_root({ 
-  workspace_root: "/absolute/path/to/your/workspace" 
+set_workspace_info({ 
+  workspace_root: "/absolute/path/to/your/workspace",
+  available_mcps: []
 })
 
 This enables:
 - Project-local configuration (bc-code-intel-config.json)
 - Project knowledge overrides (bc-code-intel-overrides/)
 - Team and company knowledge layers
+- Ecosystem-aware specialist recommendations
 - Full workspace-aware functionality
 
-After setting workspace root, all tools will be available.
+After setting workspace info, all tools will be available.
 ```
 
 **After Workspace Set:**
@@ -134,13 +139,14 @@ User: "Hey, can you help me optimize this code?"
 
 **Step 3: Server prompts for workspace**
 ```
-MCP: "I need workspace context. Call set_workspace_root first..."
+MCP: "I need workspace context. Call set_workspace_info first..."
 ```
 
-**Step 4: Set workspace root** (agent or user)
+**Step 4: Set workspace info** (agent or user)
 ```typescript
-set_workspace_root({ 
-  workspace_root: "C:\\Work\\MyBCProject" 
+set_workspace_info({ 
+  workspace_root: "C:\\Work\\MyBCProject",
+  available_mcps: []
 })
 ```
 
@@ -165,8 +171,9 @@ $env:BC_WORKSPACE_ROOT = "C:\Work\MyBCProject"
 **Option B: Manual Tool Call**
 ```typescript
 // First interaction with MCP
-set_workspace_root({ 
-  workspace_root: "/path/to/workspace" 
+set_workspace_info({ 
+  workspace_root: "/path/to/workspace",
+  available_mcps: []
 })
 ```
 
@@ -177,7 +184,7 @@ set_workspace_root({
 export BC_WORKSPACE_ROOT="$CI_PROJECT_DIR"
 
 # MCP server auto-detects from environment
-# No set_workspace_root call needed
+# No set_workspace_info call needed
 ```
 
 ## Configuration Discovery After Workspace Set
@@ -224,10 +231,13 @@ With workspace configured, project layer loads from:
 **Solution:**
 ```typescript
 // Verify current workspace
-get_workspace_root()
+get_workspace_info()
 
 // If wrong, set correct path
-set_workspace_root({ workspace_root: "/correct/path" })
+set_workspace_info({ 
+  workspace_root: "/correct/path",
+  available_mcps: []
+})
 ```
 
 ### **"Project layer showing 0 topics"**
@@ -246,7 +256,7 @@ mkdir -p bc-code-intel-overrides/domains/my-domain
 mkdir -p bc-code-intel-overrides/specialists
 ```
 
-### **"Services not initializing after set_workspace_root"**
+### **"Services not initializing after set_workspace_info"**
 
 **Problem:** Path doesn't exist or insufficient permissions
 
@@ -261,8 +271,9 @@ ls -la /path/to/workspace
 
 **Solution:**
 - Use absolute paths (not relative)
-- Ensure directory exists before calling set_workspace_root
+- Ensure directory exists before calling set_workspace_info
 - Check file permissions
+- Verify available_mcps parameter is provided (can be empty array)
 
 ## Implementation Details
 
@@ -275,18 +286,21 @@ ls -la /path/to/workspace
 
 ### **Service Reinitialization on Workspace Change**
 
-When `set_workspace_root` is called:
+When `set_workspace_info` is called:
 ```typescript
 // 1. Change working directory
 process.chdir(workspace_root)
 
-// 2. Reload configuration
+// 2. Store available MCP servers
+this.availableMcps = available_mcps
+
+// 3. Reload configuration
 configService.loadConfiguration()
 
-// 3. Reinitialize all services
+// 4. Reinitialize all services
 await initializeServices()
 
-// 4. Reload all knowledge layers
+// 5. Reload all knowledge layers
 await layerService.loadAllLayers()
 ```
 
@@ -294,11 +308,12 @@ await layerService.loadAllLayers()
 
 ## Best Practices
 
-1. **Set Workspace Early**: Call `set_workspace_root` at the start of MCP conversations in VS Code
+1. **Set Workspace Early**: Call `set_workspace_info` at the start of MCP conversations in VS Code
 2. **Absolute Paths**: Always use absolute paths, not relative
-3. **Verify Before Setting**: Ensure workspace directory exists and is accessible
-4. **Check After Setting**: Use `get_workspace_root` to confirm workspace configured correctly
-5. **Environment Variables**: For CLI/CI scenarios, use `BC_WORKSPACE_ROOT` env var
+3. **Provide MCP List**: Include available MCP server IDs for ecosystem-aware recommendations
+4. **Verify Before Setting**: Ensure workspace directory exists and is accessible
+5. **Check After Setting**: Use `get_workspace_info` to confirm workspace configured correctly
+6. **Environment Variables**: For CLI/CI scenarios, use `BC_WORKSPACE_ROOT` env var
 
 ## Advanced: Environment-Based Auto-Configuration
 
@@ -332,7 +347,8 @@ code .  # Launch VS Code with workspace set
 - No workaround available
 
 **After v1.5.0:**
-- Explicit workspace configuration via `set_workspace_root`
+- Explicit workspace configuration via `set_workspace_info`
+- Ecosystem-aware specialist recommendations via available_mcps parameter
 - Works in all environments (VS Code, Claude Desktop, CLI)
 - Backward compatible - embedded knowledge still works without workspace
 
@@ -341,6 +357,4 @@ code .  # Launch VS Code with workspace set
 ## See Also
 
 - [Layer System Fundamentals](layer-system-fundamentals.md) - Understanding layer architecture
-- [Project Layer Setup](project-layer-setup.md) - Setting up project-local knowledge
 - [Configuration File Discovery](configuration-file-discovery.md) - Where configs are found
-- [Configuration Troubleshooting](configuration-troubleshooting.md) - Common issues and solutions

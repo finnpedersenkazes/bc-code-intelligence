@@ -121,19 +121,20 @@ Each layer independently manages these three content types.
 ### **Git Layer** (Company/Team Knowledge)
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company BC Standards",
-      "type": "git",
-      "priority": 20,
+      "priority": 25,
       "source": {
-        "repository_url": "https://dev.azure.com/your-org/BC-Knowledge/_git/bc-standards",
+        "type": "git",
+        "url": "https://dev.azure.com/your-org/BC-Knowledge/_git/bc-standards",
         "branch": "main",
         "auth": {
           "type": "pat",
           "token_env_var": "AZURE_DEVOPS_PAT"
         }
-      }
+      },
+      "enabled": true
     }
   ]
 }
@@ -142,14 +143,15 @@ Each layer independently manages these three content types.
 ### **Project Layer** (Local Overrides)
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Project Overrides",
-      "type": "project",
       "priority": 100,
       "source": {
+        "type": "local",
         "path": "./bc-code-intel-overrides"
-      }
+      },
+      "enabled": true
     }
   ]
 }
@@ -186,8 +188,9 @@ The VS Code MCP extension doesn't set `process.cwd()` to the workspace root, cau
 
 ```typescript
 // Set workspace root explicitly
-set_workspace_root({ 
-  workspace_root: "/path/to/your/workspace" 
+set_workspace_info({ 
+  workspace_root: "/path/to/your/workspace",
+  available_mcps: []
 })
 
 // Triggers:
@@ -200,7 +203,7 @@ set_workspace_root({
 
 The MCP server uses lazy initialization:
 1. **Startup**: Load embedded knowledge only (fast startup)
-2. **First Tool Call**: If workspace not set, prompt for `set_workspace_root`
+2. **First Tool Call**: If workspace not set, prompt for `set_workspace_info`
 3. **After Workspace Set**: Full initialization including all configured layers
 
 ## Layer Caching and Performance

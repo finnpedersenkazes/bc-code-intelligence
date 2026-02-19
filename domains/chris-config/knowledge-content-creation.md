@@ -3,16 +3,17 @@ title: "Creating Custom BC Knowledge Content"
 domain: "chris-config"
 difficulty: "intermediate"
 bc_versions: "14+"
-tags: ["knowledge-creation", "content-authoring", "yaml-frontmatter", "markdown", "relevance-signals", "samples"]
+tags: ["knowledge-creation", "content-authoring", "yaml-frontmatter", "markdown", "relevance-signals", "samples", "custom-patterns", "detection"]
 related_topics:
   - "content-types-structure.md"
   - "multi-team-layer-configuration.md"
+  - "custom-pattern-detection.md"
 
 relevance_signals:
   constructs: []
-  keywords: ["knowledge", "content", "frontmatter", "yaml", "domain", "tags", "bc_versions", "difficulty", "markdown", "relevance signals", "samples", "topic"]
+  keywords: ["knowledge", "content", "frontmatter", "yaml", "domain", "tags", "bc_versions", "difficulty", "markdown", "relevance signals", "samples", "topic", "detection pattern", "custom pattern"]
   anti_pattern_indicators: ["code in topic", "missing frontmatter", "no relevance_signals"]
-  positive_pattern_indicators: ["create knowledge", "write content", "custom topic", "knowledge authoring", "V2 frontmatter", "separate samples"]
+  positive_pattern_indicators: ["create knowledge", "write content", "custom topic", "knowledge authoring", "V2 frontmatter", "separate samples", "detection.pattern"]
 
 applicable_object_types: []
 relevance_threshold: 0.4
@@ -57,6 +58,13 @@ relevance_signals:
   keywords: ["performance", "optimization"]    # Technical terms for matching
   anti_pattern_indicators: ["missing SetLoadFields", "Get in loop"]  # Bad pattern phrases
   positive_pattern_indicators: ["uses SetLoadFields", "bulk load"]   # Good pattern phrases
+
+# Custom Pattern Detection (OPTIONAL - v1.7.3+)
+# Use for company/project standards enforcement
+detection:
+  pattern: "(FindSet\\(\\))(?!.*SetLoadFields)"  # Regex pattern (use | for literal block)
+  severity: "warning"                             # error|warning|info
+  description: "FindSet without SetLoadFields"    # What this checks
 
 applicable_object_types: ["codeunit", "page", "table"]  # Object types this applies to
 relevance_threshold: 0.5              # 0.3-0.4=informational, 0.5-0.6=standard, 0.7-0.8=critical
@@ -207,6 +215,43 @@ relevance_signals:
 | 0.3-0.4 | Informational topics, good patterns to suggest |
 | 0.5-0.6 | Standard patterns, common issues |
 | 0.7-0.8 | Critical issues, security concerns (high precision) |
+
+## Custom Pattern Detection (v1.7.3+)
+
+The optional `detection` frontmatter field enables **regex-based code scanning** for company/project standards enforcement:
+
+```yaml
+detection:
+  pattern: "(Caption\\s*=\\s*['\"][^'\"]+['\"])"  # Regex pattern
+  severity: "warning"                              # error|warning|info  
+  description: "Caption requires Danish comment"   # What this checks
+```
+
+**When to use**:
+- Company-specific coding standards (e.g., "all Captions need Danish comments")
+- Project-specific conventions (e.g., "no hardcoded text, use Labels")
+- Automated compliance checking (e.g., "Error() calls must use ErrorInfo")
+
+**How it works**:
+1. `analyze_al_code` scans topics for `detection.pattern` frontmatter
+2. Runs regex against code being analyzed
+3. Results appear in `company_standards_violations` section (separate from `suggested_topics`)
+4. Layer priority determines precedence (project > team > company > embedded)
+
+**YAML syntax for regex patterns**:
+```yaml
+# Option 1: Double quotes with escaped backslashes
+pattern: "(FindSet\\(\\))(?!.*SetLoadFields)"
+
+# Option 2: Literal block (most readable)
+pattern: |
+  (FindSet\(\))(?!.*SetLoadFields)
+
+# Option 3: Simple patterns in single quotes
+pattern: 'procedure\s+\w+\('
+```
+
+**See also**: [Custom Pattern Detection](custom-pattern-detection.md) for complete guide including YAML syntax, validation, and troubleshooting.
 
 ## Content Development Workflow
 

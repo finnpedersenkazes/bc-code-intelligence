@@ -82,8 +82,8 @@ The MCP server searches these locations for configuration files:
 
 ### **1. Environment Variable** (Explicit Override)
 ```bash
-BC_CODE_INTEL_CONFIG=/absolute/path/to/config.json
-# Legacy: BCKB_CONFIG_PATH (deprecated, use BC_CODE_INTEL_CONFIG)
+BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
+# Legacy: BCKB_CONFIG_PATH (deprecated, use BC_CODE_INTEL_CONFIG_PATH)
 ```
 
 **When to use:**
@@ -99,10 +99,10 @@ BC_CODE_INTEL_CONFIG=/absolute/path/to/config.json
 **Example:**
 ```bash
 # Linux/macOS
-export BC_CODE_INTEL_CONFIG="/opt/configs/bc-code-intel-config.json"
+export BC_CODE_INTEL_CONFIG_PATH="/opt/configs/bc-code-intel-config.json"
 
 # Windows PowerShell
-$env:BC_CODE_INTEL_CONFIG = "C:\Configs\bc-code-intel-config.json"
+$env:BC_CODE_INTEL_CONFIG_PATH = "C:\Configs\bc-code-intel-config.json"
 ```
 
 ---
@@ -152,7 +152,7 @@ C:\ProgramData\bc-code-intel\config.json
         "branch": "main"
       },
       "auth": {
-        "type": "pat",
+        "type": "token",
         "token_env_var": "GITHUB_TOKEN"
       },
       "enabled": true
@@ -260,7 +260,7 @@ If no configuration files are found, the server uses **embedded defaults**:
       "name": "company",
       "priority": 20,
       "auth": {
-        "type": "pat",
+        "type": "token",
         "token_env_var": "GITHUB_TOKEN"  ← Your personal token
       }
     }
@@ -502,7 +502,7 @@ The server expands `~` to user home directory:
 
 **Environment variable (absolute):**
 ```bash
-BC_CODE_INTEL_CONFIG=/absolute/path/to/config.json
+BC_CODE_INTEL_CONFIG_PATH=/absolute/path/to/config.json
 # Must be absolute path
 ```
 
@@ -536,7 +536,7 @@ BC_CODE_INTEL_CONFIG=/absolute/path/to/config.json
         "branch": "main"
       },
       "auth": {
-        "type": "pat",
+        "type": "token",
         "token_env_var": "GITHUB_TOKEN"
       },
       "enabled": true
@@ -661,7 +661,7 @@ Layers: [
 
 **Setup:** Environment variable
 ```bash
-export BC_CODE_INTEL_CONFIG="/ci/configs/bc-code-intel-prod.json"
+export BC_CODE_INTEL_CONFIG_PATH="/ci/configs/bc-code-intel-prod.json"
 ```
 
 **Result:**
@@ -814,7 +814,7 @@ Result: team-layer wins (project overrides user)
    - Environment: CI/CD, testing, dynamic scenarios
 
 2. **Workspace Configuration in VS Code:**
-   - Always call `set_workspace_root` first
+   - Always call `set_workspace_info` first
    - Commit workspace config to repo for team sharing
    - Document layer purposes in project README
 

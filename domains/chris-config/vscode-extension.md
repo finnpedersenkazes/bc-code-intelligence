@@ -5,9 +5,9 @@ specialist: chris-config
 tags: [vscode, extension, ui, configuration, codelens, chat-participants, commands]
 bc_versions: [all]
 related_topics:
-  - mcp-layer
   - configuration-file-discovery
   - layer-system-fundamentals
+  - vscode-mcp-configuration
 complexity: intermediate
 last_updated: 2026-01-15
 ---
@@ -51,13 +51,15 @@ Settings are scoped appropriately:
 
 #### Layer Configuration
 ```json
-"bcCodeIntelligence.layers.embedded.enabled": true,  // Core knowledge (always available)
 "bcCodeIntelligence.layers.company.enabled": false,  // Company-wide standards
 "bcCodeIntelligence.layers.company.url": "https://github.com/acme/bc-standards",
 "bcCodeIntelligence.layers.company.branch": "main",
-"bcCodeIntelligence.layers.company.authMethod": "pat",
+"bcCodeIntelligence.layers.company.auth": "token",   // none, token, ssh, azure-cli, github-cli
+"bcCodeIntelligence.layers.company.tokenEnvVar": "GITHUB_TOKEN",
 "bcCodeIntelligence.layers.team.enabled": false,     // Team-specific patterns
 "bcCodeIntelligence.layers.team.url": "https://github.com/acme/team-kb",
+"bcCodeIntelligence.layers.team.branch": "main",
+"bcCodeIntelligence.layers.team.auth": "none",
 "bcCodeIntelligence.layers.project.enabled": true,   // Project overrides
 "bcCodeIntelligence.layers.project.path": "./bc-code-intel-overrides"
 ```

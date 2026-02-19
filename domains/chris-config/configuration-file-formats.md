@@ -14,7 +14,7 @@ last_updated: "2025-10-29"
 
 relevance_signals:
   constructs: []
-  keywords: ["json", "yaml", "config", "configuration", "knowledge_layers", "git", "authentication", "az_cli", "pat", "token"]
+  keywords: ["json", "yaml", "config", "configuration", "layers", "git", "authentication", "az_cli", "pat", "token"]
   anti_pattern_indicators: []
   positive_pattern_indicators: ["config file", "configuration format", "bc-code-intel-config", "layer configuration", "authentication setup"]
 
@@ -85,17 +85,17 @@ enable_diagnostic_tools: true
 **JSON:**
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company BC Standards",
-      "type": "git",
       "priority": 20,
       "source": {
-        "repository_url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
-        "branch": "main",
-        "auth": {
-          "type": "az_cli"
-        }
+        "type": "git",
+        "url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
+        "branch": "main"
+      },
+      "auth": {
+        "type": "az_cli"
       },
       "enabled": true
     }
@@ -105,15 +105,15 @@ enable_diagnostic_tools: true
 
 **YAML:**
 ```yaml
-knowledge_layers:
+layers:
   - name: "Company BC Standards"
-    type: git
     priority: 20
     source:
-      repository_url: "https://dev.azure.com/myorg/BC-Knowledge/_git/standards"
+      type: git
+      url: "https://dev.azure.com/myorg/BC-Knowledge/_git/standards"
       branch: main
-      auth:
-        type: az_cli
+    auth:
+      type: az_cli
     enabled: true
 ```
 
@@ -124,38 +124,38 @@ knowledge_layers:
 **JSON:**
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company Standards",
-      "type": "git",
       "priority": 20,
       "source": {
-        "repository_url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
-        "branch": "main",
-        "auth": {
-          "type": "az_cli"
-        }
+        "type": "git",
+        "url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
+        "branch": "main"
+      },
+      "auth": {
+        "type": "az_cli"
       },
       "enabled": true
     },
     {
       "name": "Team Conventions",
-      "type": "git",
       "priority": 50,
       "source": {
-        "repository_url": "https://dev.azure.com/myorg/BC-Knowledge/_git/team-alpha",
-        "branch": "main",
-        "auth": {
-          "type": "az_cli"
-        }
+        "type": "git",
+        "url": "https://dev.azure.com/myorg/BC-Knowledge/_git/team-alpha",
+        "branch": "main"
+      },
+      "auth": {
+        "type": "az_cli"
       },
       "enabled": true
     },
     {
       "name": "Project Overrides",
-      "type": "project",
       "priority": 100,
       "source": {
+        "type": "project",
         "path": "./bc-code-intel-overrides"
       },
       "enabled": true
@@ -167,31 +167,31 @@ knowledge_layers:
 
 **YAML:**
 ```yaml
-knowledge_layers:
+layers:
   - name: "Company Standards"
-    type: git
     priority: 20
     source:
-      repository_url: "https://dev.azure.com/myorg/BC-Knowledge/_git/standards"
+      type: git
+      url: "https://dev.azure.com/myorg/BC-Knowledge/_git/standards"
       branch: main
-      auth:
-        type: az_cli
+    auth:
+      type: az_cli
     enabled: true
 
   - name: "Team Conventions"
-    type: git
     priority: 50
     source:
-      repository_url: "https://dev.azure.com/myorg/BC-Knowledge/_git/team-alpha"
+      type: git
+      url: "https://dev.azure.com/myorg/BC-Knowledge/_git/team-alpha"
       branch: main
-      auth:
-        type: az_cli
+    auth:
+      type: az_cli
     enabled: true
 
   - name: "Project Overrides"
-    type: project
     priority: 100
     source:
+      type: project
       path: "./bc-code-intel-overrides"
     enabled: true
 
@@ -206,7 +206,7 @@ enable_diagnostic_tools: true
 
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
-| `knowledge_layers` | Array | No | `[]` | Array of knowledge layer configurations |
+| `layers` | Array | No | `[]` | Array of knowledge layer configurations |
 | `enable_diagnostic_tools` | Boolean | No | `false` | Enable advanced diagnostic MCP tools |
 | `bc_version` | String | No | Auto-detect | Target BC version for filtering (e.g., "22", "21") |
 
@@ -215,26 +215,29 @@ enable_diagnostic_tools: true
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `name` | String | Yes | Human-readable layer name |
-| `type` | String | Yes | Layer type: `"git"` or `"project"` |
 | `priority` | Number | Yes | Layer priority (0-100, higher wins) |
-| `source` | Object | Yes | Source configuration (varies by type) |
+| `source` | Object | Yes | Source configuration (varies by type, includes `type` field) |
+| `auth` | Object | No | Authentication configuration (for git layers) |
 | `enabled` | Boolean | No (default: `true`) | Whether layer is active |
 
 ### **Git Source Configuration**
 
 ```typescript
 {
-  "repository_url": string,     // Git repository URL
+  "type": "git",
+  "url": string,                // Git repository URL
   "branch": string,             // Git branch (default: "main")
-  "subdirectory"?: string,      // Optional subdirectory path
-  "auth": {
-    // Option 1: Azure CLI (recommended for Azure DevOps)
-    "type": "az_cli"
-    
-    // Option 2: PAT token (fallback or for GitHub)
-    // "type": "pat",
-    // "token_env_var": string   // Environment variable containing PAT token
-  }
+  "subdirectory"?: string       // Optional subdirectory path
+}
+
+// Auth is configured at layer level (sibling of source):
+"auth": {
+  // Option 1: Azure CLI (recommended for Azure DevOps)
+  "type": "az_cli"
+  
+  // Option 2: Token (fallback or for GitHub)
+  // "type": "token",
+  // "token_env_var": string   // Environment variable containing token
 }
 ```
 
@@ -242,6 +245,7 @@ enable_diagnostic_tools: true
 
 ```typescript
 {
+  "type": "project",
   "path": string                // Relative or absolute path (default: "./bc-code-intel-overrides")
 }
 ```
@@ -294,17 +298,17 @@ enable_diagnostic_tools: true
 **Full example:**
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company Standards",
-      "type": "git",
       "priority": 20,
       "source": {
-        "repository_url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
-        "branch": "main",
-        "auth": {
-          "type": "az_cli"
-        }
+        "type": "git",
+        "url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
+        "branch": "main"
+      },
+      "auth": {
+        "type": "az_cli"
       },
       "enabled": true
     }
@@ -333,7 +337,7 @@ Use when Azure CLI is not available or when automation requires static credentia
 3. **Reference in config:**
    ```json
    "auth": {
-     "type": "pat",
+     "type": "token",
      "token_env_var": "AZURE_DEVOPS_PAT"
    }
    ```
@@ -357,7 +361,7 @@ Use when Azure CLI is not available or when automation requires static credentia
 3. **Reference in config:**
    ```json
    "auth": {
-     "type": "pat",
+     "type": "token",
      "token_env_var": "GITHUB_TOKEN"
    }
    ```
@@ -401,17 +405,17 @@ cp bc-code-intel-config.example.json bc-code-intel-config.json
 **PowerShell:**
 ```powershell
 $config = @{
-    knowledge_layers = @(
+    layers = @(
         @{
             name = "Company Standards"
-            type = "git"
             priority = 20
             source = @{
-                repository_url = "https://dev.azure.com/myorg/BC-Knowledge/_git/standards"
+                type = "git"
+                url = "https://dev.azure.com/myorg/BC-Knowledge/_git/standards"
                 branch = "main"
-                auth = @{
-                    type = "az_cli"
-                }
+            }
+            auth = @{
+                type = "az_cli"
             }
             enabled = $true
         }
@@ -426,17 +430,17 @@ $config | ConvertTo-Json -Depth 10 | Out-File "bc-code-intel-config.json"
 ```bash
 cat > bc-code-intel-config.json << 'EOF'
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company Standards",
-      "type": "git",
       "priority": 20,
       "source": {
-        "repository_url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
-        "branch": "main",
-        "auth": {
-          "type": "az_cli"
-        }
+        "type": "git",
+        "url": "https://dev.azure.com/myorg/BC-Knowledge/_git/standards",
+        "branch": "main"
+      },
+      "auth": {
+        "type": "az_cli"
       },
       "enabled": true
     }
@@ -489,7 +493,7 @@ Enable diagnostic tools and use layer diagnostic MCP tools:
 ```json
 {
   "enable_diagnostic_tools": true,
-  "knowledge_layers": [...]
+  "layers": [...]
 }
 ```
 
@@ -506,13 +510,13 @@ Uses embedded knowledge only.
 ### **Pattern 2: Company Standards Only**
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company",
-      "type": "git",
       "priority": 20,
       "source": {
-        "repository_url": "https://github.com/company/bc-standards",
+        "type": "git",
+        "url": "https://github.com/company/bc-standards",
         "branch": "main"
       },
       "enabled": true
@@ -524,26 +528,32 @@ Uses embedded knowledge only.
 ### **Pattern 3: Multiple Teams with Project Overrides**
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Company",
-      "type": "git",
       "priority": 20,
-      "source": { "repository_url": "..." },
+      "source": {
+        "type": "git",
+        "url": "..."
+      },
       "enabled": true
     },
     {
       "name": "Team Alpha",
-      "type": "git",
       "priority": 50,
-      "source": { "repository_url": "..." },
+      "source": {
+        "type": "git",
+        "url": "..."
+      },
       "enabled": true
     },
     {
       "name": "Project",
-      "type": "project",
       "priority": 100,
-      "source": { "path": "./bc-code-intel-overrides" },
+      "source": {
+        "type": "project",
+        "path": "./bc-code-intel-overrides"
+      },
       "enabled": true
     }
   ]
@@ -553,12 +563,14 @@ Uses embedded knowledge only.
 ### **Pattern 4: Temporary Layer Disable**
 ```json
 {
-  "knowledge_layers": [
+  "layers": [
     {
       "name": "Experimental Team Layer",
-      "type": "git",
       "priority": 50,
-      "source": { "repository_url": "..." },
+      "source": {
+        "type": "git",
+        "url": "..."
+      },
       "enabled": false  // <-- Temporarily disabled
     }
   ]
@@ -570,7 +582,7 @@ Uses embedded knowledge only.
 ### **"Configuration file not found"**
 - Check file name exactly: `bc-code-intel-config.json` (not `.config.json`)
 - Verify file in correct location (workspace root or home directory)
-- Use `get_workspace_root` to check current working directory
+- Use `get_workspace_info` to check current working directory
 
 ### **"Invalid JSON/YAML syntax"**
 - Validate with tools mentioned above

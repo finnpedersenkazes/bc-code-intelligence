@@ -3,16 +3,17 @@ title: "Content Types Structure"
 domain: "chris-config"
 bc_versions: "14+"
 difficulty: "intermediate"
-tags: ["mcp-configuration", "content-types", "yaml-frontmatter", "knowledge-structure", "relevance-signals"]
+tags: ["mcp-configuration", "content-types", "yaml-frontmatter", "knowledge-structure", "relevance-signals", "custom-patterns", "detection"]
 related_topics:
   - "layer-system-fundamentals.md"
   - "knowledge-content-creation.md"
+  - "custom-pattern-detection.md"
 
 relevance_signals:
   constructs: []
-  keywords: ["topics", "specialists", "workflows", "frontmatter", "yaml", "domains", "content types", "knowledge layer", "markdown", "relevance signals", "samples"]
+  keywords: ["topics", "specialists", "workflows", "frontmatter", "yaml", "domains", "content types", "knowledge layer", "markdown", "relevance signals", "samples", "detection pattern", "custom pattern"]
   anti_pattern_indicators: ["code in topic file", "missing relevance_signals", "no samples separation"]
-  positive_pattern_indicators: ["content structure", "yaml frontmatter", "specialist definition", "topic format", "knowledge content", "V2 frontmatter"]
+  positive_pattern_indicators: ["content structure", "yaml frontmatter", "specialist definition", "topic format", "knowledge content", "V2 frontmatter", "detection.pattern"]
 
 applicable_object_types: []
 relevance_threshold: 0.4
@@ -103,10 +104,24 @@ relevance_signals:
   anti_pattern_indicators: ["missing SetLoadFields", "Get in loop"]  # Phrases indicating bad patterns
   positive_pattern_indicators: ["uses SetLoadFields", "bulk operation"]  # Phrases indicating good patterns
 
+# Custom Pattern Detection (Optional - v1.7.3+)
+# Use for company/project standards enforcement
+detection:
+  pattern: "(FindSet\\(\\))(?!.*SetLoadFields)"  # Regex pattern (use | for literal block)
+  severity: "warning"                             # error|warning|info
+  description: "FindSet without SetLoadFields"    # What this checks
+
 applicable_object_types: ["codeunit", "page", "table"]  # Object types this applies to
 relevance_threshold: 0.5              # 0.0-1.0 (higher = stricter matching)
 ---
 ```
+
+**Custom Pattern Detection** (v1.7.3+):
+- **Optional field** for company/project standards enforcement
+- Enables regex-based code scanning during `analyze_al_code`
+- Results appear in `company_standards_violations` section
+- Layer priority determines precedence (project > team > company > embedded)
+- See [Custom Pattern Detection](custom-pattern-detection.md) for syntax and validation
 
 ### **Relevance Threshold Guidelines**
 
