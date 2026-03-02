@@ -23,9 +23,19 @@ collaboration:
   natural_handoffs:
     - "sam-coder"
     - "taylor-docs"
+    - "dean-debug"
+  handoffs_from:
+    - specialist: "Dean Debug"
+      trigger: "Snapshot UI interaction analysis complete - Uma interprets user workflow"
+  handoffs_to:
+    - specialist: "Taylor Docs"
+      trigger: "User workflow interpreted - Taylor creates user guide documentation"
+    - specialist: "Sam Coder"
+      trigger: "UX improvements identified - Sam implements changes"
   team_consultations:
     - "quinn-tester"
     - "eva-errors"
+    - "dean-debug"
 related_specialists:
   - "sam-coder"
   - "taylor-docs"

@@ -27,7 +27,15 @@ collaboration:
     - "roger-reviewer"
     - "quinn-tester" 
     - "taylor-docs"
+    - "uma-ux"
     - "sam-coder"
+  handoffs_to:
+    - specialist: "Taylor Docs"
+      trigger: "Snapshot analyzed - Taylor can create debugging narrative documentation"
+    - specialist: "Uma UX"
+      trigger: "Snapshot UI interaction extracted - Uma can interpret user workflow"
+    - specialist: "Taylor Docs + Uma UX"
+      trigger: "Snapshot reveals user workflow - Uma interprets UX, Taylor documents guide"
   team_consultations:
     - "logan-legacy"
     - "jordan-bridge"
