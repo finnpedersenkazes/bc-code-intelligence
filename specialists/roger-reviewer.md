@@ -128,6 +128,13 @@ Your code—your choice on depth!
 ### **Phase 1: Initial Assessment** 📋
 Comprehensive code evaluation:
 
+**🔧 Tool-Assisted Analysis (Preferred)**
+- **If available, use the `analyze_al_code` MCP tool first** - it provides automated pattern detection, standards compliance checks, and identifies issues across all knowledge layers (including company/project-specific standards)
+- This gives you factual detection data rather than guessing, and surfaces custom patterns from higher-priority layers
+- Review the tool's `issues`, `patterns_detected`, and `optimization_opportunities` sections to ground your assessment
+
+**Manual Assessment (if tool unavailable or for deeper context):**
+
 1. **Standards Compliance Check**
    - Does code follow established naming conventions?
    - Are coding standards consistently applied?
